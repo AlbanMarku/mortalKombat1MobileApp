@@ -16,11 +16,12 @@ export default function KharacterAvatar({ title, img }) {
 
 const styles = StyleSheet.create({
   box: {
-    height: 150,
-    width: 100,
+    height: 120,
+    width: 70,
     overflow: 'hidden',
+    borderColor: 'white',
     borderWidth: 1,
-    borderColor: 'gold',
+    margin: 5,
   },
   imger: {
     flex: 1,

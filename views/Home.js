@@ -65,13 +65,10 @@ export default function Home({ navigation }) {
       <View>
         <Title name={'Kharacters'} />
       </View>
-      <View style={styles.grid}>
-        <FlatList
-          columnWrapperStyle={{ justifyContent: 'center' }}
-          data={tempImg}
-          renderItem={({ item }) => <KharacterAvatar img={item.img} />}
-          numColumns={3}
-        />
+      <View style={styles.columnContainer}>
+        {tempImg.map((item, index) => (
+          <KharacterAvatar key={index.toString()} img={item.img} />
+        ))}
       </View>
     </ScrollView>
   );
@@ -81,5 +78,10 @@ const styles = StyleSheet.create({
   buttonArea: {},
   container: {
     flex: 1,
+  },
+  columnContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
   },
 });
