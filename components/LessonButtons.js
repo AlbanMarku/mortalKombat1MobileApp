@@ -1,5 +1,7 @@
 import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
+//call func multiple times to make components with params.
+
 export default function LessonButtons() {
   const onPress = (title) => {
     console.log(title);

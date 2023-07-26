@@ -5,6 +5,8 @@ import Title from '../components/Title';
 import { globalStyles } from '../styles/global';
 import { ScrollView } from 'react-native-gesture-handler';
 
+//Some temp data to map through. Components for homescreen.
+
 export default function Home({ navigation }) {
   const tempImg = [
     {

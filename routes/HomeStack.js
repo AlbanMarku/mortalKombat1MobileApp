@@ -3,7 +3,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { useFonts } from 'expo-font';
 import Home from '../views/Home';
 import About from '../views/About';
-
+import HeaderComp from '../components/HeaderComp';
 const Drawer = createDrawerNavigator();
 
 function TabNav() {
@@ -29,7 +29,7 @@ function TabNav() {
         },
       }}
     >
-      <Drawer.Screen name="Home" component={Home} />
+      <Drawer.Screen name="Home" component={Home} options={{ headerRight: () => <HeaderComp /> }} />
       <Drawer.Screen name="About" component={About} />
     </Drawer.Navigator>
   );
