@@ -1,6 +1,7 @@
 import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
 import ClickBox from '../components/ClickBox';
 import Title from '../components/Title';
+import { globalStyles } from '../styles/global';
 
 export default function Home({ navigation }) {
   const tempData = [
@@ -10,7 +11,7 @@ export default function Home({ navigation }) {
   ];
 
   return (
-    <View style={styles.container}>
+    <View style={[globalStyles.color, styles.container]}>
       <Title name={'Lessons'} />
       <FlatList
         columnWrapperStyle={{ justifyContent: 'center' }}
@@ -24,12 +25,8 @@ export default function Home({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  buttonArea: {},
   container: {
-    backgroundColor: 'white',
     flex: 1,
-  },
-  buttonArea: {
-    backgroundColor: 'blue',
-    padding: 5,
   },
 });
