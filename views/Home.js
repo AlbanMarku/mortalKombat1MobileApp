@@ -1,29 +1,11 @@
 import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
-import ClickBox from '../components/ClickBox';
+import LessonButtons from '../components/LessonButtons';
 import KharacterAvatar from '../components/KharacterAvatar';
 import Title from '../components/Title';
 import { globalStyles } from '../styles/global';
 import { ScrollView } from 'react-native-gesture-handler';
 
 export default function Home({ navigation }) {
-  const tempData = [
-    {
-      title: 'Basics',
-      img: 'https://www.fightersgeneration.com/nf7/game/mk11/mk11-screenshot-jan2019.jpg',
-      key: 1,
-    },
-    {
-      title: 'Intermediate',
-      img: 'https://www.fightersgeneration.com/nf7/game/mk11/mk11-screenshot-jan2019.jpg',
-      key: 2,
-    },
-    {
-      title: 'Advanced',
-      img: 'https://www.fightersgeneration.com/nf7/game/mk11/mk11-screenshot-jan2019.jpg',
-      key: 3,
-    },
-  ];
-
   const tempImg = [
     {
       img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
@@ -54,13 +36,7 @@ export default function Home({ navigation }) {
         <Title name={'Lessons'} />
       </View>
       <View>
-        <FlatList
-          columnWrapperStyle={{ justifyContent: 'center' }}
-          contentContainerStyle={styles.buttonArea}
-          data={tempData}
-          renderItem={({ item }) => <ClickBox title={item.title} img={item.img} />}
-          numColumns={2}
-        />
+        <LessonButtons />
       </View>
       <View>
         <Title name={'Kharacters'} />
@@ -77,6 +53,9 @@ export default function Home({ navigation }) {
 const styles = StyleSheet.create({
   buttonArea: {},
   container: {
+    flex: 1,
+  },
+  boxContainer: {
     flex: 1,
   },
   columnContainer: {
