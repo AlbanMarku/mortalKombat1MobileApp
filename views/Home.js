@@ -1,7 +1,9 @@
 import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
 import ClickBox from '../components/ClickBox';
+import KharacterAvatar from '../components/KharacterAvatar';
 import Title from '../components/Title';
 import { globalStyles } from '../styles/global';
+import { ScrollView } from 'react-native-gesture-handler';
 
 export default function Home({ navigation }) {
   const tempData = [
@@ -22,8 +24,32 @@ export default function Home({ navigation }) {
     },
   ];
 
+  const tempImg = [
+    {
+      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
+    },
+    {
+      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
+    },
+    {
+      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
+    },
+    {
+      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
+    },
+    {
+      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
+    },
+    {
+      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
+    },
+    {
+      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
+    },
+  ];
+
   return (
-    <View style={[globalStyles.color, styles.container]}>
+    <ScrollView style={[globalStyles.color, styles.container]}>
       <View>
         <Title name={'Lessons'} />
       </View>
@@ -34,10 +60,20 @@ export default function Home({ navigation }) {
           data={tempData}
           renderItem={({ item }) => <ClickBox title={item.title} img={item.img} />}
           numColumns={2}
-          // ItemSeparatorComponent={() => <View style={{ height: 5 }} />}
         />
       </View>
-    </View>
+      <View>
+        <Title name={'Kharacters'} />
+      </View>
+      <View style={styles.grid}>
+        <FlatList
+          columnWrapperStyle={{ justifyContent: 'center' }}
+          data={tempImg}
+          renderItem={({ item }) => <KharacterAvatar img={item.img} />}
+          numColumns={3}
+        />
+      </View>
+    </ScrollView>
   );
 }
 
