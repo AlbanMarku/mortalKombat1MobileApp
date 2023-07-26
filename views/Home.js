@@ -24,10 +24,10 @@ export default function Home({ navigation }) {
 
   return (
     <View style={[globalStyles.color, styles.container]}>
-      <View style={{ backgroundColor: 'blue' }}>
+      <View>
         <Title name={'Lessons'} />
       </View>
-      <View style={{ backgroundColor: 'yellow' }}>
+      <View>
         <FlatList
           columnWrapperStyle={{ justifyContent: 'center' }}
           contentContainerStyle={styles.buttonArea}
@@ -45,6 +45,5 @@ const styles = StyleSheet.create({
   buttonArea: {},
   container: {
     flex: 1,
-    backgroundColor: 'red',
   },
 });

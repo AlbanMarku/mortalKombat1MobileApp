@@ -1,4 +1,4 @@
-import { ImageBackground, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function ClickBox({ title, img }) {
   const onPress = () => {
@@ -8,7 +8,9 @@ export default function ClickBox({ title, img }) {
   return (
     <TouchableOpacity onPress={onPress} style={styles.box}>
       <ImageBackground style={styles.imger} source={{ uri: img }}>
-        <Text>{title}</Text>
+        <View style={styles.textContainer}>
+          <Text style={styles.text}>{title}</Text>
+        </View>
       </ImageBackground>
     </TouchableOpacity>
   );
@@ -24,5 +26,16 @@ const styles = StyleSheet.create({
   imger: {
     flex: 1,
     justifyContent: 'center',
+  },
+  textContainer: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100%',
+  },
+  text: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
   },
 });
