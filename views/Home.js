@@ -28,23 +28,71 @@ export default function Home({ navigation }) {
     {
       img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
     },
+    {
+      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
+    },
+    {
+      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
+    },
+    {
+      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
+    },
+    {
+      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
+    },
+    {
+      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
+    },
+    {
+      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
+    },
+  ];
+  const tempKameo = [
+    {
+      img: 'https://cdn-prod.mortalkombat.com/roster/frost/thumb-p.png',
+    },
+    {
+      img: 'https://cdn-prod.mortalkombat.com/roster/frost/thumb-p.png',
+    },
+    {
+      img: 'https://cdn-prod.mortalkombat.com/roster/frost/thumb-p.png',
+    },
+    {
+      img: 'https://cdn-prod.mortalkombat.com/roster/frost/thumb-p.png',
+    },
+    {
+      img: 'https://cdn-prod.mortalkombat.com/roster/frost/thumb-p.png',
+    },
+    {
+      img: 'https://cdn-prod.mortalkombat.com/roster/frost/thumb-p.png',
+    },
+    {
+      img: 'https://cdn-prod.mortalkombat.com/roster/frost/thumb-p.png',
+    },
+    {
+      img: 'https://cdn-prod.mortalkombat.com/roster/frost/thumb-p.png',
+    },
   ];
 
   return (
     <ScrollView style={[globalStyles.color, styles.container]}>
-      <View>
-        <Title name={'Lessons'} />
-      </View>
+      <Title name={'Lessons'} />
       <View>
         <LessonButtons />
       </View>
-      <View>
-        <Title name={'Kharacters'} />
-      </View>
+      <Title name={'Kharacters'} />
       <View style={styles.columnContainer}>
         {tempImg.map((item, index) => (
           <KharacterAvatar key={index.toString()} img={item.img} />
         ))}
+      </View>
+      <Title name={'Kameos'} />
+      <View>
+        <View style={styles.columnContainer}>
+          {tempKameo.map((item, index) => (
+            <KharacterAvatar key={index.toString()} img={item.img} />
+          ))}
+        </View>
       </View>
     </ScrollView>
   );
