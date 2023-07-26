@@ -14,7 +14,8 @@ function TabNav() {
       screenOptions={{
         headerTintColor: 'white',
         headerStyle: {
-          backgroundColor: '#2d2d30',
+          backgroundColor: 'black',
+          shadowColor: 'white',
         },
         headerTitleStyle: {
           color: 'white',
