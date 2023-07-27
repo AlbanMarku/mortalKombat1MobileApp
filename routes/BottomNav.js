@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     height: 50,
     position: 'absolute',
-    bottom: 50,
+    bottom: 0,
     left: 0,
     right: 0,
   },

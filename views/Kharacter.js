@@ -16,14 +16,11 @@ export default function Kharacter({ route, navigation }) {
 
   return (
     <View style={[globalStyles.color, { flex: 1 }]}>
-      <StatusBar style="auto" />
-      <SafeAreaView>
-        <ScrollView>
-          <Text>I am character page {JSON.stringify(name)}</Text>
-          <Image style={{ height: 100 }} source={{ uri: img }} />
-          <Text>input is {input}</Text>
-        </ScrollView>
-      </SafeAreaView>
+      <ScrollView>
+        <Text>I am character page {JSON.stringify(name)}</Text>
+        <Image style={{ height: 100 }} source={{ uri: img }} />
+        <Text>input is {input}</Text>
+      </ScrollView>
       <BottomNav />
     </View>
   );

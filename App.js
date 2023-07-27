@@ -4,8 +4,9 @@ import * as Splashscreen from 'expo-splash-screen';
 import { MenuProvider } from 'react-native-popup-menu';
 import { useEffect, useState } from 'react';
 import { InputContext } from './Context';
-import { NavigationContainer } from '@react-navigation/native';
+import { DarkTheme, NavigationContainer } from '@react-navigation/native';
 import MyStack from './routes/HomeStack';
+import { StatusBar } from 'expo-status-bar';
 
 export default function App() {
   const [fontsLoaded] = useFonts({ mk11: require('./assets/fonts/mk11Reg.otf') });
@@ -34,6 +35,8 @@ export default function App() {
     <InputContext.Provider value={{ input, setInput }}>
       <MenuProvider>
         <NavigationContainer>
+          <StatusBar backgroundColor="black" style="light" />
+
           <MyStack />
         </NavigationContainer>
       </MenuProvider>
