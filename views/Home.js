@@ -11,6 +11,7 @@ export default function Home({ navigation }) {
   const tempImg = [
     {
       img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
+      name: 'scorpion',
     },
     {
       img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
@@ -85,7 +86,11 @@ export default function Home({ navigation }) {
       <Title name={'Kharacters'} />
       <View style={styles.columnContainer}>
         {tempImg.map((item, index) => (
-          <KharacterAvatar key={index.toString()} img={item.img} />
+          <KharacterAvatar
+            key={index.toString()}
+            img={item.img}
+            name={item.name ? item.name : 'unknown name'}
+          />
         ))}
       </View>
       <Title name={'Kameos'} />
