@@ -24,6 +24,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     height: 50,
+    position: 'absolute',
+    bottom: 50,
+    left: 0,
+    right: 0,
   },
   text: {
     color: 'white',
