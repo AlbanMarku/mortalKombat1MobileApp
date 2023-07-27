@@ -4,7 +4,7 @@ import { Menu, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-m
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
-
+import { Entypo } from '@expo/vector-icons';
 import { useContext } from 'react';
 import { InputContext } from '../Context';
 
@@ -55,6 +55,15 @@ export default function InputOption() {
               <View style={styles.inputDiv}>
                 <Text>Nintendo</Text>
                 <MaterialCommunityIcons name="nintendo-switch" size={24} color="black" />
+              </View>
+            }
+          />
+          <MenuOption
+            onSelect={() => handleInput(4)}
+            children={
+              <View style={styles.inputDiv}>
+                <Text>Keyboard</Text>
+                <Entypo name="keyboard" size={24} color="black" />
               </View>
             }
           />
