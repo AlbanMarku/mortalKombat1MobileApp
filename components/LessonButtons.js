@@ -1,8 +1,11 @@
 import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useFonts } from 'expo-font';
 
 //call func multiple times to make components with params.
 
 export default function LessonButtons() {
+  useFonts({ mk11: require('../assets/fonts/mk11Reg.otf') });
+
   const onPress = (title) => {
     console.log(title);
   };
@@ -18,7 +21,7 @@ export default function LessonButtons() {
       <TouchableOpacity onPress={() => onPress(title)} style={styles.box}>
         <ImageBackground style={styles.imger} source={img}>
           <View style={styles.textContainer}>
-            <Text style={styles.text}>{title}</Text>
+            <Text style={{ fontFamily: 'mk11', fontSize: 25, color: 'white' }}>{title}</Text>
           </View>
         </ImageBackground>
       </TouchableOpacity>
