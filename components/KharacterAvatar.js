@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 export default function KharacterAvatar({ title, img }) {
   const navigation = useNavigation();
   return (
-    <TouchableOpacity onPress={() => navigation.navigate('About')} style={styles.box}>
+    <TouchableOpacity onPress={() => navigation.navigate('Kharacter')} style={styles.box}>
       <Image
         source={{
           uri: img,
