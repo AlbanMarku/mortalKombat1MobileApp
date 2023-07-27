@@ -15,6 +15,8 @@ export default function InputOption() {
     setInput(selectedInput);
   };
 
+  //Make selected option visible
+
   return (
     <View>
       <Menu>

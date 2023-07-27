@@ -1,9 +1,10 @@
 import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
-import { globalStyles } from '../styles/global';
+import { useNavigation } from '@react-navigation/native';
 
 export default function KharacterAvatar({ title, img }) {
+  const navigation = useNavigation();
   return (
-    <TouchableOpacity style={styles.box}>
+    <TouchableOpacity onPress={() => navigation.navigate('About')} style={styles.box}>
       <Image
         source={{
           uri: img,
