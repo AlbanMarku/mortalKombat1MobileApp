@@ -36,7 +36,6 @@ export default function App() {
       <MenuProvider>
         <NavigationContainer>
           <StatusBar backgroundColor="black" style="light" />
-
           <MyStack />
         </NavigationContainer>
       </MenuProvider>

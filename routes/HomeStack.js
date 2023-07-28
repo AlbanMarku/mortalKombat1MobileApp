@@ -4,6 +4,8 @@ import { View } from 'react-native';
 import Kharacter from '../views/Kharacter';
 import DrawerStack from './DrawerStack';
 
+//add box shadow
+
 const Stack = createNativeStackNavigator();
 
 export default function MyStack() {
