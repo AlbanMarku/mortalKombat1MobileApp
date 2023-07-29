@@ -9,7 +9,7 @@ import { useContext } from 'react';
 import { InputContext } from '../Context';
 
 export default function InputOption() {
-  const { input, setInput } = useContext(InputContext);
+  const [input, setInput] = useContext(InputContext);
 
   const handleInput = (selectedInput) => {
     setInput(selectedInput);
