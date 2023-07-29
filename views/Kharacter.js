@@ -1,42 +1,33 @@
 import { View, Text, Image, StyleSheet } from 'react-native';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { InputContext } from '../Context';
 import BottomNav from '../routes/BottomNav';
 import { ScrollView } from 'react-native-gesture-handler';
 import { globalStyles } from '../styles/global';
-import { StatusBar } from 'expo-status-bar';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import Title from '../components/Title';
-import axios from 'axios';
-import { createClient } from '@sanity/client';
 import { setupURLPolyfill } from 'react-native-url-polyfill';
-import imageUrlBuilder from '@sanity/image-url';
+import { client, urlFor } from '../components/SanityClient';
 
 export default function Kharacter({ route, navigation }) {
   setupURLPolyfill();
-
-  const client = createClient({
-    projectId: 'd3ix1agf',
-    dataset: 'production',
-    useCdn: true,
-    apiVersion: '2023-07-29',
-  });
-
-  const builder = imageUrlBuilder(client);
-
-  const urlFor = (source) => {
-    return builder.image(source);
-  };
+  console.log('run');
 
   const { name, img } = route.params;
 
-  const { input } = useContext(InputContext);
+  const [tempImger, setTempImger] = useState(
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/1024px-User-avatar.svg.png'
+  );
+
+  const [tempNamer, setTempNamer] = useState('Kharacter');
 
   const getDetails = async () => {
     try {
       const posts = await client.fetch("*[_type == 'kharacter']");
+      console.log(posts);
       const dis = urlFor(posts[0].avatar.asset._ref);
-      console.log(dis.url());
+      console.log(posts[0].name);
+      setTempImger(dis.url());
+      setTempNamer(posts[0].name);
     } catch (err) {
       console.log(err);
     }
@@ -51,8 +42,8 @@ export default function Kharacter({ route, navigation }) {
       <ScrollView>
         <View style={[globalStyles.color, styles.summary]}>
           <View>
-            <Title name={name} />
-            <Image style={{ height: 300, width: 300 }} source={{ uri: img }} />
+            <Title name={tempNamer} />
+            <Image style={{ height: 300, width: 300 }} source={{ uri: tempImger }} />
           </View>
           <View>
             <Text>Framedata</Text>
