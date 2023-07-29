@@ -4,52 +4,14 @@ import KharacterAvatar from '../components/KharacterAvatar';
 import Title from '../components/Title';
 import { globalStyles } from '../styles/global';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useContext } from 'react';
+import { InputContext } from '../Context';
 
 //Some temp data to map through. Components for homescreen.
 
 export default function Home({ navigation }) {
-  const tempImg = [
-    {
-      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
-      name: 'scorpion',
-    },
-    {
-      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
-    },
-    {
-      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
-    },
-    {
-      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
-    },
-    {
-      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
-    },
-    {
-      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
-    },
-    {
-      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
-    },
-    {
-      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
-    },
-    {
-      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
-    },
-    {
-      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
-    },
-    {
-      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
-    },
-    {
-      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
-    },
-    {
-      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
-    },
-  ];
+  const [input, setInput, tempImg] = useContext(InputContext);
+
   const tempKameo = [
     {
       img: 'https://cdn-prod.mortalkombat.com/roster/frost/thumb-p.png',
