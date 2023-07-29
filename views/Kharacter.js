@@ -10,6 +10,7 @@ import Title from '../components/Title';
 import axios from 'axios';
 import { createClient } from '@sanity/client';
 import { setupURLPolyfill } from 'react-native-url-polyfill';
+import imageUrlBuilder from '@sanity/image-url';
 
 export default function Kharacter({ route, navigation }) {
   setupURLPolyfill();
@@ -21,6 +22,12 @@ export default function Kharacter({ route, navigation }) {
     apiVersion: '2023-07-29',
   });
 
+  const builder = imageUrlBuilder(client);
+
+  const urlFor = (source) => {
+    return builder.image(source);
+  };
+
   const { name, img } = route.params;
 
   const { input } = useContext(InputContext);
@@ -28,7 +35,8 @@ export default function Kharacter({ route, navigation }) {
   const getDetails = async () => {
     try {
       const posts = await client.fetch("*[_type == 'kharacter']");
-      console.log(posts);
+      const dis = urlFor(posts[0].avatar.asset._ref);
+      console.log(dis.url());
     } catch (err) {
       console.log(err);
     }
