@@ -15,7 +15,7 @@ export default function Home({ navigation }) {
 
   const fetchRoster = async () => {
     try {
-      const queryData = await client.fetch("*[_type == 'kharacter']");
+      const queryData = await client.fetch("*[_type == 'kharacter']{ _id, name, avatar }");
       const extractedData = queryData.map((item) => {
         const parsedImg = urlFor(item.avatar.asset._ref);
         return { name: item.name, img: parsedImg.url() };
