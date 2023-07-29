@@ -5,7 +5,7 @@ import { globalStyles } from '../styles/global';
 import Title from '../components/Title';
 
 export default function Kharacter({ route, navigation }) {
-  const { name, img } = route.params;
+  const { name, img, basicAttacks } = route.params;
 
   return (
     <View style={[globalStyles.color, { flex: 1 }]}>
@@ -16,7 +16,20 @@ export default function Kharacter({ route, navigation }) {
             <Image style={{ height: 300, width: 300 }} source={{ uri: img }} />
           </View>
           <View>
-            <Text>Framedata</Text>
+            {basicAttacks.map((item) => {
+              const dir = item.attackInput.direction;
+              const but = item.attackInput.button;
+              if (dir == 5) {
+                return <Text>{but}</Text>;
+              } else {
+                return (
+                  <Text>
+                    {dir}
+                    {but}
+                  </Text>
+                );
+              }
+            })}
           </View>
         </View>
       </ScrollView>

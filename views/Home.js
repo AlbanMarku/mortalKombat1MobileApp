@@ -15,10 +15,13 @@ export default function Home({ navigation }) {
 
   const fetchRoster = async () => {
     try {
-      const queryData = await client.fetch("*[_type == 'kharacter']{ _id, name, avatar }");
+      const queryData = await client.fetch(
+        "*[_type == 'kharacter']{ _id, name, avatar, basicAttacks }"
+      );
+
       const extractedData = queryData.map((item) => {
         const parsedImg = urlFor(item.avatar.asset._ref);
-        return { name: item.name, img: parsedImg.url() };
+        return { name: item.name, img: parsedImg.url(), basicAttacks: item.basicAttacks };
       });
       setRosterData(extractedData);
     } catch (err) {
@@ -70,6 +73,7 @@ export default function Home({ navigation }) {
             key={index.toString()}
             img={item.img}
             name={item.name ? item.name : 'unknown name'}
+            basicAttacks={item.basicAttacks}
           />
         ))}
       </View>
