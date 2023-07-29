@@ -1,6 +1,8 @@
 import { createContext, useState } from 'react';
 
-export const InputContext = createContext();
+//If context requires more operations, make context file for each value instead of all together.
+
+export const MyContext = createContext();
 
 const MyProvider = ({ children }) => {
   const [input, setInput] = useState(0);
@@ -46,9 +48,12 @@ const MyProvider = ({ children }) => {
       img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
     },
   ];
+  const [rosterData, setRosterData] = useState([]);
 
   return (
-    <InputContext.Provider value={[input, setInput, tempImg]}>{children}</InputContext.Provider>
+    <MyContext.Provider value={[input, setInput, tempImg, rosterData, setRosterData]}>
+      {children}
+    </MyContext.Provider>
   );
 };
 

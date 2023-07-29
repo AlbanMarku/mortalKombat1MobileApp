@@ -13,6 +13,8 @@ export default function Kharacter({ route, navigation }) {
   console.log('run');
 
   const { name, img } = route.params;
+  console.log(name);
+  console.log(img);
 
   const [tempImger, setTempImger] = useState(
     'https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/1024px-User-avatar.svg.png'

@@ -6,10 +6,10 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { useContext } from 'react';
-import { InputContext } from '../Context';
+import { MyContext } from '../Context';
 
 export default function InputOption() {
-  const [input, setInput] = useContext(InputContext);
+  const [input, setInput] = useContext(MyContext);
 
   const handleInput = (selectedInput) => {
     setInput(selectedInput);
