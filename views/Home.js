@@ -1,4 +1,4 @@
-import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import LessonButtons from '../components/LessonButtons';
 import KharacterAvatar from '../components/KharacterAvatar';
 import Title from '../components/Title';
@@ -6,13 +6,12 @@ import { globalStyles } from '../styles/global';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useContext, useEffect } from 'react';
 import { MyContext } from '../Context';
-import { setupURLPolyfill } from 'react-native-url-polyfill';
 import { client, urlFor } from '../components/SanityClient';
 
 //Some temp data to map through. Components for homescreen.
 
 export default function Home({ navigation }) {
-  const [input, setInput, tempImg, rosterData, setRosterData] = useContext(MyContext);
+  const [input, setInput, rosterData, setRosterData] = useContext(MyContext);
 
   const fetchRoster = async () => {
     try {

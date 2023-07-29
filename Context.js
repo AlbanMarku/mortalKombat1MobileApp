@@ -6,52 +6,10 @@ export const MyContext = createContext();
 
 const MyProvider = ({ children }) => {
   const [input, setInput] = useState(0);
-  const tempImg = [
-    {
-      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
-      name: 'scorpion',
-    },
-    {
-      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
-    },
-    {
-      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
-    },
-    {
-      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
-    },
-    {
-      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
-    },
-    {
-      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
-    },
-    {
-      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
-    },
-    {
-      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
-    },
-    {
-      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
-    },
-    {
-      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
-    },
-    {
-      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
-    },
-    {
-      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
-    },
-    {
-      img: 'https://cdn-prod.mortalkombat.com/roster/scorpion/thumb-p.png',
-    },
-  ];
   const [rosterData, setRosterData] = useState([]);
 
   return (
-    <MyContext.Provider value={[input, setInput, tempImg, rosterData, setRosterData]}>
+    <MyContext.Provider value={[input, setInput, rosterData, setRosterData]}>
       {children}
     </MyContext.Provider>
   );

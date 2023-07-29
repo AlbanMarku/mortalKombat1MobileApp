@@ -1,7 +1,4 @@
 import { StyleSheet, Modal, Text, View } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { useContext, useState } from 'react';
-import { InputContext } from '../Context';
 import InputOption from './InputOption';
 
 export default function HeaderComp() {
