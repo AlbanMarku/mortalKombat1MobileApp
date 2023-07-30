@@ -38,9 +38,7 @@ const styles = StyleSheet.create({
   imageDiv: {
     alignItems: 'center',
   },
-  moveList: {
-    backgroundColor: 'red',
-  },
+  moveList: {},
 });
 
 //  <View>

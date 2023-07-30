@@ -7,6 +7,7 @@ export default function MoveBox({ attack, iconSet }) {
   const name = attack.attackName;
   const attackType = attack.attackType.name;
   const onBlock = attack.blockAdv;
+  const startup = attack.startup;
 
   const buttonComp = () => {
     switch (input) {
@@ -39,16 +40,19 @@ export default function MoveBox({ attack, iconSet }) {
 
   return (
     <View style={styles.div}>
-      <View>
+      <View style={styles.butInfoDiv}>
         <View style={styles.inputDiv}>
-          <View>{directionComp()}</View>
-          <View>{buttonComp()}</View>
+          <View style={styles.but}>{directionComp()}</View>
+          <View style={styles.but}>{buttonComp()}</View>
         </View>
-        <Text>{name}</Text>
+        <Text style={styles.moveName}>{name}</Text>
       </View>
-      <View>
-        <Text>{onBlock}</Text>
-        <Text>{attackType}</Text>
+      <View style={styles.butInfoDiv}>
+        <View style={styles.inputDiv}>
+          <Text style={styles.data}>{startup}</Text>
+          <Text style={styles.data}>{onBlock}</Text>
+        </View>
+        <Text style={styles.moveName}>{attackType}</Text>
       </View>
     </View>
   );
@@ -56,11 +60,32 @@ export default function MoveBox({ attack, iconSet }) {
 
 const styles = StyleSheet.create({
   div: {
-    backgroundColor: 'green',
     justifyContent: 'space-between',
     flexDirection: 'row',
+    borderBottomWidth: 1,
+  },
+  butInfoDiv: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 5,
+    minWidth: 80,
   },
   inputDiv: {
     flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  but: {
+    marginRight: 7,
+  },
+  moveName: {
+    fontSize: 18,
+    marginTop: 5,
+    color: 'white',
+  },
+  data: {
+    fontSize: 24,
+    marginRight: 7,
+    color: 'white',
   },
 });
