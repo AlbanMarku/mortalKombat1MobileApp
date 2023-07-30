@@ -31,7 +31,6 @@ export default function Home({ navigation }) {
         };
       });
       setRosterData(extractedData);
-      // console.log(extractedData[0].basicAttacks[0].attackType.name);
     } catch (err) {
       console.log(err);
     }
