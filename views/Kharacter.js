@@ -24,6 +24,7 @@ export default function Kharacter({ route, navigation }) {
         <Title name={'Frame Data'} />
         <View style={styles.moveList}>
           {basicAttacks.map((item, index) => {
+            console.log(item.attackInput.button);
             return <MoveBox attack={item} iconSet={iconSet} key={index.toString()} />;
           })}
         </View>

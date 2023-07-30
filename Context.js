@@ -11,11 +11,7 @@ const MyProvider = ({ children }) => {
   const [input, setInput] = useState(0);
   const [rosterData, setRosterData] = useState([]);
 
-  // Define the getIcon function here
   const getIcon = (inputValue) => {
-    // Icon logic based on the inputValue (inputDisplay) goes here
-    // Return the appropriate icon component
-    // For example:
     if (inputValue === 0) {
       const iconSet = {
         fp: <Feather name="square" size={24} color="white" />,
