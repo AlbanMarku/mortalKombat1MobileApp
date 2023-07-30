@@ -38,6 +38,9 @@ export default function MoveBox({ attack, iconSet, style }) {
     }
   };
 
+  const colorStyle =
+    onBlock >= 0 ? styles.green : onBlock <= -1 && onBlock >= -7 ? styles.yellow : styles.red;
+
   return (
     <View style={[styles.div, style]}>
       <View style={styles.butInfoDiv}>
@@ -49,14 +52,20 @@ export default function MoveBox({ attack, iconSet, style }) {
       </View>
       <View style={styles.butInfoDiv}>
         <View style={styles.inputDiv}>
-          <Text style={[styles.data, { marginRight: 7 }]}>{startup}</Text>
-          <Text style={styles.data}>{onBlock}</Text>
+          <Text
+            style={[styles.data, { marginRight: 20 }, startup <= 9 ? styles.green : styles.white]}
+          >
+            {startup}
+          </Text>
+          <Text style={[styles.data, colorStyle]}>{onBlock}</Text>
         </View>
         <Text style={styles.moveName}>{attackType}</Text>
       </View>
     </View>
   );
 }
+
+// style={index % 2 === 0 ? styles.evenItem : styles.oddItem}
 
 const styles = StyleSheet.create({
   div: {
@@ -85,6 +94,17 @@ const styles = StyleSheet.create({
   },
   data: {
     fontSize: 24,
+  },
+  green: {
+    color: 'green',
+  },
+  white: {
     color: 'white',
+  },
+  yellow: {
+    color: 'orange',
+  },
+  red: {
+    color: 'red',
   },
 });
