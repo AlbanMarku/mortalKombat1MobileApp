@@ -4,7 +4,7 @@ export default function BottomNav() {
   return (
     <View style={styles.bar}>
       <TouchableOpacity style={styles.item} onPress={() => console.log('clicker')}>
-        <Text style={styles.text}>item</Text>
+        <Text style={styles.text}>Frame Data</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.item} onPress={() => console.log('clicker')}>
         <Text style={styles.text}>item</Text>

@@ -1,7 +1,5 @@
 import { createContext, useState } from 'react';
-import { Feather } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { FontAwesome } from '@expo/vector-icons';
+import { MaterialCommunityIcons, FontAwesome, Feather } from '@expo/vector-icons';
 
 //If context requires more operations, make context file for each value instead of all together.
 
@@ -21,7 +19,13 @@ const MyProvider = ({ children }) => {
       };
       return iconSet;
     } else if (inputValue === 1) {
-      return 1;
+      const iconSet = {
+        // fp: <Icon icon="iconoir:xbox-x" />,
+        // bp: <Icon icon="iconoir:xbox-y" />,
+        // fk: <Icon icon="iconoir:xbox-a" />,
+        // bk: <Icon icon="iconoir:xbox-b" />,
+      };
+      return iconSet;
     } else {
       return 33;
     }

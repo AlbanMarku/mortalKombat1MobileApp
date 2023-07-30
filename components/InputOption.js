@@ -13,6 +13,8 @@ export default function InputOption() {
 
   const handleInput = (selectedInput) => {
     setInput(selectedInput);
+
+    console.log(selectedInput);
   };
 
   //Make selected option visible
