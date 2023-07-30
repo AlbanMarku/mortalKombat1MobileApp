@@ -10,7 +10,7 @@ const MyProvider = ({ children }) => {
   const [rosterData, setRosterData] = useState([]);
 
   const getIcon = (inputValue) => {
-    if (inputValue === 0) {
+    if (inputValue === 1) {
       const iconSet = {
         fp: (
           <Image
@@ -33,7 +33,7 @@ const MyProvider = ({ children }) => {
         ),
       };
       return iconSet;
-    } else if (inputValue === 1) {
+    } else if (inputValue === 2) {
       const iconSet = {
         fp: <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/xboxX.png')} />,
         bp: <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/xboxY.png')} />,
@@ -41,7 +41,7 @@ const MyProvider = ({ children }) => {
         bk: <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/xboxB.png')} />,
       };
       return iconSet;
-    } else if (inputValue === 2) {
+    } else if (inputValue === 3) {
       const iconSet = {
         fp: (
           <Image
@@ -69,7 +69,7 @@ const MyProvider = ({ children }) => {
         ),
       };
       return iconSet;
-    } else if (input == 3) {
+    } else if (input == 0) {
       const iconSet = {
         fp: <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/1.png')} />,
         bp: <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/2.png')} />,

@@ -3,6 +3,7 @@ import { useFonts } from 'expo-font';
 import { View } from 'react-native';
 import Kharacter from '../views/Kharacter';
 import DrawerStack from './DrawerStack';
+import HeaderComp from '../components/HeaderComp';
 
 //add box shadow
 
@@ -34,6 +35,7 @@ export default function MyStack() {
             animation: 'slide_from_right',
             gestureEnabled: true,
             gestureDirection: 'horizontal',
+            headerRight: () => <HeaderComp />,
           }}
         />
       </Stack.Navigator>
