@@ -14,16 +14,24 @@ export default function Home({ navigation }) {
   const [input, setInput, rosterData, setRosterData] = useContext(MyContext);
 
   const fetchRoster = async () => {
+    //fetch roster data. only get specified fields. parse image. data set as array to kharacter props.
     try {
       const queryData = await client.fetch(
-        "*[_type == 'kharacter']{ _id, name, avatar, basicAttacks }"
+        "*[_type == 'kharacter']{ _id, name, avatar, profile, basicAttacks[]{..., attackType->{name}}}"
       );
 
       const extractedData = queryData.map((item) => {
-        const parsedImg = urlFor(item.avatar.asset._ref);
-        return { name: item.name, img: parsedImg.url(), basicAttacks: item.basicAttacks };
+        const parsedAvatarImg = urlFor(item.avatar.asset._ref);
+        const parsedProfileImg = urlFor(item.profile.asset._ref);
+        return {
+          name: item.name,
+          img: parsedAvatarImg.url(),
+          profile: parsedProfileImg.url(),
+          basicAttacks: item.basicAttacks,
+        };
       });
       setRosterData(extractedData);
+      // console.log(extractedData[0].basicAttacks[0].attackType.name);
     } catch (err) {
       console.log(err);
     }
@@ -74,6 +82,7 @@ export default function Home({ navigation }) {
             img={item.img}
             name={item.name ? item.name : 'unknown name'}
             basicAttacks={item.basicAttacks}
+            profile={item.profile}
           />
         ))}
       </View>
