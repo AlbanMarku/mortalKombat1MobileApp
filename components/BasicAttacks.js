@@ -32,9 +32,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   evenItem: {
-    backgroundColor: '#1c1b1b',
+    backgroundColor: '#333232',
   },
   oddItem: {
-    backgroundColor: '#303030',
+    backgroundColor: '#4a4949',
   },
 });

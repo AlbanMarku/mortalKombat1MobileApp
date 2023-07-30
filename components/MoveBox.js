@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet } from 'react-native';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
 
 export default function MoveBox({ attack, iconSet, style }) {
   const direction = attack.attackInput.direction;
@@ -25,13 +25,13 @@ export default function MoveBox({ attack, iconSet, style }) {
   const directionComp = () => {
     switch (direction) {
       case 4:
-        return <FontAwesome5 name="arrow-left" size={24} color="white" />;
+        return <Entypo name="arrow-bold-left" size={32} color="white" />;
 
       case 6:
-        return <FontAwesome5 name="arrow-right" size={24} color="white" />;
+        return <Entypo name="arrow-bold-right" size={32} color="white" />;
 
       case 2:
-        return <FontAwesome5 name="arrow-down" size={24} color="white" />;
+        return <Entypo name="arrow-bold-down" size={32} color="white" />;
 
       default:
         return null;
@@ -65,8 +65,6 @@ export default function MoveBox({ attack, iconSet, style }) {
   );
 }
 
-// style={index % 2 === 0 ? styles.evenItem : styles.oddItem}
-
 const styles = StyleSheet.create({
   div: {
     justifyContent: 'space-between',
@@ -85,7 +83,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   but: {
-    marginRight: 7,
+    marginRight: 2,
   },
   moveName: {
     fontSize: 18,
@@ -94,12 +92,13 @@ const styles = StyleSheet.create({
   },
   data: {
     fontSize: 24,
+    color: 'white',
   },
   green: {
     color: 'green',
   },
-  white: {
-    color: 'white',
+  black: {
+    color: 'black',
   },
   yellow: {
     color: 'orange',
