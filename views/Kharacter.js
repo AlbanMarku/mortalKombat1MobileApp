@@ -12,7 +12,6 @@ import { MyContext } from '../Context';
 export default function Kharacter({ route, navigation }) {
   const { name, img, profile, basicAttacks } = route.params;
   const [input, setInput, rosterData, setRosterData, getIcon] = useContext(MyContext);
-
   const iconSet = getIcon(input);
   return (
     <View style={[globalStyles.color, { flex: 1 }]}>
@@ -22,12 +21,18 @@ export default function Kharacter({ route, navigation }) {
           <Image style={{ height: 300, width: 300 }} source={{ uri: profile }} />
         </View>
         <Title name={'Frame Data'} />
-        <View style={styles.moveList}>
+        <ScrollView nestedScrollEnabled style={styles.moveList}>
           {basicAttacks.map((item, index) => {
-            console.log(item.attackInput.button);
-            return <MoveBox attack={item} iconSet={iconSet} key={index.toString()} />;
+            return (
+              <MoveBox
+                attack={item}
+                iconSet={iconSet}
+                style={index % 2 === 0 ? styles.evenItem : styles.oddItem}
+                key={index.toString()}
+              />
+            );
           })}
-        </View>
+        </ScrollView>
       </ScrollView>
       <BottomNav />
     </View>
@@ -38,22 +43,13 @@ const styles = StyleSheet.create({
   imageDiv: {
     alignItems: 'center',
   },
-  moveList: {},
+  moveList: {
+    minHeight: 400,
+  },
+  evenItem: {
+    backgroundColor: '#1c1b1b',
+  },
+  oddItem: {
+    backgroundColor: '#303030',
+  },
 });
-
-//  <View>
-//             {basicAttacks.map((item) => {
-//               const dir = item.attackInput.direction;
-//               const but = item.attackInput.button;
-//               if (dir == 5) {
-//                 return <Text>{but}</Text>;
-//               } else {
-//                 return (
-//                   <Text>
-//                     {dir}
-//                     {but}
-//                   </Text>
-//                 );
-//               }
-//             })}
-//           </View>

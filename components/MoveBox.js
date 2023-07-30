@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 
-export default function MoveBox({ attack, iconSet }) {
+export default function MoveBox({ attack, iconSet, style }) {
   const direction = attack.attackInput.direction;
   const input = attack.attackInput.button;
   const name = attack.attackName;
@@ -39,7 +39,7 @@ export default function MoveBox({ attack, iconSet }) {
   };
 
   return (
-    <View style={styles.div}>
+    <View style={[styles.div, style]}>
       <View style={styles.butInfoDiv}>
         <View style={styles.inputDiv}>
           <View style={styles.but}>{directionComp()}</View>
@@ -49,7 +49,7 @@ export default function MoveBox({ attack, iconSet }) {
       </View>
       <View style={styles.butInfoDiv}>
         <View style={styles.inputDiv}>
-          <Text style={styles.data}>{startup}</Text>
+          <Text style={[styles.data, { marginRight: 7 }]}>{startup}</Text>
           <Text style={styles.data}>{onBlock}</Text>
         </View>
         <Text style={styles.moveName}>{attackType}</Text>
@@ -85,7 +85,6 @@ const styles = StyleSheet.create({
   },
   data: {
     fontSize: 24,
-    marginRight: 7,
     color: 'white',
   },
 });
