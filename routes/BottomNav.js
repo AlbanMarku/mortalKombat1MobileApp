@@ -1,13 +1,13 @@
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 
-export default function BottomNav() {
+export default function BottomNav({ setPage }) {
   return (
     <View style={styles.bar}>
-      <TouchableOpacity style={styles.item} onPress={() => console.log('clicker')}>
+      <TouchableOpacity style={styles.item} onPress={() => setPage(0)}>
         <Text style={styles.text}>Frame Data</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.item} onPress={() => console.log('clicker')}>
-        <Text style={styles.text}>item</Text>
+      <TouchableOpacity style={styles.item} onPress={() => setPage(1)}>
+        <Text style={styles.text}>Guide</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.item} onPress={() => console.log('clicker')}>
         <Text style={styles.text}>item</Text>
