@@ -57,7 +57,7 @@ export default function MoveBox({ attack, iconSet, style }) {
   const colorStyle =
     detailedInfo.blockAdv >= 0
       ? styles.green
-      : detailedInfo.onBlock <= -1 && detailedInfo.onBlock >= -7
+      : detailedInfo.blockAdv <= -1 && detailedInfo.blockAdv >= -7
       ? styles.yellow
       : styles.red;
 
