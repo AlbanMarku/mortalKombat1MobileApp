@@ -1,30 +1,35 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
+import StatBox from './StatBox';
 
 export default function ModalComp({ setOpenModal, detailedInfo }) {
   const handlePress = () => {
     setOpenModal(false);
   };
   return (
-    <View style={{ flex: 1, backgroundColor: 'red' }}>
-      <TouchableOpacity onPress={handlePress}>
-        <View style={styles.bar}>
-          <Text>{detailedInfo.name}</Text>
-          <AntDesign style={styles.arrow} name="down" size={24} color="black" />
+    <View style={{ flex: 1, backgroundColor: 'black' }}>
+      <View>
+        <TouchableOpacity style={{ marginBottom: 10 }} onPress={handlePress}>
+          <View style={styles.bar}>
+            <Text>{detailedInfo.name}</Text>
+            <AntDesign style={styles.arrow} name="down" size={24} color="black" />
+          </View>
+        </TouchableOpacity>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+          <StatBox name={'Damage'} stat={detailedInfo.damageHit} />
+          <StatBox name={'Block Damage'} stat={detailedInfo.damageBlock} />
+          <StatBox name={'Attack Type'} stat={detailedInfo.attackType} />
         </View>
-      </TouchableOpacity>
-      <View style={styles.container}></View>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: 'blue',
-  },
+  container: {},
   bar: {
-    backgroundColor: 'yellow',
-    height: '35%',
+    backgroundColor: 'white',
+    height: 35,
     justifyContent: 'center',
     alignItems: 'center',
   },
