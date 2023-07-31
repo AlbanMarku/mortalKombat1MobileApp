@@ -6,10 +6,20 @@ import ModalComp from './ModalComp';
 export default function MoveBox({ attack, iconSet, style }) {
   const direction = attack.attackInput.direction;
   const input = attack.attackInput.button;
-  const name = attack.attackName;
-  const attackType = attack.attackType.name;
-  const onBlock = attack.blockAdv;
-  const startup = attack.startup;
+  const detailedInfo = {
+    name: attack.attackName,
+    attackType: attack.attackType.name,
+    blockAdv: attack.blockAdv,
+    active: attack.active,
+    damageBlock: attack.damageBlock,
+    startup: attack.startup,
+    flawlessBlockAdv: attack.flawlessBlockAdv,
+    damageHit: attack.damageHit,
+    hitAdv: attack.hitAdv,
+    airOk: attack.airOk,
+  };
+
+  //Clean up code. Make div names clearer.
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -43,13 +53,17 @@ export default function MoveBox({ attack, iconSet, style }) {
   };
 
   const colorStyle =
-    onBlock >= 0 ? styles.green : onBlock <= -1 && onBlock >= -7 ? styles.yellow : styles.red;
+    detailedInfo.blockAdv >= 0
+      ? styles.green
+      : detailedInfo.onBlock <= -1 && detailedInfo.onBlock >= -7
+      ? styles.yellow
+      : styles.red;
 
   return (
     <View>
       <Modal transparent={true} animationType="slide" visible={openModal}>
         <View style={styles.modal}>
-          <ModalComp setOpenModal={setOpenModal} />
+          <ModalComp detailedInfo={detailedInfo} setOpenModal={setOpenModal} />
         </View>
       </Modal>
       <TouchableOpacity onPress={() => setOpenModal(true)} style={[styles.div, style]}>
@@ -58,18 +72,22 @@ export default function MoveBox({ attack, iconSet, style }) {
             <View style={styles.but}>{directionComp()}</View>
             <View style={styles.but}>{buttonComp()}</View>
           </View>
-          <Text style={styles.moveName}>{name}</Text>
+          <Text style={styles.moveName}>{detailedInfo.name}</Text>
         </View>
         <View style={styles.butInfoDiv}>
           <View style={styles.inputDiv}>
             <Text
-              style={[styles.data, { marginRight: 20 }, startup <= 9 ? styles.green : styles.white]}
+              style={[
+                styles.data,
+                { marginRight: 20 },
+                detailedInfo.startup <= 9 ? styles.green : styles.white,
+              ]}
             >
-              {startup}
+              {detailedInfo.startup}
             </Text>
-            <Text style={[styles.data, colorStyle]}>{onBlock}</Text>
+            <Text style={[styles.data, colorStyle]}>{detailedInfo.blockAdv}</Text>
           </View>
-          <Text style={styles.moveName}>{attackType}</Text>
+          <Text style={styles.moveName}>{detailedInfo.attackType}</Text>
         </View>
       </TouchableOpacity>
     </View>
