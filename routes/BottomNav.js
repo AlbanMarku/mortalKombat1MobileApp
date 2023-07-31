@@ -1,12 +1,17 @@
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-export default function BottomNav({ setPage }) {
+export default function BottomNav({ setPage, basicAttacks }) {
+  const navigation = useNavigation();
   return (
     <View style={styles.bar}>
       <TouchableOpacity style={styles.item} onPress={() => setPage(0)}>
         <Text style={styles.text}>Frame Data</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.item} onPress={() => setPage(1)}>
+      <TouchableOpacity
+        style={styles.item}
+        onPress={() => navigation.navigate('FrameData', { basicAttacks })}
+      >
         <Text style={styles.text}>Guide</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.item} onPress={() => console.log('clicker')}>

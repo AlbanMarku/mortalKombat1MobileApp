@@ -7,18 +7,20 @@ import { ScrollView } from 'react-native-gesture-handler';
 import BasicMoves from './BasicMoves';
 import StringMoves from './StringMoves';
 import SpecialMoves from './SpecialMoves';
+import { globalStyles } from '../styles/global';
 
-export default function BasicAttacks({ basicAttacks }) {
+export default function BasicAttacks({ route, navigation }) {
   const [input, setInput, rosterData, setRosterData, getIcon] = useContext(MyContext);
   const [dataPage, setDataPage] = useState(0);
   const iconSet = getIcon(input);
+  const { basicAttacks } = route.params;
 
   const handlePress = (pageValue) => {
     setDataPage(pageValue);
   };
 
   return (
-    <View>
+    <View style={[globalStyles.color, { flex: 1 }]}>
       <Title name={'Frame Data'} />
       <View style={styles.optionsContainer}>
         <TouchableOpacity onPress={() => handlePress(0)}>
@@ -31,7 +33,7 @@ export default function BasicAttacks({ basicAttacks }) {
           <Text style={[styles.optionText, dataPage === 2 && styles.selectedOption]}>Specials</Text>
         </TouchableOpacity>
       </View>
-      <View>
+      <View style={{ flex: 1 }}>
         {dataPage === 0 ? (
           <BasicMoves basicAttacks={basicAttacks} iconSet={iconSet} />
         ) : dataPage === 1 ? (
