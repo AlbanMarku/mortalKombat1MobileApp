@@ -3,7 +3,7 @@ import BottomNav from '../routes/BottomNav';
 import { ScrollView } from 'react-native-gesture-handler';
 import { globalStyles } from '../styles/global';
 import Title from '../components/Title';
-import BasicAttacks from '../components/BasicAttacks';
+import FrameData from '../components/FrameData';
 import { useState } from 'react';
 import KharacterGuide from '../components/KharacterGuide';
 //use props to populate data. neutral input only render button.
@@ -20,7 +20,7 @@ export default function Kharacter({ route, navigation }) {
           <Image style={{ height: 300, width: 300 }} source={{ uri: profile }} />
         </View>
         {page === 0 ? (
-          <BasicAttacks basicAttacks={basicAttacks} />
+          <FrameData basicAttacks={basicAttacks} />
         ) : page === 1 ? (
           <KharacterGuide />
         ) : null}
