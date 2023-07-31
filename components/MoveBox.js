@@ -1,7 +1,7 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 
-export default function MoveBox({ attack, iconSet, style }) {
+export default function MoveBox({ attack, iconSet, style, setOpenModal }) {
   const direction = attack.attackInput.direction;
   const input = attack.attackInput.button;
   const name = attack.attackName;
@@ -38,11 +38,15 @@ export default function MoveBox({ attack, iconSet, style }) {
     }
   };
 
+  const handlePress = () => {
+    setOpenModal(true);
+  };
+
   const colorStyle =
     onBlock >= 0 ? styles.green : onBlock <= -1 && onBlock >= -7 ? styles.yellow : styles.red;
 
   return (
-    <View style={[styles.div, style]}>
+    <TouchableOpacity onPress={handlePress} style={[styles.div, style]}>
       <View style={styles.butInfoDiv}>
         <View style={styles.inputDiv}>
           <View style={styles.but}>{directionComp()}</View>
@@ -61,7 +65,7 @@ export default function MoveBox({ attack, iconSet, style }) {
         </View>
         <Text style={styles.moveName}>{attackType}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 
