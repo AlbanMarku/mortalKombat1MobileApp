@@ -20,7 +20,7 @@ export default function BasicAttacks({ route, navigation }) {
   };
 
   return (
-    <View style={globalStyles.color}>
+    <View style={[globalStyles.color, { flex: 1 }]}>
       <Title name={'Frame Data'} />
       <View style={styles.optionsContainer}>
         <TouchableOpacity onPress={() => handlePress(0)}>
@@ -33,7 +33,7 @@ export default function BasicAttacks({ route, navigation }) {
           <Text style={[styles.optionText, dataPage === 2 && styles.selectedOption]}>Specials</Text>
         </TouchableOpacity>
       </View>
-      <View>
+      <View style={{ flex: 1 }}>
         {dataPage === 0 ? (
           <BasicMoves basicAttacks={basicAttacks} iconSet={iconSet} />
         ) : dataPage === 1 ? (

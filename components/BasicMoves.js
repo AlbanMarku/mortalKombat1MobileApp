@@ -15,11 +15,9 @@ export default function BasicMoves({ basicAttacks, iconSet }) {
   return (
     <View style={{}}>
       <FlatList
-        initialNumToRender={3}
         data={basicAttacks}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
-        contentContainerStyle={{ paddingBottom: 250 }} //super janky.
       />
     </View>
   );
