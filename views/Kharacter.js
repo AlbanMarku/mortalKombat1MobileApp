@@ -3,7 +3,6 @@ import BottomNav from '../routes/BottomNav';
 import { ScrollView } from 'react-native-gesture-handler';
 import { globalStyles } from '../styles/global';
 import Title from '../components/Title';
-import FrameData from '../components/FrameData';
 import { useState } from 'react';
 import KharacterGuide from '../components/KharacterGuide';
 //use props to populate data. neutral input only render button.

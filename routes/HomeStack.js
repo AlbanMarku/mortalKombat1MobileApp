@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import Kharacter from '../views/Kharacter';
 import DrawerStack from './DrawerStack';
 import HeaderComp from '../components/HeaderComp';
-import FrameData from '../components/FrameData';
+import FrameData from '../views/FrameData';
 
 //add box shadow
 

@@ -1,9 +1,7 @@
-import { View, Text, StyleSheet, FlatList, Dimensions } from 'react-native';
+import { View, StyleSheet, FlatList } from 'react-native';
 import MoveBox from './MoveBox';
 
 export default function BasicMoves({ basicAttacks, iconSet }) {
-  const screenHeight = Dimensions.get('screen').height;
-
   const renderItem = ({ item, index }) => (
     <MoveBox
       attack={item}

@@ -1,4 +1,4 @@
-import { StyleSheet, Modal, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import InputOption from './InputOption';
 
 export default function HeaderComp() {

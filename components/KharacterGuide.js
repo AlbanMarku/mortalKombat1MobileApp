@@ -1,6 +1,5 @@
-import { View, Text } from 'react-native';
+import { Text, ScrollView } from 'react-native';
 import Title from './Title';
-import { ScrollView } from 'react-native-gesture-handler';
 
 export default function KharacterGuide() {
   return (

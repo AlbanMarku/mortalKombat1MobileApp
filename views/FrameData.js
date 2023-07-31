@@ -1,14 +1,13 @@
-import { View, StyleSheet, Modal, Text, TouchableOpacity, FlatList } from 'react-native';
-import MoveBox from './MoveBox';
-import Title from './Title';
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { useFonts } from 'expo-font';
 import { useContext, useState } from 'react';
 import { MyContext } from '../Context';
-import { ScrollView } from 'react-native-gesture-handler';
-import BasicMoves from './BasicMoves';
-import StringMoves from './StringMoves';
-import SpecialMoves from './SpecialMoves';
+import BasicMoves from '../components/BasicMoves';
+import StringMoves from '../components/StringMoves';
+import SpecialMoves from '../components/SpecialMoves';
 import { globalStyles } from '../styles/global';
-import { useFonts } from 'expo-font';
+
+import Title from '../components/Title';
 
 export default function BasicAttacks({ route, navigation }) {
   const [input, setInput, rosterData, setRosterData, getIcon] = useContext(MyContext);
