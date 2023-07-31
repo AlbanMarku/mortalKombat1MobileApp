@@ -8,12 +8,14 @@ import BasicMoves from './BasicMoves';
 import StringMoves from './StringMoves';
 import SpecialMoves from './SpecialMoves';
 import { globalStyles } from '../styles/global';
+import { useFonts } from 'expo-font';
 
 export default function BasicAttacks({ route, navigation }) {
   const [input, setInput, rosterData, setRosterData, getIcon] = useContext(MyContext);
   const [dataPage, setDataPage] = useState(0);
   const iconSet = getIcon(input);
   const { basicAttacks } = route.params;
+  useFonts({ mk11: require('../assets/fonts/mk11Reg.otf') });
 
   const handlePress = (pageValue) => {
     setDataPage(pageValue);
@@ -57,6 +59,7 @@ const styles = StyleSheet.create({
   optionText: {
     color: 'white',
     fontSize: 18,
+    fontFamily: 'mk11',
   },
   selectedOption: {
     color: 'orange',

@@ -6,16 +6,16 @@ export default function BottomNav({ setPage, basicAttacks }) {
   return (
     <View style={styles.bar}>
       <TouchableOpacity style={styles.item} onPress={() => setPage(0)}>
-        <Text style={styles.text}>Frame Data</Text>
+        <Text style={styles.text}>Guide</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.item}
         onPress={() => navigation.navigate('FrameData', { basicAttacks })}
       >
-        <Text style={styles.text}>Guide</Text>
+        <Text style={styles.text}>Frame Data</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.item} onPress={() => console.log('clicker')}>
-        <Text style={styles.text}>item</Text>
+        <Text style={styles.text}>Favorites?</Text>
       </TouchableOpacity>
     </View>
   );
