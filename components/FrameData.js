@@ -7,26 +7,20 @@ import { ScrollView } from 'react-native-gesture-handler';
 import BasicMoves from './BasicMoves';
 import StringMoves from './StringMoves';
 import SpecialMoves from './SpecialMoves';
+import { globalStyles } from '../styles/global';
 
-export default function BasicAttacks({ basicAttacks }) {
+export default function BasicAttacks({ route, navigation }) {
   const [input, setInput, rosterData, setRosterData, getIcon] = useContext(MyContext);
   const [dataPage, setDataPage] = useState(0);
   const iconSet = getIcon(input);
+  const { basicAttacks } = route.params;
 
   const handlePress = (pageValue) => {
     setDataPage(pageValue);
   };
-  const renderItem = ({ item, index }) => (
-    <MoveBox
-      attack={item}
-      iconSet={iconSet}
-      style={index % 2 === 0 ? styles.evenItem : styles.oddItem}
-      key={index.toString()}
-    />
-  );
 
   return (
-    <View>
+    <View style={globalStyles.color}>
       <Title name={'Frame Data'} />
       <View style={styles.optionsContainer}>
         <TouchableOpacity onPress={() => handlePress(0)}>
@@ -41,7 +35,7 @@ export default function BasicAttacks({ basicAttacks }) {
       </View>
       <View>
         {dataPage === 0 ? (
-          <BasicMoves basicAttacks={basicAttacks} iconSet={iconSet} renderItem={renderItem} />
+          <BasicMoves basicAttacks={basicAttacks} iconSet={iconSet} />
         ) : dataPage === 1 ? (
           <StringMoves />
         ) : dataPage === 2 ? (
