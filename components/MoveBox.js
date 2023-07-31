@@ -13,6 +13,8 @@ export default function MoveBox({ attack, iconSet, style }) {
     active: attack.active,
     damageBlock: attack.damageBlock,
     startup: attack.startup,
+    recovery: attack.recovery,
+    cancelAdv: attack.cancelAdv,
     flawlessBlockAdv: attack.flawlessBlockAdv,
     damageHit: attack.damageHit,
     hitAdv: attack.hitAdv,
