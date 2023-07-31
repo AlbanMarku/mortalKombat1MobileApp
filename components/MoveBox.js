@@ -1,13 +1,17 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal } from 'react-native';
+import { useState } from 'react';
 import { Entypo } from '@expo/vector-icons';
+import ModalComp from './ModalComp';
 
-export default function MoveBox({ attack, iconSet, style, setOpenModal }) {
+export default function MoveBox({ attack, iconSet, style }) {
   const direction = attack.attackInput.direction;
   const input = attack.attackInput.button;
   const name = attack.attackName;
   const attackType = attack.attackType.name;
   const onBlock = attack.blockAdv;
   const startup = attack.startup;
+
+  const [openModal, setOpenModal] = useState(false);
 
   const buttonComp = () => {
     switch (input) {
@@ -38,34 +42,37 @@ export default function MoveBox({ attack, iconSet, style, setOpenModal }) {
     }
   };
 
-  const handlePress = () => {
-    setOpenModal(true);
-  };
-
   const colorStyle =
     onBlock >= 0 ? styles.green : onBlock <= -1 && onBlock >= -7 ? styles.yellow : styles.red;
 
   return (
-    <TouchableOpacity onPress={handlePress} style={[styles.div, style]}>
-      <View style={styles.butInfoDiv}>
-        <View style={styles.inputDiv}>
-          <View style={styles.but}>{directionComp()}</View>
-          <View style={styles.but}>{buttonComp()}</View>
+    <View>
+      <Modal transparent={true} animationType="slide" visible={openModal}>
+        <View style={styles.modal}>
+          <ModalComp setOpenModal={setOpenModal} />
         </View>
-        <Text style={styles.moveName}>{name}</Text>
-      </View>
-      <View style={styles.butInfoDiv}>
-        <View style={styles.inputDiv}>
-          <Text
-            style={[styles.data, { marginRight: 20 }, startup <= 9 ? styles.green : styles.white]}
-          >
-            {startup}
-          </Text>
-          <Text style={[styles.data, colorStyle]}>{onBlock}</Text>
+      </Modal>
+      <TouchableOpacity onPress={() => setOpenModal(true)} style={[styles.div, style]}>
+        <View style={styles.butInfoDiv}>
+          <View style={styles.inputDiv}>
+            <View style={styles.but}>{directionComp()}</View>
+            <View style={styles.but}>{buttonComp()}</View>
+          </View>
+          <Text style={styles.moveName}>{name}</Text>
         </View>
-        <Text style={styles.moveName}>{attackType}</Text>
-      </View>
-    </TouchableOpacity>
+        <View style={styles.butInfoDiv}>
+          <View style={styles.inputDiv}>
+            <Text
+              style={[styles.data, { marginRight: 20 }, startup <= 9 ? styles.green : styles.white]}
+            >
+              {startup}
+            </Text>
+            <Text style={[styles.data, colorStyle]}>{onBlock}</Text>
+          </View>
+          <Text style={styles.moveName}>{attackType}</Text>
+        </View>
+      </TouchableOpacity>
+    </View>
   );
 }
 
@@ -97,6 +104,11 @@ const styles = StyleSheet.create({
   data: {
     fontSize: 24,
     color: 'white',
+  },
+  modal: {
+    marginTop: 'auto',
+    minHeight: 300,
+    height: '30%',
   },
   green: {
     color: 'green',
