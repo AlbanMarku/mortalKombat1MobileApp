@@ -8,7 +8,7 @@ import KharacterGuide from '../components/KharacterGuide';
 //use props to populate data. neutral input only render button.
 
 export default function Kharacter({ route, navigation }) {
-  const { name, img, profile, basicAttacks } = route.params;
+  const { name, img, profile, basicAttacks, stringAttacks } = route.params;
   const [page, setPage] = useState(0);
 
   return (
@@ -20,7 +20,7 @@ export default function Kharacter({ route, navigation }) {
         </View>
         <KharacterGuide />
       </ScrollView>
-      <BottomNav setPage={setPage} basicAttacks={basicAttacks} />
+      <BottomNav setPage={setPage} basicAttacks={basicAttacks} stringAttacks={stringAttacks} />
     </View>
   );
 }

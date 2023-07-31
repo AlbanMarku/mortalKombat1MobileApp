@@ -17,7 +17,7 @@ export default function Home({ navigation }) {
     //fetch roster data. only get specified fields. parse image. data set as array to kharacter props.
     try {
       const queryData = await client.fetch(
-        "*[_type == 'kharacter']{ _id, name, avatar, profile, basicAttacks[]{..., attackType->{name}}}"
+        "*[_type == 'kharacter']{ _id, name, avatar, profile,basicAttacks[]{..., attackType->{name}},stringAttacks[]{..., attackType->{name}}}"
       );
 
       const extractedData = queryData.map((item) => {
@@ -28,6 +28,7 @@ export default function Home({ navigation }) {
           img: parsedAvatarImg.url(),
           profile: parsedProfileImg.url(),
           basicAttacks: item.basicAttacks,
+          stringAttacks: item.stringAttacks,
         };
       });
       setRosterData(extractedData);
@@ -81,6 +82,7 @@ export default function Home({ navigation }) {
             img={item.img}
             name={item.name ? item.name : 'unknown name'}
             basicAttacks={item.basicAttacks}
+            stringAttacks={item.stringAttacks}
             profile={item.profile}
           />
         ))}

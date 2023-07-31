@@ -6,14 +6,13 @@ import BasicMoves from '../components/BasicMoves';
 import StringMoves from '../components/StringMoves';
 import SpecialMoves from '../components/SpecialMoves';
 import { globalStyles } from '../styles/global';
-
 import Title from '../components/Title';
 
 export default function BasicAttacks({ route, navigation }) {
+  const { basicAttacks, stringAttacks } = route.params;
   const [input, setInput, rosterData, setRosterData, getIcon] = useContext(MyContext);
   const [dataPage, setDataPage] = useState(0);
   const iconSet = getIcon(input);
-  const { basicAttacks } = route.params;
   useFonts({ mk11: require('../assets/fonts/mk11Reg.otf') });
 
   const handlePress = (pageValue) => {
@@ -22,7 +21,7 @@ export default function BasicAttacks({ route, navigation }) {
 
   return (
     <View style={[globalStyles.color, { flex: 1 }]}>
-      <Title name={'Frame Data'} />
+      <Title name={'Frame Data'} underline />
       <View style={styles.optionsContainer}>
         <TouchableOpacity onPress={() => handlePress(0)}>
           <Text style={[styles.optionText, dataPage === 0 && styles.selectedOption]}>Buttons</Text>
@@ -38,7 +37,7 @@ export default function BasicAttacks({ route, navigation }) {
         {dataPage === 0 ? (
           <BasicMoves basicAttacks={basicAttacks} iconSet={iconSet} />
         ) : dataPage === 1 ? (
-          <StringMoves />
+          <StringMoves stringAttacks={stringAttacks} iconSet={iconSet} />
         ) : dataPage === 2 ? (
           <SpecialMoves />
         ) : null}
@@ -52,8 +51,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     flexDirection: 'row',
     padding: 15,
-    borderTopWidth: 1,
-    borderTopColor: 'white',
   },
   optionText: {
     color: 'white',

@@ -1,11 +1,13 @@
 import { StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-export default function KharacterAvatar({ name, img, profile, basicAttacks }) {
+export default function KharacterAvatar({ name, img, profile, basicAttacks, stringAttacks }) {
   const navigation = useNavigation();
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate('Kharacter', { name, img, profile, basicAttacks })}
+      onPress={() =>
+        navigation.navigate('Kharacter', { name, img, profile, basicAttacks, stringAttacks })
+      }
       style={styles.box}
     >
       <Image

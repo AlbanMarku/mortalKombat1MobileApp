@@ -1,7 +1,7 @@
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-export default function BottomNav({ setPage, basicAttacks }) {
+export default function BottomNav({ setPage, basicAttacks, stringAttacks }) {
   const navigation = useNavigation();
   return (
     <View style={styles.bar}>
@@ -10,7 +10,7 @@ export default function BottomNav({ setPage, basicAttacks }) {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.item}
-        onPress={() => navigation.navigate('FrameData', { basicAttacks })}
+        onPress={() => navigation.navigate('FrameData', { basicAttacks, stringAttacks })}
       >
         <Text style={styles.text}>Frame Data</Text>
       </TouchableOpacity>

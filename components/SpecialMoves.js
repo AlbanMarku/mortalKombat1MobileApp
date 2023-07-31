@@ -1,5 +1,6 @@
-import { Text } from 'react-native';
+import { Text, View, FlatList } from 'react-native';
+import MoveBox from './MoveBox';
 
-export default function SpecialMoves() {
-  return <Text>I am specials screen</Text>;
+export default function SpecialMoves({}) {
+  return <Text>hi</Text>;
 }
