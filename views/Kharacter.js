@@ -19,13 +19,9 @@ export default function Kharacter({ route, navigation }) {
         <View style={styles.imageDiv}>
           <Image style={{ height: 300, width: 300 }} source={{ uri: profile }} />
         </View>
-        {page === 0 ? (
-          <FrameData basicAttacks={basicAttacks} />
-        ) : page === 1 ? (
-          <KharacterGuide />
-        ) : null}
+        <KharacterGuide />
       </ScrollView>
-      <BottomNav setPage={setPage} />
+      <BottomNav setPage={setPage} basicAttacks={basicAttacks} />
     </View>
   );
 }

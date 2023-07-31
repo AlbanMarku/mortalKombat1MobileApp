@@ -4,6 +4,7 @@ import { View } from 'react-native';
 import Kharacter from '../views/Kharacter';
 import DrawerStack from './DrawerStack';
 import HeaderComp from '../components/HeaderComp';
+import FrameData from '../components/FrameData';
 
 //add box shadow
 
@@ -33,6 +34,17 @@ export default function MyStack() {
           options={{
             headerShown: true,
             animation: 'slide_from_right',
+            gestureEnabled: true,
+            gestureDirection: 'horizontal',
+            headerRight: () => <HeaderComp />,
+          }}
+        />
+        <Stack.Screen
+          name="FrameData"
+          component={FrameData}
+          options={{
+            headerShown: true,
+            animation: 'slide_from_bottom',
             gestureEnabled: true,
             gestureDirection: 'horizontal',
             headerRight: () => <HeaderComp />,

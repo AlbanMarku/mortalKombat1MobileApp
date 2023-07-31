@@ -1,23 +1,19 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, FlatList } from 'react-native';
 import MoveBox from './MoveBox';
 
-export default function BasicMoves({ basicAttacks, iconSet }) {
+export default function BasicMoves({ basicAttacks, iconSet, renderItem }) {
   return (
-    <View style={styles.moveList}>
-      {basicAttacks.map((item, index) => {
-        return (
-          <MoveBox
-            attack={item}
-            iconSet={iconSet}
-            style={index % 2 === 0 ? styles.evenItem : styles.oddItem}
-            key={index.toString()}
-          />
-        );
-      })}
+    <View>
+      <FlatList
+        initialNumToRender={3}
+        data={basicAttacks}
+        renderItem={renderItem}
+        keyExtractor={(item, index) => index.toString()}
+        contentContainerStyle={styles.moveList}
+      />
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   moveList: {
     marginBottom: 50,

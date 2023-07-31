@@ -16,6 +16,14 @@ export default function BasicAttacks({ basicAttacks }) {
   const handlePress = (pageValue) => {
     setDataPage(pageValue);
   };
+  const renderItem = ({ item, index }) => (
+    <MoveBox
+      attack={item}
+      iconSet={iconSet}
+      style={index % 2 === 0 ? styles.evenItem : styles.oddItem}
+      key={index.toString()}
+    />
+  );
 
   return (
     <View>
@@ -33,7 +41,7 @@ export default function BasicAttacks({ basicAttacks }) {
       </View>
       <View>
         {dataPage === 0 ? (
-          <BasicMoves basicAttacks={basicAttacks} iconSet={iconSet} />
+          <BasicMoves basicAttacks={basicAttacks} iconSet={iconSet} renderItem={renderItem} />
         ) : dataPage === 1 ? (
           <StringMoves />
         ) : dataPage === 2 ? (
