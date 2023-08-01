@@ -1,17 +1,15 @@
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { useFonts } from 'expo-font';
 import { useContext, useState } from 'react';
 import { MyContext } from '../Context';
 import MoveList from '../components/MoveList';
 import { globalStyles } from '../styles/global';
 import Title from '../components/Title';
 
-export default function BasicAttacks({ route, navigation }) {
+export default function FrameData({ route, navigation }) {
   const { basicAttacks, stringAttacks, specialAttacks } = route.params;
   const [input, setInput, rosterData, setRosterData, getIcon] = useContext(MyContext);
   const [dataPage, setDataPage] = useState(0);
   const iconSet = getIcon(input);
-  useFonts({ mk11: require('../assets/fonts/mk11Reg.otf') });
 
   const handlePress = (pageValue) => {
     setDataPage(pageValue);

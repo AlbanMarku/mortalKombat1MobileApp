@@ -1,5 +1,4 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { useFonts } from 'expo-font';
 import Home from '../views/Home';
 import About from '../views/About';
 import HeaderComp from '../components/HeaderComp';
@@ -7,7 +6,6 @@ import HeaderComp from '../components/HeaderComp';
 const Drawer = createDrawerNavigator();
 
 export default function DrawerStack() {
-  useFonts({ mk11: require('../assets/fonts/mk11Reg.otf') });
   return (
     <Drawer.Navigator
       screenOptions={{

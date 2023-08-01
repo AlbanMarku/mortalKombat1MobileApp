@@ -1,11 +1,8 @@
 import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useFonts } from 'expo-font';
 
 //call func multiple times to make components with params.
 
 export default function LessonButtons() {
-  useFonts({ mk11: require('../assets/fonts/mk11Reg.otf') });
-
   const onPress = (title) => {
     console.log(title);
   };
