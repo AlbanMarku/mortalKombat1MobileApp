@@ -1,10 +1,11 @@
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, Modal } from 'react-native';
 import { useState } from 'react';
 import { Entypo } from '@expo/vector-icons';
 import ModalComp from './ModalComp';
 
 export default function KomboBox({ attack, iconSet, style }) {
   const kombo = attack.attackInputs;
+  const [openModal, setOpenModal] = useState(false);
 
   const detailedInfo = {
     name: attack.attackName,
@@ -50,45 +51,48 @@ export default function KomboBox({ attack, iconSet, style }) {
     }
   };
 
-  const colorStyle =
+  const colorStyleBlockAdv =
     detailedInfo.blockAdv >= 0
       ? styles.green
       : detailedInfo.blockAdv <= -1 && detailedInfo.blockAdv >= -7
       ? styles.yellow
       : styles.red;
 
-  return (
-    <TouchableOpacity style={[styles.div, style]}>
-      <View style={styles.buttonInfoContainer}>
-        <View style={styles.buttonIconsContainer}>
-          {kombo.map((item) => {
-            return (
-              <View style={styles.input} key={item.key}>
-                <View style={styles.but}>{directionComp(item.direction)}</View>
-                <View style={styles.but}>{buttonComp(item.button)}</View>
-              </View>
-            );
-          })}
-        </View>
-        <Text style={styles.moveName}>{detailedInfo.name}</Text>
-      </View>
+  const colorStyleBlockAdvStartup = detailedInfo.startup <= 9 ? styles.green : styles.white;
 
-      <View style={styles.dataInfoDiv}>
-        <View style={styles.dataDiv}>
-          <Text
-            style={[
-              styles.data,
-              { marginRight: 20 },
-              detailedInfo.startup <= 9 ? styles.green : styles.white,
-            ]}
-          >
-            {detailedInfo.startup}
-          </Text>
-          <Text style={[styles.data, colorStyle]}>{detailedInfo.blockAdv}</Text>
+  return (
+    <View>
+      <Modal transparent={true} animationType="slide" visible={openModal}>
+        <View style={styles.modal}>
+          <ModalComp detailedInfo={detailedInfo} setOpenModal={setOpenModal} />
         </View>
-        <Text style={styles.moveName}>{detailedInfo.attackType}</Text>
-      </View>
-    </TouchableOpacity>
+      </Modal>
+      <TouchableOpacity onPress={() => setOpenModal(true)} style={[styles.div, style]}>
+        <View style={styles.buttonInfoContainer}>
+          <View style={styles.buttonIconsContainer}>
+            {kombo.map((item) => {
+              return (
+                <View style={styles.input} key={item.key}>
+                  <View style={styles.but}>{directionComp(item.direction)}</View>
+                  <View style={styles.but}>{buttonComp(item.button)}</View>
+                </View>
+              );
+            })}
+          </View>
+          <Text style={styles.moveName}>{detailedInfo.name}</Text>
+        </View>
+
+        <View style={styles.dataInfoContainer}>
+          <View style={styles.dataDiv}>
+            <Text style={[styles.data, colorStyleBlockAdvStartup, { marginRight: 20 }]}>
+              {detailedInfo.startup}
+            </Text>
+            <Text style={[styles.data, colorStyleBlockAdv]}>{detailedInfo.blockAdv}</Text>
+          </View>
+          <Text style={styles.moveName}>{detailedInfo.attackType}</Text>
+        </View>
+      </TouchableOpacity>
+    </View>
   );
 }
 
@@ -120,7 +124,7 @@ const styles = StyleSheet.create({
   but: {
     marginRight: 2,
   },
-  dataInfoDiv: {
+  dataInfoContainer: {
     alignItems: 'center',
     justifyContent: 'center',
     padding: 5,
