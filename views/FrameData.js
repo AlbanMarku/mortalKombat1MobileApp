@@ -2,9 +2,7 @@ import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useFonts } from 'expo-font';
 import { useContext, useState } from 'react';
 import { MyContext } from '../Context';
-import BasicMoves from '../components/BasicMoves';
-import StringMoves from '../components/StringMoves';
-import SpecialMoves from '../components/SpecialMoves';
+import MoveList from '../components/MoveList';
 import { globalStyles } from '../styles/global';
 import Title from '../components/Title';
 
@@ -35,11 +33,11 @@ export default function BasicAttacks({ route, navigation }) {
       </View>
       <View style={{ flex: 1 }}>
         {dataPage === 0 ? (
-          <BasicMoves basicAttacks={basicAttacks} iconSet={iconSet} />
+          <MoveList attacks={basicAttacks} iconSet={iconSet} />
         ) : dataPage === 1 ? (
-          <StringMoves stringAttacks={stringAttacks} iconSet={iconSet} />
+          <MoveList attacks={stringAttacks} iconSet={iconSet} />
         ) : dataPage === 2 ? (
-          <SpecialMoves />
+          <Text>yo</Text>
         ) : null}
       </View>
     </View>

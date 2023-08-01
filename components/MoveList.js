@@ -1,10 +1,10 @@
 import { Text, View, StyleSheet, FlatList } from 'react-native';
-import KomboBox from './KomboBox';
+import MoveBox from './MoveBox';
 
-export default function StringMoves({ stringAttacks, iconSet }) {
+export default function MoveList({ attacks, iconSet }) {
   const renderItem = ({ item, index }) => {
     return (
-      <KomboBox
+      <MoveBox
         attack={item}
         iconSet={iconSet}
         style={index % 2 === 0 ? styles.evenItem : styles.oddItem}
@@ -15,7 +15,7 @@ export default function StringMoves({ stringAttacks, iconSet }) {
 
   return (
     <FlatList
-      data={stringAttacks}
+      data={attacks}
       renderItem={renderItem}
       keyExtractor={(arr, index) => index.toString()}
     />
