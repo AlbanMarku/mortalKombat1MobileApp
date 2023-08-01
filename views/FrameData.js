@@ -7,7 +7,7 @@ import { globalStyles } from '../styles/global';
 import Title from '../components/Title';
 
 export default function BasicAttacks({ route, navigation }) {
-  const { basicAttacks, stringAttacks } = route.params;
+  const { basicAttacks, stringAttacks, specialAttacks } = route.params;
   const [input, setInput, rosterData, setRosterData, getIcon] = useContext(MyContext);
   const [dataPage, setDataPage] = useState(0);
   const iconSet = getIcon(input);
@@ -37,7 +37,7 @@ export default function BasicAttacks({ route, navigation }) {
         ) : dataPage === 1 ? (
           <MoveList attacks={stringAttacks} iconSet={iconSet} />
         ) : dataPage === 2 ? (
-          <Text>yo</Text>
+          <MoveList attacks={specialAttacks} iconSet={iconSet} />
         ) : null}
       </View>
     </View>

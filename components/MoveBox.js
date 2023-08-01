@@ -32,6 +32,8 @@ export default function MoveBox({ attack, iconSet, style }) {
         return iconSet.fk;
       case 4:
         return iconSet.bk;
+      default:
+        null;
     }
   };
 
@@ -120,9 +122,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginRight: 5,
   },
-  but: {
-    marginRight: 2,
-  },
+  but: {},
   dataInfoContainer: {
     alignItems: 'center',
     justifyContent: 'center',
