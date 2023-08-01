@@ -11,13 +11,11 @@ export default function BasicMoves({ basicAttacks, iconSet }) {
     />
   );
   return (
-    <View style={{}}>
-      <FlatList
-        data={basicAttacks}
-        renderItem={renderItem}
-        keyExtractor={(item, index) => index.toString()}
-      />
-    </View>
+    <FlatList
+      data={basicAttacks}
+      renderItem={renderItem}
+      keyExtractor={(item, index) => index.toString()}
+    />
   );
 }
 const styles = StyleSheet.create({
