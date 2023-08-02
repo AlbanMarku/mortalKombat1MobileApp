@@ -69,7 +69,12 @@ export default function MoveBox({ attack, iconSet, style }) {
 
   return (
     <View>
-      <Modal transparent={true} animationType="slide" visible={openModal}>
+      <Modal
+        onRequestClose={() => setOpenModal(false)}
+        transparent={true}
+        animationType="slide"
+        visible={openModal}
+      >
         <View style={styles.modal}>
           <ModalComp detailedInfo={detailedInfo} setOpenModal={setOpenModal} />
         </View>
