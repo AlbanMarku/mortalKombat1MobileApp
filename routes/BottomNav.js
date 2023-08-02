@@ -2,6 +2,7 @@ import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 export default function BottomNav({ basicAttacks, stringAttacks, specialAttacks }) {
+  //Navbar comp with on click that navigates to screens. Drills attack info to FrameData screen.
   const navigation = useNavigation();
   return (
     <View style={styles.bar}>

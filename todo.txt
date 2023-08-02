@@ -1,4 +1,3 @@
-Frame data
-Chars
-Char details
-Fav info
+Guide
+Use imgs instead of icons for inputs.
+Khar guide

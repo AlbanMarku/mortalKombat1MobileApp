@@ -6,6 +6,7 @@ import { globalStyles } from '../styles/global';
 import Title from '../components/Title';
 
 export default function FrameData({ route, navigation }) {
+  //Conditionally render movelist components. Could be change to horizontal scrollview and render all three movelists at once.
   const { basicAttacks, stringAttacks, specialAttacks } = route.params;
   const [input, setInput, rosterData, setRosterData, getIcon] = useContext(MyContext);
   const [dataPage, setDataPage] = useState(0);

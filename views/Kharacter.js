@@ -7,10 +7,10 @@ import { useState, useEffect } from 'react';
 import KharacterGuide from '../components/KharacterGuide';
 import { client } from '../components/SanityClient';
 
-//use props to populate data. neutral input only render button.
+//Fetch attack info from name query. Props drilled to FrameData screen.
 
 export default function Kharacter({ route, navigation }) {
-  const { name, img, profile } = route.params;
+  const { name, profile } = route.params;
 
   const [basicAttacks, setBasicAttacks] = useState([]);
   const [stringAttacks, setStringAttacks] = useState([]);
@@ -19,7 +19,7 @@ export default function Kharacter({ route, navigation }) {
   const fetchAttackData = async () => {
     try {
       const queryData = await client.fetch(
-        "*[_type == 'kharacter']{ _id, basicAttacks[]{..., attackType->{name}},stringAttacks[]{..., attackType->{name}},basicAttacks[]{..., attackType->{name}},specialAttacks[]{...,attackType->{name}}}"
+        `*[_type == 'kharacter' && name== "${name}"]{ _id,name, basicAttacks[]{..., attackType->{name}},stringAttacks[]{..., attackType->{name}},basicAttacks[]{..., attackType->{name}},specialAttacks[]{...,attackType->{name}}}`
       );
 
       queryData.map((item) => {
@@ -35,7 +35,7 @@ export default function Kharacter({ route, navigation }) {
   useEffect(() => {
     fetchAttackData();
   }, []);
-
+  console.log(stringAttacks);
   return (
     <View style={[globalStyles.color, { flex: 1 }]}>
       <ScrollView>

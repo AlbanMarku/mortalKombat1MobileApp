@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 
 export default function KharacterAvatar({ name, img, profile }) {
   const navigation = useNavigation();
-
+  //Touchable box component. On press, navigate to stack screen "kharacter" and pass name and profile img props.
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate('Kharacter', { name, img, profile })}

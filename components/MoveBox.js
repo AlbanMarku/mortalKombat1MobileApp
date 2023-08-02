@@ -4,6 +4,7 @@ import { Entypo } from '@expo/vector-icons';
 import ModalComp from './ModalComp';
 
 export default function MoveBox({ attack, iconSet, style }) {
+  //Grab attackinputs array form the attack prop. Grab attack properties. Map through attackinputs array to display in div. In depth stats passed as props to modal.
   const kombo = attack.attackInputs;
   const [openModal, setOpenModal] = useState(false);
 
@@ -23,6 +24,7 @@ export default function MoveBox({ attack, iconSet, style }) {
   };
 
   const buttonComp = (button) => {
+    //Attack use NRS notation. Return icon depending on number.
     switch (button) {
       case 1:
         return iconSet.fp;
@@ -38,6 +40,7 @@ export default function MoveBox({ attack, iconSet, style }) {
   };
 
   const directionComp = (direction) => {
+    //Direction uses numpad notation. Return icon depending on number.
     switch (direction) {
       case 4:
         return <Entypo name="arrow-bold-left" size={32} color="white" />;
@@ -52,6 +55,8 @@ export default function MoveBox({ attack, iconSet, style }) {
         return null;
     }
   };
+
+  //If a the block/startup adv value is a certain range, apply color style.
 
   const colorStyleBlockAdv =
     detailedInfo.blockAdv >= 0

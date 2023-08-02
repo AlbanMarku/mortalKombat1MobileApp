@@ -14,14 +14,9 @@ export default function Home({ navigation }) {
   const [input, setInput, rosterData, setRosterData] = useContext(MyContext);
 
   const fetchRoster = async () => {
-    //fetch roster data. only get specified fields. parse image. data set as array to kharacter props.
+    //Fetch all karacters. Get their name, avatar, profile image. Map through each khacaracter and create touchable box.
     try {
-      // const queryData = await client.fetch(
-      //   "*[_type == 'kharacter']{ _id, name, avatar, profile,basicAttacks[]{..., attackType->{name}},stringAttacks[]{..., attackType->{name}}}"
-      // );
-
       const queryData = await client.fetch("*[_type == 'kharacter']{ _id, name, avatar, profile}");
-
       const extractedData = queryData.map((item) => {
         const parsedAvatarImg = urlFor(item.avatar.asset._ref);
         const parsedProfileImg = urlFor(item.profile.asset._ref);
@@ -83,8 +78,6 @@ export default function Home({ navigation }) {
             key={index.toString()}
             img={item.img}
             name={item.name ? item.name : 'unknown name'}
-            // basicAttacks={item.basicAttacks}
-            // stringAttacks={item.stringAttacks}
             profile={item.profile}
           />
         ))}
