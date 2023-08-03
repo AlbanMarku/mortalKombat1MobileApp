@@ -1,6 +1,7 @@
 import { Text, View, Pressable, Animated, StyleSheet } from 'react-native';
 import VideoPlayer from './VideoPlayer';
 import { useEffect, useState, useRef } from 'react';
+import { AntDesign } from '@expo/vector-icons';
 
 export default function StrategyComp({ info, videoUrl, title }) {
   const [isVisible, setIsVisible] = useState(false);
@@ -24,6 +25,11 @@ export default function StrategyComp({ info, videoUrl, title }) {
         <View style={styles.videoDiv}>
           <Pressable style={styles.pressableDiv} onPress={() => setIsVisible(!isVisible)}>
             <Text style={styles.pressableText}>{isVisible ? 'Hide video' : 'Show video'}</Text>
+            {isVisible ? (
+              <AntDesign style={styles.arrow} name="up" size={24} color="white" />
+            ) : (
+              <AntDesign style={styles.arrow} name="down" size={24} color="white" />
+            )}
           </Pressable>
           <Animated.View style={{ height: heightAnim, overflow: 'hidden' }}>
             {isVisible && <VideoPlayer source={videoUrl} />}
@@ -36,7 +42,7 @@ export default function StrategyComp({ info, videoUrl, title }) {
 
 const styles = StyleSheet.create({
   container: {
-    // marginHorizontal: 10,
+    marginBottom: 20,
   },
   infoText: {
     color: 'white',
@@ -48,9 +54,10 @@ const styles = StyleSheet.create({
   pressableDiv: {
     width: '100%',
     alignItems: 'center',
+    justifyContent: 'center',
     padding: 10,
     backgroundColor: '#292929',
-    marginVertical: 20,
+    marginTop: 20,
   },
   pressableText: {
     fontSize: 20,
@@ -61,5 +68,10 @@ const styles = StyleSheet.create({
     fontFamily: 'mk11',
     fontSize: 24,
     paddingBottom: 10,
+  },
+  arrow: {
+    position: 'absolute',
+    right: 0,
+    marginRight: 10,
   },
 });
