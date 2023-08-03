@@ -4,10 +4,9 @@ import { useEffect, useState } from 'react';
 
 export default function StrategyComp({ info, videoUrl }) {
   return (
-    <View style={{ backgroundColor: 'red', flex: 1 }}>
-      <Text>I am an info lmao</Text>
+    <View style={{ backgroundColor: 'red', height: 200 }}>
       <Text>{info}</Text>
-      <VideoPlayer source={'https://thumbs.gfycat.com/RemoteMeekHornedviper-mobile.mp4'} />
+      <VideoPlayer source={videoUrl} />
     </View>
   );
 }

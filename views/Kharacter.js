@@ -35,28 +35,13 @@ export default function Kharacter({ route, navigation }) {
   useEffect(() => {
     fetchAttackData();
   }, []);
-
-  const renderKharacterInfo = () => {
-    return (
-      <View>
-        <Title name={name} />
-        <View style={styles.imageDiv}>
-          <Image style={{ height: 300, width: 300 }} source={{ uri: profile }} />
-        </View>
-        <KharacterGuide name={name} />
-      </View>
-    );
-  };
-
-  return (
+  
+   return (
     <View style={[globalStyles.color, { flex: 1 }]}>
-      <View style={{ flex: 1 }}>
-        <FlatList
-          data={[{}]} // An empty array or an array with some placeholder data to render the KharacterInfo
-          renderItem={renderKharacterInfo}
-          keyExtractor={(arr, index) => index.toString()}
-        />
-      </View>
+      <ScrollView>
+        <KharacterGuide name={name} profile={profile} />
+      </ScrollView>
+
       <BottomNav
         basicAttacks={basicAttacks}
         stringAttacks={stringAttacks}
@@ -65,9 +50,3 @@ export default function Kharacter({ route, navigation }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  imageDiv: {
-    alignItems: 'center',
-  },
-});
