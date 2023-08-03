@@ -1,13 +1,13 @@
-import { StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Image, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 export default function KharacterAvatar({ name, img, profile }) {
   const navigation = useNavigation();
   //Touchable box component. On press, navigate to stack screen "kharacter" and pass name and profile img props.
   return (
-    <TouchableOpacity
+    <Pressable
       onPress={() => navigation.navigate('Kharacter', { name, img, profile })}
-      style={styles.box}
+      style={({ pressed }) => (pressed ? styles.dim : styles.box)}
     >
       <Image
         source={{
@@ -15,7 +15,7 @@ export default function KharacterAvatar({ name, img, profile }) {
         }}
         style={styles.imger}
       />
-    </TouchableOpacity>
+    </Pressable>
   );
 }
 
@@ -31,5 +31,14 @@ const styles = StyleSheet.create({
   imger: {
     flex: 1,
     resizeMode: 'cover',
+  },
+  dim: {
+    height: 120,
+    width: 70,
+    overflow: 'hidden',
+    borderColor: 'white',
+    borderWidth: 1,
+    margin: 5,
+    opacity: 0.5,
   },
 });

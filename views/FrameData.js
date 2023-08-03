@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, Pressable } from 'react-native';
 import { useContext, useState } from 'react';
 import { MyContext } from '../Context';
 import MoveList from '../components/MoveList';
@@ -20,15 +20,15 @@ export default function FrameData({ route, navigation }) {
     <View style={[globalStyles.color, { flex: 1 }]}>
       <Title name={'Frame Data'} underline />
       <View style={styles.optionsContainer}>
-        <TouchableOpacity onPress={() => handlePress(0)}>
+        <Pressable onPressIn={() => handlePress(0)}>
           <Text style={[styles.optionText, dataPage === 0 && styles.selectedOption]}>Buttons</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => handlePress(1)}>
+        </Pressable>
+        <Pressable onPressIn={() => handlePress(1)}>
           <Text style={[styles.optionText, dataPage === 1 && styles.selectedOption]}>Strings</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => handlePress(2)}>
+        </Pressable>
+        <Pressable onPressIn={() => handlePress(2)}>
           <Text style={[styles.optionText, dataPage === 2 && styles.selectedOption]}>Specials</Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
       <View style={{ flex: 1 }}>
         {dataPage === 0 ? (
