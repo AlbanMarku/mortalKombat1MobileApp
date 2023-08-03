@@ -35,8 +35,8 @@ export default function Kharacter({ route, navigation }) {
   useEffect(() => {
     fetchAttackData();
   }, []);
-  
-   return (
+
+  return (
     <View style={[globalStyles.color, { flex: 1 }]}>
       <ScrollView>
         <KharacterGuide name={name} profile={profile} />
