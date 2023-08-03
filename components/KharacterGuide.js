@@ -1,9 +1,8 @@
-import { Text, ScrollView, FlatList, View, StyleSheet, Image } from 'react-native';
+import { Text, View, StyleSheet, Image } from 'react-native';
 import { client } from '../components/SanityClient';
-import Title from './Title';
-import VideoPlayer from './VideoPlayer';
 import { useEffect, useState } from 'react';
 import StrategyComp from './StratagyComp';
+import Title from './Title';
 
 export default function KharacterGuide({ name, profile }) {
   const [strategyInfo, setStrategyInfo] = useState([]);
@@ -25,7 +24,14 @@ export default function KharacterGuide({ name, profile }) {
 
   const MapThroughStrats = () => {
     const strats = strategyInfo.map((item) => {
-      return <StrategyComp info={item.strategyInfo} videoUrl={item.videoUrl} key={item._key} />;
+      return (
+        <StrategyComp
+          info={item.strategyInfo}
+          title={item.strategyTitle}
+          videoUrl={item.videoUrl}
+          key={item._key}
+        />
+      );
     });
     return strats;
   };
@@ -37,7 +43,7 @@ export default function KharacterGuide({ name, profile }) {
         <Image style={{ height: 300, width: 300 }} source={{ uri: profile }} />
       </View>
       <Title name={'Guide'} underline />
-      <Title name={'Strategy'} underline />
+      <Title name={'Strategy'} subHeader />
       {strategyInfo.length > 0 ? (
         <MapThroughStrats />
       ) : (

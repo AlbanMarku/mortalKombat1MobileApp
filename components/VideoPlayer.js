@@ -19,7 +19,6 @@ export default function VideoPlayer({ source }) {
 
 const styles = StyleSheet.create({
   videoStyle: {
-    backgroundColor: 'red',
-    height: 200,
+    flex: 1,
   },
 });
