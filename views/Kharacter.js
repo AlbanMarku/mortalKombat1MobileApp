@@ -1,6 +1,5 @@
-import { View, Image, StyleSheet } from 'react-native';
+import { View, Image, StyleSheet, ScrollView } from 'react-native';
 import BottomNav from '../routes/BottomNav';
-import { ScrollView } from 'react-native-gesture-handler';
 import { globalStyles } from '../styles/global';
 import Title from '../components/Title';
 import { useState, useEffect } from 'react';
@@ -43,7 +42,7 @@ export default function Kharacter({ route, navigation }) {
         <View style={styles.imageDiv}>
           <Image style={{ height: 300, width: 300 }} source={{ uri: profile }} />
         </View>
-        <KharacterGuide />
+        <KharacterGuide name={name} />
       </ScrollView>
       <BottomNav
         basicAttacks={basicAttacks}
