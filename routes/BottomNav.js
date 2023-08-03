@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     height: 50,
-    position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
