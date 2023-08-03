@@ -1,7 +1,6 @@
 import { Text, View, Pressable, Animated, StyleSheet } from 'react-native';
 import VideoPlayer from './VideoPlayer';
 import { useEffect, useState, useRef } from 'react';
-import Title from './Title';
 
 export default function StrategyComp({ info, videoUrl, title }) {
   const [isVisible, setIsVisible] = useState(false);
@@ -14,7 +13,7 @@ export default function StrategyComp({ info, videoUrl, title }) {
       useNativeDriver: false,
     }).start();
   }, [isVisible]);
-  console.log(info);
+
   return (
     <View style={styles.container}>
       <View>

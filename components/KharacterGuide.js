@@ -6,13 +6,16 @@ import Title from './Title';
 
 export default function KharacterGuide({ name, profile }) {
   const [strategyInfo, setStrategyInfo] = useState([]);
+  const [fetchComplete, setFetchComplete] = useState(false);
 
   const fetchGuide = async () => {
     try {
+      setFetchComplete(false);
       const queryData = await client.fetch(
         `*[_type == "kharacter" && name == "${name}"][0]{_id, guide}`
       );
       setStrategyInfo(queryData.guide.strategy);
+      setFetchComplete(true);
     } catch (err) {
       console.log(err);
     }
@@ -44,12 +47,14 @@ export default function KharacterGuide({ name, profile }) {
       </View>
       <Title name={'Guide'} underline />
       <Title name={'Strategy'} subHeader />
-      {strategyInfo.length > 0 ? (
+      {fetchComplete && strategyInfo.length > 0 ? (
         <MapThroughStrats />
-      ) : (
+      ) : fetchComplete && strategyInfo.length === 0 ? (
         <View style={styles.noItemDiv}>
           <Text style={{ color: 'white' }}>No strats</Text>
         </View>
+      ) : (
+        <Text style={{ fontSize: 40, color: 'white' }}>I am loading the stats pls chill out</Text>
       )}
     </View>
   );
