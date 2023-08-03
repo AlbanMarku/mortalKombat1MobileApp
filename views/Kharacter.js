@@ -39,11 +39,7 @@ export default function Kharacter({ route, navigation }) {
   const renderKharacterInfo = () => {
     return (
       <View>
-        <Title name={name} />
-        <View style={styles.imageDiv}>
-          <Image style={{ height: 300, width: 300 }} source={{ uri: profile }} />
-        </View>
-        <KharacterGuide name={name} />
+        <KharacterGuide name={name} profile={profile} />
       </View>
     );
   };
@@ -65,9 +61,3 @@ export default function Kharacter({ route, navigation }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  imageDiv: {
-    alignItems: 'center',
-  },
-});

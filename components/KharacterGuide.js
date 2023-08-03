@@ -1,11 +1,11 @@
-import { Text, ScrollView, FlatList, View } from 'react-native';
+import { Text, ScrollView, FlatList, View, StyleSheet, Image } from 'react-native';
 import { client } from '../components/SanityClient';
 import Title from './Title';
 import VideoPlayer from './VideoPlayer';
 import { useEffect, useState } from 'react';
 import StrategyComp from './StratagyComp';
 
-export default function KharacterGuide({ name }) {
+export default function KharacterGuide({ name, profile }) {
   const [guideInfo, setGuideInfo] = useState({});
 
   const fetchGuide = async () => {
@@ -25,13 +25,20 @@ export default function KharacterGuide({ name }) {
   }, []);
 
   const renderItem = () => {
-    return <StrategyComp />;
+    return (
+      <View>
+        <StrategyComp />
+      </View>
+    );
   };
 
   return (
     <View>
+      <Title name={name} />
+      <View style={styles.imageDiv}>
+        <Image style={{ height: 300, width: 300 }} source={{ uri: profile }} />
+      </View>
       <Title name={'Guide'} underline />
-      <Title name={'Strategy'} underline />
       <FlatList
         data={guideInfo.strategy}
         renderItem={renderItem}
@@ -40,3 +47,9 @@ export default function KharacterGuide({ name }) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  imageDiv: {
+    alignItems: 'center',
+  },
+});
