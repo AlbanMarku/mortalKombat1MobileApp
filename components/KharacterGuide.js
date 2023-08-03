@@ -6,15 +6,14 @@ import { useEffect, useState } from 'react';
 import StrategyComp from './StratagyComp';
 
 export default function KharacterGuide({ name, profile }) {
-  const [guideInfo, setGuideInfo] = useState({});
+  const [strategyInfo, setStrategyInfo] = useState([]);
 
   const fetchGuide = async () => {
     try {
       const queryData = await client.fetch(
-        `*[_type == "kharacter" && name == "${name}"][0]{guide}`
+        `*[_type == "kharacter" && name == "${name}"][0]{_id, guide}`
       );
-      console.log(queryData.guide);
-      setGuideInfo(queryData.guide);
+      setStrategyInfo(queryData.guide.strategy);
     } catch (err) {
       console.log(err);
     }
@@ -24,14 +23,6 @@ export default function KharacterGuide({ name, profile }) {
     fetchGuide();
   }, []);
 
-  const renderItem = () => {
-    return (
-      <View>
-        <StrategyComp />
-      </View>
-    );
-  };
-
   return (
     <View>
       <Title name={name} />
@@ -39,11 +30,10 @@ export default function KharacterGuide({ name, profile }) {
         <Image style={{ height: 300, width: 300 }} source={{ uri: profile }} />
       </View>
       <Title name={'Guide'} underline />
-      <FlatList
-        data={guideInfo.strategy}
-        renderItem={renderItem}
-        keyExtractor={(arr, index) => index.toString()}
-      />
+      <Title name={'Strategy'} underline />
+      {strategyInfo.map((item) => (
+        <StrategyComp info={item.strategyInfo} videoUrl={item.videoUrl} key={item._key} />
+      ))}
     </View>
   );
 }

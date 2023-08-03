@@ -36,23 +36,11 @@ export default function Kharacter({ route, navigation }) {
     fetchAttackData();
   }, []);
 
-  const renderKharacterInfo = () => {
-    return (
-      <View>
-        <KharacterGuide name={name} profile={profile} />
-      </View>
-    );
-  };
-
   return (
     <View style={[globalStyles.color, { flex: 1 }]}>
-      <View style={{ flex: 1 }}>
-        <FlatList
-          data={[{}]} // An empty array or an array with some placeholder data to render the KharacterInfo
-          renderItem={renderKharacterInfo}
-          keyExtractor={(arr, index) => index.toString()}
-        />
-      </View>
+      <ScrollView>
+        <KharacterGuide name={name} profile={profile} />
+      </ScrollView>
       <BottomNav
         basicAttacks={basicAttacks}
         stringAttacks={stringAttacks}
