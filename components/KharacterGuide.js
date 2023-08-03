@@ -23,6 +23,13 @@ export default function KharacterGuide({ name, profile }) {
     fetchGuide();
   }, []);
 
+  const MapThroughStrats = () => {
+    const strats = strategyInfo.map((item) => {
+      return <StrategyComp info={item.strategyInfo} videoUrl={item.videoUrl} key={item._key} />;
+    });
+    return strats;
+  };
+
   return (
     <View>
       <Title name={name} />
@@ -31,9 +38,13 @@ export default function KharacterGuide({ name, profile }) {
       </View>
       <Title name={'Guide'} underline />
       <Title name={'Strategy'} underline />
-      {strategyInfo.map((item) => (
-        <StrategyComp info={item.strategyInfo} videoUrl={item.videoUrl} key={item._key} />
-      ))}
+      {strategyInfo.length > 0 ? (
+        <MapThroughStrats />
+      ) : (
+        <View style={styles.noItemDiv}>
+          <Text style={{ color: 'white' }}>No strats</Text>
+        </View>
+      )}
     </View>
   );
 }
@@ -41,5 +52,10 @@ export default function KharacterGuide({ name, profile }) {
 const styles = StyleSheet.create({
   imageDiv: {
     alignItems: 'center',
+  },
+  noItemDiv: {
+    alignItems: 'center',
+    height: 200,
+    justifyContent: 'center',
   },
 });
