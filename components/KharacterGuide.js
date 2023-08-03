@@ -14,7 +14,13 @@ export default function KharacterGuide({ name, profile }) {
       const queryData = await client.fetch(
         `*[_type == "kharacter" && name == "${name}"][0]{_id, guide}`
       );
-      setStrategyInfo(queryData.guide.strategy);
+      if (queryData.guide) {
+        setStrategyInfo(queryData.guide.strategy);
+        console.log('yah');
+      } else {
+        setStrategyInfo([]);
+        console.log('nah');
+      }
       setFetchComplete(true);
     } catch (err) {
       console.log(err);
