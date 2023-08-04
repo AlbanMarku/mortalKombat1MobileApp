@@ -64,15 +64,11 @@ export default function StrategyComp({ info, videoUrl, title }) {
             const directionNumber = parseInt(substring.charAt(0), 10);
             const buttonNumber = parseInt(substring.charAt(1), 10);
             return (
-              <View
-                style={{
-                  flexDirection: 'row',
-                  backgroundColor: 'red',
-                }}
-                key={index}
-              >
-                <ReplaceDir number={directionNumber} />
-                <ReplaceBut number={buttonNumber} />
+              <View style={{}} key={index}>
+                <View style={{ flexDirection: 'row', marginBottom: -5 }}>
+                  <ReplaceDir number={directionNumber} />
+                  <ReplaceBut number={buttonNumber} />
+                </View>
               </View>
             );
           } else {
