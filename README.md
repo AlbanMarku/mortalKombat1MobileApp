@@ -7,19 +7,21 @@ Built using React Native JavaScript. Data fetched from Sanity content management
 
 ## Features
 
-- View all Kharacters
-- Up to date frame data
+- View all Kharacters.
+- Up to date frame data.
 - Easy to read move information with colour coded text.
 - Show attacks in selected gaming platform buttons.
+- Kharacter guides.
+
 
 ## Work in progress
-
-- Strings data.
+- Offline support.
+- Pin moves.
 - Kombo data.
 - Kameo data.
-- Guide/How to play information.
+- How to play information.
 - Fully support iOS.
-
+- QOL
 
 ## Installation
 
@@ -30,4 +32,3 @@ Install with npm. Use expo to run app through emulator or native device.
   npm install
   npm run start
 ```
-    
