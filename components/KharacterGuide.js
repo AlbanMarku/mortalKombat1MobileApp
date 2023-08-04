@@ -60,7 +60,9 @@ export default function KharacterGuide({ name, profile }) {
           <Text style={{ color: 'white' }}>No strats</Text>
         </View>
       ) : (
-        <Text style={{ fontSize: 40, color: 'white' }}>I am loading the stats pls chill out</Text>
+        <Text style={{ fontSize: 40, color: 'white', flex: 1 }}>
+          I am loading the stats pls chill out
+        </Text>
       )}
     </View>
   );

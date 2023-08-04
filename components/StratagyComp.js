@@ -2,6 +2,7 @@ import { Text, View, Pressable, Animated, StyleSheet } from 'react-native';
 import VideoPlayer from './VideoPlayer';
 import { useEffect, useState, useRef } from 'react';
 import { AntDesign } from '@expo/vector-icons';
+import ParseText from '../styles/ParseText';
 
 export default function StrategyComp({ info, videoUrl, title }) {
   const [isVisible, setIsVisible] = useState(false);
@@ -19,7 +20,7 @@ export default function StrategyComp({ info, videoUrl, title }) {
     <View style={styles.container}>
       <View>
         <Text style={styles.stratTitle}>{title}</Text>
-        <Text style={styles.infoText}>{info}</Text>
+        <ParseText para={info} />
       </View>
       {videoUrl && (
         <View style={styles.videoDiv}>
@@ -43,10 +44,6 @@ export default function StrategyComp({ info, videoUrl, title }) {
 const styles = StyleSheet.create({
   container: {
     marginBottom: 20,
-  },
-  infoText: {
-    color: 'white',
-    fontSize: 16,
   },
   videoDiv: {
     // alignItems: 'center',
