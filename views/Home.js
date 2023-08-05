@@ -6,116 +6,31 @@ import { globalStyles } from '../styles/global';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useContext, useEffect, useState } from 'react';
 import { MyContext } from '../Context';
-import { client, urlFor } from '../components/SanityClient';
 
-import * as SQLite from 'expo-sqlite';
+import { db, setupDb } from '../myDb';
 
 //Some temp data to map through. Components for homescreen.
 
 export default function Home({ navigation }) {
   const [input, setInput, rosterData, setRosterData] = useContext(MyContext);
-  const [fetched, setFetched] = useState(false);
+  const [avatarInfo, setAvatarInfo] = useState([]);
 
-  const fetchRoster = async () => {
-    //Fetch all karacters. Get their name, avatar, profile image. Map through each khacaracter and create touchable box.
-    try {
-      const queryData = await client.fetch(
-        " *[_type == 'kharacter']{ _id,name, avatar, profile, basicAttacks[]{..., attackType->{name}},stringAttacks[]{..., attackType->{name}},basicAttacks[]{..., attackType->{name}},specialAttacks[]{...,attackType->{name}}}"
-      );
-      const extractedData = queryData.map((item) => {
-        const parsedAvatarImg = urlFor(item.avatar.asset._ref);
-        const parsedProfileImg = urlFor(item.profile.asset._ref);
-        const basicAttacks = item.basicAttacks ? item.basicAttacks : [];
-        const stringAttacks = item.stringAttacks ? item.stringAttacks : [];
-        const specialAttacks = item.specialAttacks ? item.specialAttacks : [];
-        return {
-          name: item.name,
-          avatar: parsedAvatarImg.url(),
-          profile: parsedProfileImg.url(),
-          basicAttacks: basicAttacks,
-          stringAttacks: stringAttacks,
-          specialAttacks: specialAttacks,
-        };
-      });
-      setRosterData(extractedData);
-      setFetched(true);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const db = SQLite.openDatabase('main.db');
-
-  const resetDatabase = () => {
-    const db = SQLite.openDatabase('main.db');
+  const loadAvatar = () => {
     db.transaction((tx) => {
-      tx.executeSql('DROP TABLE IF EXISTS kharacters');
+      //Search names
+      tx.executeSql('SELECT name, avatar, profile FROM kharacters', null, (txObj, resultSet) => {
+        setAvatarInfo(resultSet.rows._array);
+      });
     });
   };
 
   useEffect(() => {
-    const setupDb = async () => {
-      await fetchRoster();
-      console.log(rosterData);
-      if (fetched) {
-        console.log('starting');
-        db.transaction((tx) => {
-          tx.executeSql(
-            'CREATE TABLE IF NOT EXISTS kharacters (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE, avatar TEXT, profile TEXT, basicAttacks TEXT, stringAttacks TEXT, specialAttacks TEXT)'
-          );
-        });
-
-        db.transaction((tx) => {
-          const insertQuery = `INSERT OR IGNORE INTO kharacters (name, avatar, profile , basicAttacks, stringAttacks, specialAttacks) 
-          VALUES (?, ?, ?, ?, ?, ?)`;
-          rosterData.forEach((kharacter) => {
-            const { name, avatar, profile, basicAttacks, stringAttacks, specialAttacks } =
-              kharacter;
-
-            const basicAttacksJSON = JSON.stringify(basicAttacks);
-            const stringAttacksJSON = JSON.stringify(stringAttacks);
-            const specialAttacksJSON = JSON.stringify(specialAttacks);
-
-            tx.executeSql(
-              'SELECT * FROM kharacters WHERE name = ?',
-              [name],
-              (txObj, resultSet) => {
-                if (resultSet.rows.length > 0) {
-                  console.log('Already exists', name);
-                } else {
-                  tx.executeSql(
-                    insertQuery,
-                    [
-                      name,
-                      avatar,
-                      profile,
-                      basicAttacksJSON,
-                      stringAttacksJSON,
-                      specialAttacksJSON,
-                    ],
-                    (txObj, resultSet) => {
-                      console.log('Insert success:', resultSet);
-                    },
-                    (txObj, error) => {
-                      console.log('Insert failed:', error);
-                    }
-                  );
-                }
-              },
-              (txObj, err) => console.log('Insert failed:', err)
-            );
-          });
-        });
-
-        db.transaction((tx) => {
-          tx.executeSql('SELECT name FROM kharacters', null, (txObj, resultSet) => {
-            console.log('Executed Query:', resultSet.rows);
-          });
-        });
-      }
-    };
-    setupDb();
+    loadAvatar();
   }, []);
+
+  useEffect(() => {
+    loadAvatar();
+  }, [rosterData]);
 
   const tempKameo = [
     {
@@ -151,16 +66,16 @@ export default function Home({ navigation }) {
         <LessonButtons />
       </View>
       <Title name={'Kharacters'} />
-      {/* <View style={styles.columnContainer}>
-        {rosterData.map((item, index) => (
+      <View style={styles.columnContainer}>
+        {avatarInfo.map((item, index) => (
           <KharacterAvatar
             key={index.toString()}
-            img={item.img}
+            img={item.avatar}
             name={item.name ? item.name : 'unknown name'}
             profile={item.profile}
           />
         ))}
-      </View> */}
+      </View>
       <Title name={'Kameos'} />
       <View>
         <View style={styles.columnContainer}>
