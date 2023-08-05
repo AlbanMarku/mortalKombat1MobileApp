@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
 import LessonButtons from '../components/LessonButtons';
 import KharacterAvatar from '../components/KharacterAvatar';
 import Title from '../components/Title';
@@ -11,16 +11,20 @@ import { db, setupDb } from '../myDb';
 
 //Some temp data to map through. Components for homescreen.
 
-export default function Home({ navigation }) {
+export default function Home({ navigation, loading }) {
   const [input, setInput, rosterData, setRosterData] = useContext(MyContext);
   const [avatarInfo, setAvatarInfo] = useState([]);
 
   const loadAvatar = () => {
     db.transaction((tx) => {
       //Search names
-      tx.executeSql('SELECT name, avatar, profile FROM kharacters', null, (txObj, resultSet) => {
-        setAvatarInfo(resultSet.rows._array);
-      });
+      tx.executeSql(
+        'SELECT name, avatar, profile FROM kharacters ORDER BY name ASC',
+        null,
+        (txObj, resultSet) => {
+          setAvatarInfo(resultSet.rows._array);
+        }
+      );
     });
   };
 
@@ -29,8 +33,9 @@ export default function Home({ navigation }) {
   }, []);
 
   useEffect(() => {
+    console.log('hit');
     loadAvatar();
-  }, [rosterData]);
+  }, [loading]);
 
   const tempKameo = [
     {
@@ -67,14 +72,18 @@ export default function Home({ navigation }) {
       </View>
       <Title name={'Kharacters'} />
       <View style={styles.columnContainer}>
-        {avatarInfo.map((item, index) => (
-          <KharacterAvatar
-            key={index.toString()}
-            img={item.avatar}
-            name={item.name ? item.name : 'unknown name'}
-            profile={item.profile}
-          />
-        ))}
+        {loading ? (
+          <ActivityIndicator color={'white'} size={'large'} />
+        ) : (
+          avatarInfo.map((item, index) => (
+            <KharacterAvatar
+              key={index.toString()}
+              img={item.avatar}
+              name={item.name ? item.name : 'unknown name'}
+              profile={item.profile}
+            />
+          ))
+        )}
       </View>
       <Title name={'Kameos'} />
       <View>

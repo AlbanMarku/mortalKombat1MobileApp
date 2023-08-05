@@ -11,12 +11,13 @@ const Drawer = createDrawerNavigator();
 
 export default function DrawerStack() {
   const [input, setInput, rosterData, setRosterData] = useContext(MyContext);
+  const [loading, setLoading] = useState(false);
 
   const fetchRoster = async () => {
     console.log('fetching...');
+    setLoading(true);
     //Fetch all karacters. Get their name, avatar, profile image. Map through each khacaracter and create touchable box.
     try {
-      setRosterData([]);
       const queryData = await client.fetch(
         " *[_type == 'kharacter']{ _id,name, avatar, profile, basicAttacks[]{..., attackType->{name}},stringAttacks[]{..., attackType->{name}},basicAttacks[]{..., attackType->{name}},specialAttacks[]{...,attackType->{name}}}"
       );
@@ -35,10 +36,11 @@ export default function DrawerStack() {
           specialAttacks: specialAttacks,
         };
       });
-      await setupDb(extractedData);
-      setRosterData(extractedData);
+      setupDb(extractedData);
+      setLoading(false);
     } catch (err) {
       console.log(err);
+      setLoading(false);
     }
   };
 
@@ -64,11 +66,12 @@ export default function DrawerStack() {
     >
       <Drawer.Screen
         name="Main"
-        component={Home}
         options={{
           headerRight: () => <HeaderComp option={'download'} fetchRoster={fetchRoster} />,
         }}
-      />
+      >
+        {() => <Home loading={loading} />}
+      </Drawer.Screen>
       <Drawer.Screen name="About" component={About} />
     </Drawer.Navigator>
   );
