@@ -8,6 +8,8 @@ import { useContext, useEffect } from 'react';
 import { MyContext } from '../Context';
 import { client, urlFor } from '../components/SanityClient';
 
+import * as SQLite from 'expo-sqlite';
+
 //Some temp data to map through. Components for homescreen.
 
 export default function Home({ navigation }) {
@@ -34,8 +36,23 @@ export default function Home({ navigation }) {
     }
   };
 
+  const db = SQLite.openDatabase('main.db');
+
   useEffect(() => {
-    fetchRoster();
+    db.transaction((tx) => {
+      tx.executeSql(
+        'CREATE TABLE IF NOT EXISTS kharacters (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, avatar TEXT, profile TEXT, basicAttacks TEXT, stringAttacks TEXT, specialAttacks TEXT)'
+      );
+    });
+
+    db.transaction((tx) => {
+      tx.executeSql(
+        'SELECT name FROM kharacters',
+        null,
+        (txObj, resultSet) => console.log(resultSet),
+        (txObj, err) => console.log(err)
+      );
+    });
   }, []);
 
   const tempKameo = [
@@ -72,7 +89,7 @@ export default function Home({ navigation }) {
         <LessonButtons />
       </View>
       <Title name={'Kharacters'} />
-      <View style={styles.columnContainer}>
+      {/* <View style={styles.columnContainer}>
         {rosterData.map((item, index) => (
           <KharacterAvatar
             key={index.toString()}
@@ -81,7 +98,7 @@ export default function Home({ navigation }) {
             profile={item.profile}
           />
         ))}
-      </View>
+      </View> */}
       <Title name={'Kameos'} />
       <View>
         <View style={styles.columnContainer}>
