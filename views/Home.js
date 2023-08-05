@@ -4,7 +4,7 @@ import KharacterAvatar from '../components/KharacterAvatar';
 import Title from '../components/Title';
 import { globalStyles } from '../styles/global';
 import { ScrollView } from 'react-native-gesture-handler';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { MyContext } from '../Context';
 import { client, urlFor } from '../components/SanityClient';
 
@@ -14,11 +14,14 @@ import * as SQLite from 'expo-sqlite';
 
 export default function Home({ navigation }) {
   const [input, setInput, rosterData, setRosterData] = useContext(MyContext);
+  const [fetched, setFetched] = useState(false);
 
   const fetchRoster = async () => {
     //Fetch all karacters. Get their name, avatar, profile image. Map through each khacaracter and create touchable box.
     try {
-      const queryData = await client.fetch("*[_type == 'kharacter']{ _id, name, avatar, profile}");
+      const queryData = await client.fetch(
+        " *[_type == 'kharacter']{ _id,name, avatar, profile, basicAttacks[]{..., attackType->{name}},stringAttacks[]{..., attackType->{name}},basicAttacks[]{..., attackType->{name}},specialAttacks[]{...,attackType->{name}}}"
+      );
       const extractedData = queryData.map((item) => {
         const parsedAvatarImg = urlFor(item.avatar.asset._ref);
         const parsedProfileImg = urlFor(item.profile.asset._ref);
@@ -28,9 +31,11 @@ export default function Home({ navigation }) {
           profile: parsedProfileImg.url(),
           basicAttacks: item.basicAttacks,
           stringAttacks: item.stringAttacks,
+          specialAttacks: item.specialAttacks,
         };
       });
       setRosterData(extractedData);
+      setFetched(true);
     } catch (err) {
       console.log(err);
     }
@@ -39,20 +44,39 @@ export default function Home({ navigation }) {
   const db = SQLite.openDatabase('main.db');
 
   useEffect(() => {
-    db.transaction((tx) => {
-      tx.executeSql(
-        'CREATE TABLE IF NOT EXISTS kharacters (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, avatar TEXT, profile TEXT, basicAttacks TEXT, stringAttacks TEXT, specialAttacks TEXT)'
-      );
-    });
+    fetchRoster();
 
-    db.transaction((tx) => {
-      tx.executeSql(
-        'SELECT name FROM kharacters',
-        null,
-        (txObj, resultSet) => console.log(resultSet),
-        (txObj, err) => console.log(err)
-      );
-    });
+    if (fetched) {
+      db.transaction((tx) => {
+        tx.executeSql(
+          'CREATE TABLE IF NOT EXISTS kharacters (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, avatar TEXT, profile TEXT, basicAttacks TEXT, stringAttacks TEXT, specialAttacks TEXT)'
+        );
+      });
+
+      db.transaction((tx) => {
+        const insertQuery = `INSERT INTO kharacters (id, name, avatar, profile , basicAttacks, stringAttacks, specialAttacks) 
+        VALUES (?, ?, ?, ?, ?, ?, ?)`;
+        rosterData.forEach((kharacter) => {
+          const { _id, name, avatar, profile, basicAttacks, stringAttacks, specialAttacks } =
+            kharacter;
+
+          const basicAttacksJSON = JSON.stringify(basicAttacks);
+          const stringAttacksJSON = JSON.stringify(stringAttacks);
+          const specialAttacksJSON = JSON.stringify(specialAttacks);
+          tx.executeSql(
+            insertQuery,
+            [_id, name, avatar, profile, basicAttacksJSON, stringAttacksJSON, specialAttacksJSON],
+            (txObj, resultSet) => {
+              console.log(resultSet);
+            }
+          );
+        });
+      });
+
+      db.transaction((tx) => {
+        tx.executeSql('SELECT name FROM kharacters', null);
+      });
+    }
   }, []);
 
   const tempKameo = [
