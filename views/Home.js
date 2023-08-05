@@ -25,13 +25,16 @@ export default function Home({ navigation }) {
       const extractedData = queryData.map((item) => {
         const parsedAvatarImg = urlFor(item.avatar.asset._ref);
         const parsedProfileImg = urlFor(item.profile.asset._ref);
+        const basicAttacks = item.basicAttacks ? item.basicAttacks : [];
+        const stringAttacks = item.stringAttacks ? item.stringAttacks : [];
+        const specialAttacks = item.specialAttacks ? item.specialAttacks : [];
         return {
           name: item.name,
-          img: parsedAvatarImg.url(),
+          avatar: parsedAvatarImg.url(),
           profile: parsedProfileImg.url(),
-          basicAttacks: item.basicAttacks,
-          stringAttacks: item.stringAttacks,
-          specialAttacks: item.specialAttacks,
+          basicAttacks: basicAttacks,
+          stringAttacks: stringAttacks,
+          specialAttacks: specialAttacks,
         };
       });
       setRosterData(extractedData);
@@ -43,40 +46,75 @@ export default function Home({ navigation }) {
 
   const db = SQLite.openDatabase('main.db');
 
+  const resetDatabase = () => {
+    const db = SQLite.openDatabase('main.db');
+    db.transaction((tx) => {
+      tx.executeSql('DROP TABLE IF EXISTS kharacters');
+    });
+  };
+
   useEffect(() => {
-    fetchRoster();
-
-    if (fetched) {
-      db.transaction((tx) => {
-        tx.executeSql(
-          'CREATE TABLE IF NOT EXISTS kharacters (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, avatar TEXT, profile TEXT, basicAttacks TEXT, stringAttacks TEXT, specialAttacks TEXT)'
-        );
-      });
-
-      db.transaction((tx) => {
-        const insertQuery = `INSERT INTO kharacters (id, name, avatar, profile , basicAttacks, stringAttacks, specialAttacks) 
-        VALUES (?, ?, ?, ?, ?, ?, ?)`;
-        rosterData.forEach((kharacter) => {
-          const { _id, name, avatar, profile, basicAttacks, stringAttacks, specialAttacks } =
-            kharacter;
-
-          const basicAttacksJSON = JSON.stringify(basicAttacks);
-          const stringAttacksJSON = JSON.stringify(stringAttacks);
-          const specialAttacksJSON = JSON.stringify(specialAttacks);
+    const setupDb = async () => {
+      await fetchRoster();
+      console.log(rosterData);
+      if (fetched) {
+        console.log('starting');
+        db.transaction((tx) => {
           tx.executeSql(
-            insertQuery,
-            [_id, name, avatar, profile, basicAttacksJSON, stringAttacksJSON, specialAttacksJSON],
-            (txObj, resultSet) => {
-              console.log(resultSet);
-            }
+            'CREATE TABLE IF NOT EXISTS kharacters (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE, avatar TEXT, profile TEXT, basicAttacks TEXT, stringAttacks TEXT, specialAttacks TEXT)'
           );
         });
-      });
 
-      db.transaction((tx) => {
-        tx.executeSql('SELECT name FROM kharacters', null);
-      });
-    }
+        db.transaction((tx) => {
+          const insertQuery = `INSERT OR IGNORE INTO kharacters (name, avatar, profile , basicAttacks, stringAttacks, specialAttacks) 
+          VALUES (?, ?, ?, ?, ?, ?)`;
+          rosterData.forEach((kharacter) => {
+            const { name, avatar, profile, basicAttacks, stringAttacks, specialAttacks } =
+              kharacter;
+
+            const basicAttacksJSON = JSON.stringify(basicAttacks);
+            const stringAttacksJSON = JSON.stringify(stringAttacks);
+            const specialAttacksJSON = JSON.stringify(specialAttacks);
+
+            tx.executeSql(
+              'SELECT * FROM kharacters WHERE name = ?',
+              [name],
+              (txObj, resultSet) => {
+                if (resultSet.rows.length > 0) {
+                  console.log('Already exists', name);
+                } else {
+                  tx.executeSql(
+                    insertQuery,
+                    [
+                      name,
+                      avatar,
+                      profile,
+                      basicAttacksJSON,
+                      stringAttacksJSON,
+                      specialAttacksJSON,
+                    ],
+                    (txObj, resultSet) => {
+                      console.log('Insert success:', resultSet);
+                    },
+                    (txObj, error) => {
+                      console.log('Insert failed:', error);
+                    }
+                  );
+                }
+              },
+              (txObj, err) => console.log('Insert failed:', err)
+            );
+          });
+        });
+
+        db.transaction((tx) => {
+          tx.executeSql('SELECT name FROM kharacters', null, (txObj, resultSet) => {
+            console.log('Executed Query:', resultSet.rows);
+          });
+        });
+      }
+    };
+    setupDb();
   }, []);
 
   const tempKameo = [
