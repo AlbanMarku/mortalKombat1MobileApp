@@ -1,10 +1,11 @@
 import { StyleSheet, View } from 'react-native';
 import InputOption from './InputOption';
+import DataButton from './DataButton';
 
-export default function HeaderComp() {
+export default function HeaderComp({ option, fetchRoster }) {
   return (
     <View style={styles.header}>
-      <InputOption />
+      {option === 'download' ? <DataButton fetchRoster={fetchRoster} /> : <InputOption />}
     </View>
   );
 }
