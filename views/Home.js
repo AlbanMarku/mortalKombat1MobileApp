@@ -4,15 +4,13 @@ import KharacterAvatar from '../components/KharacterAvatar';
 import Title from '../components/Title';
 import { globalStyles } from '../styles/global';
 import { ScrollView } from 'react-native-gesture-handler';
-import { useContext, useEffect, useState } from 'react';
-import { MyContext } from '../Context';
+import { useEffect, useState } from 'react';
 
-import { db, setupDb } from '../myDb';
+import { db } from '../myDb';
 
 //Some temp data to map through. Components for homescreen.
 
 export default function Home({ navigation, loading }) {
-  const [input, setInput, rosterData, setRosterData] = useContext(MyContext);
   const [avatarInfo, setAvatarInfo] = useState([]);
 
   const loadAvatar = () => {
@@ -33,7 +31,6 @@ export default function Home({ navigation, loading }) {
   }, []);
 
   useEffect(() => {
-    console.log('hit');
     loadAvatar();
   }, [loading]);
 

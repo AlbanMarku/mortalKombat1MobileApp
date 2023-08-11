@@ -18,7 +18,7 @@ export const setupDb = async (extractedData) => {
 
   db.transaction((tx) => {
     //Insert all the data into the table. For each kharacter, get the properties and stringify. If doesn't exist, insert data.
-    const insertQuery = `INSERT OR IGNORE INTO kharacters (name, avatar, profile , basicAttacks, stringAttacks, specialAttacks) 
+    const insertQuery = `INSERT OR REPLACE INTO kharacters (name, avatar, profile , basicAttacks, stringAttacks, specialAttacks) 
         VALUES (?, ?, ?, ?, ?, ?)`;
     extractedData.forEach((kharacter) => {
       const { name, avatar, profile, basicAttacks, stringAttacks, specialAttacks } = kharacter;
