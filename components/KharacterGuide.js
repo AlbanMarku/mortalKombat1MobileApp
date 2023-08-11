@@ -3,24 +3,36 @@ import { client } from '../components/SanityClient';
 import { useEffect, useState } from 'react';
 import StrategyComp from './StratagyComp';
 import Title from './Title';
+import { db } from '../myDb';
 
 export default function KharacterGuide({ name, profile }) {
   const [strategyInfo, setStrategyInfo] = useState([]);
   const [fetchComplete, setFetchComplete] = useState(false);
 
-  const fetchGuide = async () => {
+  const fetchGuide = () => {
     try {
       setFetchComplete(false);
-      const queryData = await client.fetch(
-        `*[_type == "kharacter" && name == "${name}"][0]{_id, guide}`
-      );
-      if (queryData.guide) {
-        setStrategyInfo(queryData.guide.strategy);
-        console.log('yah');
-      } else {
-        setStrategyInfo([]);
-        console.log('nah');
-      }
+      db.transaction((tx) => {
+        tx.executeSql(
+          'SELECT guide FROM kharacters WHERE name = ?',
+          [name],
+          (txObj, resultSet) => {
+            console.log('Got guide');
+            const queriedGuide = resultSet.rows._array;
+            const parsedGuide = JSON.parse(queriedGuide[0].guide);
+            if (parsedGuide !== null) {
+              console.log('yah');
+              setStrategyInfo(parsedGuide.strategy);
+            } else {
+              console.log('nah');
+              setStrategyInfo([]);
+            }
+          },
+          (txObj, err) => {
+            console.log('FALIED', err);
+          }
+        );
+      });
       setFetchComplete(true);
     } catch (err) {
       console.log(err);

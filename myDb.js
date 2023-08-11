@@ -12,20 +12,22 @@ export const setupDb = async (extractedData) => {
   db.transaction((tx) => {
     //Create table. Name is unique.
     tx.executeSql(
-      'CREATE TABLE IF NOT EXISTS kharacters (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE, avatar TEXT, profile TEXT, basicAttacks TEXT, stringAttacks TEXT, specialAttacks TEXT)'
+      'CREATE TABLE IF NOT EXISTS kharacters (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE, avatar TEXT, profile TEXT, basicAttacks TEXT, stringAttacks TEXT, specialAttacks TEXT, guide TEXT)'
     );
   });
 
   db.transaction((tx) => {
     //Insert all the data into the table. For each kharacter, get the properties and stringify. If doesn't exist, insert data.
-    const insertQuery = `INSERT OR REPLACE INTO kharacters (name, avatar, profile , basicAttacks, stringAttacks, specialAttacks) 
-        VALUES (?, ?, ?, ?, ?, ?)`;
+    const insertQuery = `INSERT OR REPLACE INTO kharacters (name, avatar, profile , basicAttacks, stringAttacks, specialAttacks, guide) 
+        VALUES (?, ?, ?, ?, ?, ?, ?)`;
     extractedData.forEach((kharacter) => {
-      const { name, avatar, profile, basicAttacks, stringAttacks, specialAttacks } = kharacter;
+      const { name, avatar, profile, basicAttacks, stringAttacks, specialAttacks, guide } =
+        kharacter;
 
       const basicAttacksJSON = JSON.stringify(basicAttacks);
       const stringAttacksJSON = JSON.stringify(stringAttacks);
       const specialAttacksJSON = JSON.stringify(specialAttacks);
+      const guideJSON = JSON.stringify(guide);
 
       tx.executeSql(
         'SELECT * FROM kharacters WHERE name = ?',
@@ -36,7 +38,15 @@ export const setupDb = async (extractedData) => {
           } else {
             tx.executeSql(
               insertQuery,
-              [name, avatar, profile, basicAttacksJSON, stringAttacksJSON, specialAttacksJSON],
+              [
+                name,
+                avatar,
+                profile,
+                basicAttacksJSON,
+                stringAttacksJSON,
+                specialAttacksJSON,
+                guideJSON,
+              ],
               (txObj, resultSet) => {
                 console.log('Insert success:', resultSet);
               },

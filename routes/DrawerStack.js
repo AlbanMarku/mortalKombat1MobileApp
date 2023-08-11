@@ -16,10 +16,10 @@ export default function DrawerStack() {
   const fetchRoster = async () => {
     console.log('fetching...');
     setLoading(true);
-    //Fetch all karacters. Get their name, avatar, profile image. Map through each khacaracter and create touchable box.
+    //Fetch all karacters. Get their name, avatar, profile image. Send the fetched roster to the database for offline access.
     try {
       const queryData = await client.fetch(
-        " *[_type == 'kharacter']{ _id,name, avatar, profile, basicAttacks[]{..., attackType->{name}},stringAttacks[]{..., attackType->{name}},basicAttacks[]{..., attackType->{name}},specialAttacks[]{...,attackType->{name}}}"
+        " *[_type == 'kharacter']{ _id,name, avatar, profile, basicAttacks[]{..., attackType->{name}},stringAttacks[]{..., attackType->{name}},basicAttacks[]{..., attackType->{name}},specialAttacks[]{...,attackType->{name}}, guide}"
       );
       const extractedData = queryData.map((item) => {
         const parsedAvatarImg = urlFor(item.avatar.asset._ref);
@@ -27,6 +27,7 @@ export default function DrawerStack() {
         const basicAttacks = item.basicAttacks ? item.basicAttacks : [];
         const stringAttacks = item.stringAttacks ? item.stringAttacks : [];
         const specialAttacks = item.specialAttacks ? item.specialAttacks : [];
+        const guide = item.guide;
         return {
           name: item.name,
           avatar: parsedAvatarImg.url(),
@@ -34,6 +35,7 @@ export default function DrawerStack() {
           basicAttacks: basicAttacks,
           stringAttacks: stringAttacks,
           specialAttacks: specialAttacks,
+          guide: guide,
         };
       });
       setupDb(extractedData);
