@@ -18,7 +18,7 @@ export default function KharacterGuide({ name, profile }) {
           [name],
           (txObj, resultSet) => {
             console.log('Got guide');
-            const queriedGuide = resultSet.rows._array;
+            const queriedGuide = resultSet.rows._array; //clean this up
             const parsedGuide = JSON.parse(queriedGuide[0].guide);
             if (parsedGuide !== null) {
               console.log('yah');
