@@ -3,7 +3,7 @@ import * as SQLite from 'expo-sqlite';
 export const db = SQLite.openDatabase('main.db');
 
 export const setupDb = async (extractedData) => {
-  console.log('starting');
+  console.log('Setting up db:');
 
   db.transaction((tx) => {
     tx.executeSql('DROP TABLE IF EXISTS kharacters');

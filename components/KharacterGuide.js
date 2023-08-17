@@ -1,12 +1,14 @@
-import { Text, View, StyleSheet, Image } from 'react-native';
+import { Text, View, StyleSheet, Image, ActivityIndicator } from 'react-native';
 import { client } from '../components/SanityClient';
 import { useEffect, useState } from 'react';
 import StrategyComp from './StratagyComp';
+import OverviewComp from './OverviewComp';
 import Title from './Title';
 import { db } from '../myDb';
 
 export default function KharacterGuide({ name, profile }) {
   const [strategyInfo, setStrategyInfo] = useState([]);
+  const [overviewInfo, setOverviewInfo] = useState('');
   const [fetchComplete, setFetchComplete] = useState(false);
 
   const fetchGuide = () => {
@@ -21,11 +23,11 @@ export default function KharacterGuide({ name, profile }) {
             const queriedGuide = resultSet.rows._array; //clean this up
             const parsedGuide = JSON.parse(queriedGuide[0].guide);
             if (parsedGuide !== null) {
-              console.log('yah');
               setStrategyInfo(parsedGuide.strategy);
+              setOverviewInfo(parsedGuide.overview);
             } else {
-              console.log('nah');
               setStrategyInfo([]);
+              setOverviewInfo('Missing overview.');
             }
           },
           (txObj, err) => {
@@ -57,6 +59,10 @@ export default function KharacterGuide({ name, profile }) {
     return strats;
   };
 
+  const MapThroughOverview = () => {
+    return <OverviewComp overviewString={overviewInfo} />;
+  };
+
   return (
     <View>
       <Title name={name} />
@@ -64,6 +70,8 @@ export default function KharacterGuide({ name, profile }) {
         <Image style={{ height: 300, width: 300 }} source={{ uri: profile }} />
       </View>
       <Title name={'Guide'} underline />
+      <Title name={'Overview'} subHeader />
+      <MapThroughOverview />
       <Title name={'Strategy'} subHeader />
       {fetchComplete && strategyInfo.length > 0 ? (
         <MapThroughStrats />
@@ -72,9 +80,7 @@ export default function KharacterGuide({ name, profile }) {
           <Text style={{ color: 'white' }}>No strats</Text>
         </View>
       ) : (
-        <Text style={{ fontSize: 40, color: 'white', flex: 1 }}>
-          I am loading the stats pls chill out
-        </Text>
+        <ActivityIndicator color={'white'} size={'large'} />
       )}
     </View>
   );
