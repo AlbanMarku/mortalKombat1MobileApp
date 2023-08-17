@@ -13,7 +13,9 @@ export default function OverviewComp({ overviewObj }) {
           {overviewObj.strengths.map((item, index) => {
             return (
               <View key={index}>
-                <Text style={[styles.arrayText, index % 2 === 0 ? styles.even : styles.odd]}>
+                <Text
+                  style={[styles.arrayText, styles.pro, index % 2 === 0 ? styles.even : styles.odd]}
+                >
                   {item}
                 </Text>
               </View>
@@ -34,7 +36,9 @@ export default function OverviewComp({ overviewObj }) {
           {overviewObj.weaknesses.map((item, index) => {
             return (
               <View key={index}>
-                <Text style={[styles.arrayText, index % 2 === 0 ? styles.even : styles.odd]}>
+                <Text
+                  style={[styles.arrayText, styles.neg, index % 2 === 0 ? styles.even : styles.odd]}
+                >
                   {item}
                 </Text>
               </View>
@@ -61,6 +65,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'white',
     marginTop: 15,
+    marginHorizontal: 1,
   },
   introText: {
     color: 'white',
@@ -70,6 +75,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: 'center',
     padding: 5,
+  },
+  pro: {
+    color: 'green',
+  },
+  neg: {
+    color: 'red',
   },
   even: {
     backgroundColor: '#333232',
