@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, ActivityIndicator } from 'react-native';
 
 export default function OverviewComp({ overviewObj }) {
   console.log(overviewObj.strengths);

@@ -8,7 +8,7 @@ import { db } from '../myDb';
 
 export default function KharacterGuide({ name, profile }) {
   const [strategyInfo, setStrategyInfo] = useState([]);
-  const [overviewInfo, setOverviewInfo] = useState({});
+  const [overviewInfo, setOverviewInfo] = useState(null);
   const [fetchComplete, setFetchComplete] = useState(false);
 
   const fetchGuide = () => {
@@ -27,7 +27,7 @@ export default function KharacterGuide({ name, profile }) {
               setOverviewInfo(parsedGuide.overview);
             } else {
               setStrategyInfo([]);
-              setOverviewInfo('Missing overview.');
+              setOverviewInfo(null);
             }
           },
           (txObj, err) => {
@@ -63,6 +63,17 @@ export default function KharacterGuide({ name, profile }) {
     return <OverviewComp overviewObj={overviewInfo} />;
   };
 
+  const DisplayPage = () => {
+    return (
+      <View>
+        <Title name={'Overview'} subHeader />
+        <MapThroughOverview />
+        <Title name={'Strategy'} subHeader />
+        <MapThroughStrats />
+      </View>
+    );
+  };
+
   return (
     <View>
       <Title name={name} />
@@ -70,12 +81,9 @@ export default function KharacterGuide({ name, profile }) {
         <Image style={{ height: 300, width: 300 }} source={{ uri: profile }} />
       </View>
       <Title name={'Guide'} underline />
-      <Title name={'Overview'} subHeader />
-      <MapThroughOverview />
-      <Title name={'Strategy'} subHeader />
-      {fetchComplete && strategyInfo.length > 0 ? (
-        <MapThroughStrats />
-      ) : fetchComplete && strategyInfo.length === 0 ? (
+      {fetchComplete && strategyInfo.length > 0 && overviewInfo ? (
+        <DisplayPage />
+      ) : fetchComplete && strategyInfo.length === 0 && overviewInfo === null ? (
         <View style={styles.noItemDiv}>
           <Text style={{ color: 'white' }}>No strats</Text>
         </View>
