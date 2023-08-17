@@ -8,7 +8,7 @@ import { db } from '../myDb';
 
 export default function KharacterGuide({ name, profile }) {
   const [strategyInfo, setStrategyInfo] = useState([]);
-  const [overviewInfo, setOverviewInfo] = useState('');
+  const [overviewInfo, setOverviewInfo] = useState({});
   const [fetchComplete, setFetchComplete] = useState(false);
 
   const fetchGuide = () => {
@@ -60,7 +60,7 @@ export default function KharacterGuide({ name, profile }) {
   };
 
   const MapThroughOverview = () => {
-    return <OverviewComp overviewString={overviewInfo} />;
+    return <OverviewComp overviewObj={overviewInfo} />;
   };
 
   return (

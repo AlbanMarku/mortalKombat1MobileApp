@@ -1,13 +1,33 @@
-import { Text, View, Pressable, Animated, StyleSheet } from 'react-native';
-import VideoPlayer from './VideoPlayer';
-import { useEffect, useState, useRef } from 'react';
-import { AntDesign } from '@expo/vector-icons';
-import ParseText from '../styles/ParseText';
+import { Text, View, StyleSheet } from 'react-native';
 
-export default function OverviewComp({ overviewString }) {
+export default function OverviewComp({ overviewObj }) {
+  console.log(overviewObj);
+
+  const RenderStrengths = () => {
+    return (
+      <View style={{ backgroundColor: 'red', flex: 1 }}>
+        {overviewObj.strengths.map((item, index) => {
+          return <Text key={index}>{item}</Text>;
+        })}
+      </View>
+    );
+  };
+
+  const RenderWeaknesses = () => {
+    return (
+      <View style={{ backgroundColor: 'red', flex: 1 }}>
+        {overviewObj.weaknesses.map((item, index) => {
+          return <Text key={index}>{item}</Text>;
+        })}
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>{overviewString}</Text>
+      <RenderStrengths />
+      <RenderWeaknesses />
+      <Text style={styles.text}>{overviewObj.intro}</Text>
     </View>
   );
 }
