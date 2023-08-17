@@ -1,5 +1,4 @@
 import { Text, View, StyleSheet, Image, ActivityIndicator } from 'react-native';
-import { client } from '../components/SanityClient';
 import { useEffect, useState } from 'react';
 import StrategyComp from './StratagyComp';
 import OverviewComp from './OverviewComp';
@@ -85,7 +84,7 @@ export default function KharacterGuide({ name, profile }) {
         <DisplayPage />
       ) : fetchComplete && strategyInfo.length === 0 && overviewInfo === null ? (
         <View style={styles.noItemDiv}>
-          <Text style={{ color: 'white' }}>No strats</Text>
+          <Text style={{ color: 'white' }}>Kharacter not finished</Text>
         </View>
       ) : (
         <ActivityIndicator color={'white'} size={'large'} />

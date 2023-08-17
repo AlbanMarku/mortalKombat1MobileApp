@@ -1,3 +1,1 @@
-Guide
-Use imgs instead of icons for inputs.
-Khar guide
+Verify data in app and sanity. first time check.
