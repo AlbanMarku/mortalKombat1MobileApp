@@ -19,7 +19,7 @@ export default function Kharacter({ route, navigation }) {
     try {
       db.transaction((tx) => {
         tx.executeSql(
-          'SELECT basicAttacks, stringAttacks, specialAttacks FROM Kharacters WHERE name = ?',
+          'SELECT basicAttacks, stringAttacks, specialAttacks FROM kharacters WHERE name = ?',
           [name],
           (txObj, resultSet) => {
             console.log('FETCHED');
@@ -50,7 +50,7 @@ export default function Kharacter({ route, navigation }) {
   return (
     <View style={[globalStyles.color, { flex: 1 }]}>
       <ScrollView>
-        <KharacterGuide name={name} profile={profile} />
+        <KharacterGuide name={name} profile={profile} type={'kharacter'} />
       </ScrollView>
 
       <BottomNav

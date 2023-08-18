@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { View } from 'react-native';
 import Kharacter from '../views/Kharacter';
+import Kameo from '../views/Kameo';
 import DrawerStack from './DrawerStack';
 import HeaderComp from '../components/HeaderComp';
 import FrameData from '../views/FrameData';
@@ -28,6 +29,17 @@ export default function MyStack() {
         <Stack.Screen
           name="Kharacter"
           component={Kharacter}
+          options={{
+            headerShown: true,
+            animation: 'slide_from_right',
+            gestureEnabled: true,
+            gestureDirection: 'horizontal',
+            headerRight: () => <HeaderComp />,
+          }}
+        />
+        <Stack.Screen
+          name="Kameo"
+          component={Kameo}
           options={{
             headerShown: true,
             animation: 'slide_from_right',

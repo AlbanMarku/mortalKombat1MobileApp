@@ -5,7 +5,7 @@ import OverviewComp from './OverviewComp';
 import Title from './Title';
 import { db } from '../myDb';
 
-export default function KharacterGuide({ name, profile }) {
+export default function KharacterGuide({ name, profile, type }) {
   const [strategyInfo, setStrategyInfo] = useState([]);
   const [overviewInfo, setOverviewInfo] = useState(null);
   const [fetchComplete, setFetchComplete] = useState(false);
@@ -40,8 +40,16 @@ export default function KharacterGuide({ name, profile }) {
     }
   };
 
+  const fetchKameoGuide = () => {
+    console.log('test fetch kameo');
+  };
+
   useEffect(() => {
-    fetchGuide();
+    if (type === 'kharacter') {
+      fetchGuide();
+    } else {
+      fetchKameoGuide();
+    }
   }, []);
 
   const MapThroughStrats = () => {
@@ -62,13 +70,22 @@ export default function KharacterGuide({ name, profile }) {
     return <OverviewComp overviewObj={overviewInfo} />;
   };
 
-  const DisplayPage = () => {
+  const DisplayKharacterPage = () => {
     return (
       <View>
         <Title name={'Overview'} subHeader />
         <MapThroughOverview />
         <Title name={'Strategy'} subHeader />
         <MapThroughStrats />
+      </View>
+    );
+  };
+
+  const DisplayKameoPage = () => {
+    console.log('yeye');
+    return (
+      <View>
+        <Title name={'Kameo!'} />
       </View>
     );
   };
@@ -80,14 +97,18 @@ export default function KharacterGuide({ name, profile }) {
         <Image style={{ height: 300, width: 300 }} source={{ uri: profile }} />
       </View>
       <Title name={'Guide'} underline />
-      {fetchComplete && strategyInfo.length > 0 && overviewInfo ? (
-        <DisplayPage />
-      ) : fetchComplete && strategyInfo.length === 0 && overviewInfo === null ? (
-        <View style={styles.noItemDiv}>
-          <Text style={{ color: 'white' }}>Kharacter not finished</Text>
-        </View>
+      {type === 'kharacter' ? ( // Render different comps depending if khar or kameo.
+        fetchComplete && strategyInfo.length > 0 && overviewInfo ? (
+          <DisplayKharacterPage />
+        ) : fetchComplete && strategyInfo.length === 0 && overviewInfo === null ? (
+          <View style={styles.noItemDiv}>
+            <Text style={{ color: 'white' }}>Kharacter not finished</Text>
+          </View>
+        ) : (
+          <ActivityIndicator color={'white'} size={'large'} />
+        )
       ) : (
-        <ActivityIndicator color={'white'} size={'large'} />
+        <DisplayKameoPage />
       )}
     </View>
   );

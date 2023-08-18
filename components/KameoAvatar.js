@@ -2,9 +2,10 @@ import { StyleSheet, Image, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 export default function KameoAvatar({ name, img, profile }) {
+  const navigation = useNavigation();
   return (
     <Pressable
-      onPress={() => console.log('clicker')}
+      onPress={() => navigation.navigate('Kameo', { name, img, profile })}
       style={({ pressed }) => (pressed ? styles.dim : styles.box)}
     >
       <Image
