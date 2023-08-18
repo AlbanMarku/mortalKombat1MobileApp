@@ -5,10 +5,14 @@ import OverviewComp from './OverviewComp';
 import Title from './Title';
 import { db } from '../myDb';
 
+//clean this garbage page up. Repetitive code.
+
 export default function KharacterGuide({ name, profile, type }) {
   const [strategyInfo, setStrategyInfo] = useState([]);
   const [overviewInfo, setOverviewInfo] = useState(null);
   const [fetchComplete, setFetchComplete] = useState(false);
+  const [kameoStrategyInfo, setKameoStrategyInfo] = useState([]);
+  const [kameoOverviewInfo, setKameoOverviewInfo] = useState(null);
 
   const fetchGuide = () => {
     try {
@@ -41,40 +45,75 @@ export default function KharacterGuide({ name, profile, type }) {
   };
 
   const fetchKameoGuide = () => {
-    console.log('test fetch kameo');
+    try {
+      setFetchComplete(false);
+      db.transaction((tx) => {
+        tx.executeSql(
+          'SELECT guide FROM kameos WHERE name = ?',
+          [name],
+          (txObj, resultSet) => {
+            const queriedGuide = resultSet.rows._array;
+            const parsedGuide = JSON.parse(queriedGuide[0].guide);
+            if (parsedGuide !== null) {
+              setKameoStrategyInfo(parsedGuide.strategy);
+              setKameoOverviewInfo(parsedGuide.overview);
+            } else {
+              setKameoStrategyInfo([]);
+              setOverviewInfo(null);
+            }
+          },
+          (txObj, err) => {
+            console.log(err);
+          }
+        );
+      });
+      setFetchComplete(true);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
     if (type === 'kharacter') {
       fetchGuide();
-    } else {
+    } else if (type === 'kameo') {
       fetchKameoGuide();
     }
   }, []);
 
   const MapThroughStrats = () => {
-    const strats = strategyInfo.map((item) => {
-      return (
-        <StrategyComp
-          info={item.strategyInfo}
-          title={item.strategyTitle}
-          videoUrl={item.videoUrl}
-          key={item._key}
-        />
-      );
-    });
-    return strats;
-  };
-
-  const MapThroughOverview = () => {
-    return <OverviewComp overviewObj={overviewInfo} />;
+    if (type === 'kharacter') {
+      const strats = strategyInfo.map((item) => {
+        return (
+          <StrategyComp
+            info={item.strategyInfo}
+            title={item.strategyTitle}
+            videoUrl={item.videoUrl}
+            key={item._key}
+          />
+        );
+      });
+      return strats;
+    } else {
+      const strats = kameoStrategyInfo.map((item) => {
+        return (
+          <StrategyComp
+            info={item.strategyInfo}
+            title={item.strategyTitle}
+            videoUrl={item.videoUrl}
+            key={item._key}
+          />
+        );
+      });
+      return strats;
+    }
   };
 
   const DisplayKharacterPage = () => {
     return (
       <View>
         <Title name={'Overview'} subHeader />
-        <MapThroughOverview />
+        <OverviewComp overviewObj={overviewInfo} />
         <Title name={'Strategy'} subHeader />
         <MapThroughStrats />
       </View>
@@ -82,10 +121,12 @@ export default function KharacterGuide({ name, profile, type }) {
   };
 
   const DisplayKameoPage = () => {
-    console.log('yeye');
     return (
       <View>
-        <Title name={'Kameo!'} />
+        <Title name={'Kameo Overview'} />
+        <OverviewComp overviewObj={kameoOverviewInfo} />
+        <Title name={'Kameo Strategy'} />
+        <MapThroughStrats />
       </View>
     );
   };
@@ -107,9 +148,17 @@ export default function KharacterGuide({ name, profile, type }) {
         ) : (
           <ActivityIndicator color={'white'} size={'large'} />
         )
-      ) : (
-        <DisplayKameoPage />
-      )}
+      ) : type === 'kameo' ? (
+        fetchComplete && kameoStrategyInfo.length > 0 && kameoOverviewInfo ? (
+          <DisplayKameoPage />
+        ) : fetchComplete && strategyInfo.length === 0 && overviewInfo === null ? (
+          <View style={styles.noItemDiv}>
+            <Text style={{ color: 'white' }}>Kharacter not finished</Text>
+          </View>
+        ) : (
+          <ActivityIndicator color={'white'} size={'large'} />
+        )
+      ) : null}
     </View>
   );
 }

@@ -1,16 +1,14 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { useContext, useEffect, useState } from 'react';
+import { useState } from 'react';
 import Home from '../views/Home';
 import About from '../views/About';
 import HeaderComp from '../components/HeaderComp';
-import { MyContext } from '../Context';
 import { client, urlFor } from '../components/SanityClient';
 import { setupDb } from '../myDb';
 
 const Drawer = createDrawerNavigator();
 
 export default function DrawerStack() {
-  const [input, setInput, rosterData, setRosterData] = useContext(MyContext);
   const [loading, setLoading] = useState(false);
 
   const fetchRoster = async () => {
@@ -41,20 +39,21 @@ export default function DrawerStack() {
 
       //kameo
       const kameoQuery = await client.fetch(
-        "*[_type == 'kameo']{_id, name, avatar, profile, moves}"
+        "*[_type == 'kameo']{_id, name, avatar, profile, moves, guide}"
       );
       const kameoExtracted = kameoQuery.map((item) => {
         const parsedKameoAvatar = urlFor(item.avatar.asset._ref);
         const parsedKameoImg = urlFor(item.profile.asset._ref);
         const moves = item.moves ? item.moves : [];
+        const guide = item.guide;
         return {
           name: item.name,
           avatar: parsedKameoAvatar.url(),
           profile: parsedKameoImg.url(),
           moves: moves,
+          guide: guide,
         };
       });
-
       setupDb(mainData, kameoExtracted);
       setLoading(false);
     } catch (err) {
