@@ -1,6 +1,7 @@
 import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
 import LessonButtons from '../components/LessonButtons';
 import KharacterAvatar from '../components/KharacterAvatar';
+import KameoAvatar from '../components/KameoAvatar';
 import Title from '../components/Title';
 import { globalStyles } from '../styles/global';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -12,6 +13,7 @@ import { db } from '../myDb';
 
 export default function Home({ navigation, loading }) {
   const [avatarInfo, setAvatarInfo] = useState([]);
+  const [kameoAvatarInfo, setKameoAvatarInfo] = useState([]);
 
   const loadAvatar = () => {
     db.transaction((tx) => {
@@ -21,6 +23,14 @@ export default function Home({ navigation, loading }) {
         null,
         (txObj, resultSet) => {
           setAvatarInfo(resultSet.rows._array);
+        }
+      );
+
+      tx.executeSql(
+        'SELECT name, avatar, profile FROM kameos ORDER BY name ASC',
+        null,
+        (txObj, resultSet) => {
+          setKameoAvatarInfo(resultSet.rows._array);
         }
       );
     });
@@ -33,33 +43,6 @@ export default function Home({ navigation, loading }) {
   useEffect(() => {
     loadAvatar();
   }, [loading]);
-
-  const tempKameo = [
-    {
-      img: 'https://cdn-prod.mortalkombat.com/roster/frost/thumb-p.png',
-    },
-    {
-      img: 'https://cdn-prod.mortalkombat.com/roster/frost/thumb-p.png',
-    },
-    {
-      img: 'https://cdn-prod.mortalkombat.com/roster/frost/thumb-p.png',
-    },
-    {
-      img: 'https://cdn-prod.mortalkombat.com/roster/frost/thumb-p.png',
-    },
-    {
-      img: 'https://cdn-prod.mortalkombat.com/roster/frost/thumb-p.png',
-    },
-    {
-      img: 'https://cdn-prod.mortalkombat.com/roster/frost/thumb-p.png',
-    },
-    {
-      img: 'https://cdn-prod.mortalkombat.com/roster/frost/thumb-p.png',
-    },
-    {
-      img: 'https://cdn-prod.mortalkombat.com/roster/frost/thumb-p.png',
-    },
-  ];
 
   return (
     <ScrollView style={[globalStyles.color, styles.container]}>
@@ -85,9 +68,18 @@ export default function Home({ navigation, loading }) {
       <Title name={'Kameos'} />
       <View>
         <View style={styles.columnContainer}>
-          {tempKameo.map((item, index) => (
-            <KharacterAvatar key={index.toString()} img={item.img} />
-          ))}
+          {loading ? (
+            <ActivityIndicator color={'white'} size={'large'} />
+          ) : (
+            kameoAvatarInfo.map((item, index) => (
+              <KameoAvatar
+                key={index.toString()}
+                img={item.avatar}
+                name={item.name ? item.name : 'unknown name'}
+                profile={item.profile}
+              />
+            ))
+          )}
         </View>
       </View>
     </ScrollView>

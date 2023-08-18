@@ -37,10 +37,10 @@ export const setupDb = async (mainData, kameoData) => {
             kameoInsertQuery,
             [name, avatar, profile, movesJSON],
             (txObj, resultSet) => {
-              console.log('Insert success:', resultSet);
+              console.log('Insert success kameo:', resultSet);
             },
             (txObj, error) => {
-              console.log('Insert failed:', error);
+              console.log('Insert failed kameo:', error);
             }
           );
         }
