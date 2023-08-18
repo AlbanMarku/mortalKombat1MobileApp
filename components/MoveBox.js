@@ -34,8 +34,10 @@ export default function MoveBox({ attack, iconSet, style }) {
         return iconSet.fk;
       case 4:
         return iconSet.bk;
+      case 5:
+        return iconSet.amp;
       default:
-        null;
+        return null;
     }
   };
 

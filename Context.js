@@ -31,6 +31,7 @@ const MyProvider = ({ children }) => {
             source={require('./assets/imgs/ps4Circle.png')}
           />
         ),
+        amp: <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/AMP.png')} />,
       };
       return iconSet;
     } else if (inputValue === 2) {
@@ -39,6 +40,7 @@ const MyProvider = ({ children }) => {
         bp: <Image style={{ width: 20, height: 20 }} source={require('./assets/imgs/xboxY.png')} />,
         fk: <Image style={{ width: 20, height: 20 }} source={require('./assets/imgs/xboxA.png')} />,
         bk: <Image style={{ width: 20, height: 20 }} source={require('./assets/imgs/xboxB.png')} />,
+        amp: <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/AMP.png')} />,
       };
       return iconSet;
     } else if (inputValue === 3) {
@@ -67,6 +69,7 @@ const MyProvider = ({ children }) => {
             source={require('./assets/imgs/nintendoA.png')}
           />
         ),
+        amp: <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/AMP.png')} />,
       };
       return iconSet;
     } else if (input == 0) {
@@ -75,6 +78,7 @@ const MyProvider = ({ children }) => {
         bp: <Image style={{ width: 20, height: 20 }} source={require('./assets/imgs/2.png')} />,
         fk: <Image style={{ width: 20, height: 20 }} source={require('./assets/imgs/3.png')} />,
         bk: <Image style={{ width: 20, height: 20 }} source={require('./assets/imgs/4.png')} />,
+        amp: <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/AMP.png')} />,
       };
       return iconSet;
     }
