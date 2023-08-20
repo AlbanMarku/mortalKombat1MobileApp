@@ -1,5 +1,6 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { useState } from 'react';
+import { ToastAndroid } from 'react-native';
 import Home from '../views/Home';
 import About from '../views/About';
 import HeaderComp from '../components/HeaderComp';
@@ -56,9 +57,15 @@ export default function DrawerStack() {
       });
       setupDb(mainData, kameoExtracted);
       setLoading(false);
+      ToastAndroid.showWithGravity('Roster data updated!', ToastAndroid.SHORT, ToastAndroid.BOTTOM);
     } catch (err) {
       console.log(err);
       setLoading(false);
+      ToastAndroid.showWithGravity(
+        'Something went wrong. Are you online?',
+        ToastAndroid.SHORT,
+        ToastAndroid.BOTTOM
+      );
     }
   };
 
