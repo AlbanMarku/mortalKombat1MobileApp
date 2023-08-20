@@ -1,16 +1,15 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { useContext, useEffect, useState } from 'react';
+import { useState } from 'react';
+import { ToastAndroid } from 'react-native';
 import Home from '../views/Home';
 import About from '../views/About';
 import HeaderComp from '../components/HeaderComp';
-import { MyContext } from '../Context';
 import { client, urlFor } from '../components/SanityClient';
 import { setupDb } from '../myDb';
 
 const Drawer = createDrawerNavigator();
 
 export default function DrawerStack() {
-  const [input, setInput, rosterData, setRosterData] = useContext(MyContext);
   const [loading, setLoading] = useState(false);
 
   const fetchRoster = async () => {
@@ -21,7 +20,7 @@ export default function DrawerStack() {
       const queryData = await client.fetch(
         " *[_type == 'kharacter']{ _id,name, avatar, profile, basicAttacks[]{..., attackType->{name}},stringAttacks[]{..., attackType->{name}},basicAttacks[]{..., attackType->{name}},specialAttacks[]{...,attackType->{name}}, guide}"
       );
-      const extractedData = queryData.map((item) => {
+      const mainData = queryData.map((item) => {
         const parsedAvatarImg = urlFor(item.avatar.asset._ref);
         const parsedProfileImg = urlFor(item.profile.asset._ref);
         const basicAttacks = item.basicAttacks ? item.basicAttacks : [];
@@ -38,11 +37,35 @@ export default function DrawerStack() {
           guide: guide,
         };
       });
-      setupDb(extractedData);
+
+      //kameo
+      const kameoQuery = await client.fetch(
+        "*[_type == 'kameo']{_id, name, avatar, profile, moves, guide}"
+      );
+      const kameoExtracted = kameoQuery.map((item) => {
+        const parsedKameoAvatar = urlFor(item.avatar.asset._ref);
+        const parsedKameoImg = urlFor(item.profile.asset._ref);
+        const moves = item.moves ? item.moves : [];
+        const guide = item.guide;
+        return {
+          name: item.name,
+          avatar: parsedKameoAvatar.url(),
+          profile: parsedKameoImg.url(),
+          moves: moves,
+          guide: guide,
+        };
+      });
+      setupDb(mainData, kameoExtracted);
       setLoading(false);
+      ToastAndroid.showWithGravity('Roster data updated!', ToastAndroid.SHORT, ToastAndroid.BOTTOM);
     } catch (err) {
       console.log(err);
       setLoading(false);
+      ToastAndroid.showWithGravity(
+        'Something went wrong. Are you online?',
+        ToastAndroid.SHORT,
+        ToastAndroid.BOTTOM
+      );
     }
   };
 

@@ -1,4 +1,4 @@
 Verify data in app and sanity. first time check.
-held, assist, meter burn
+held, assist
 suitable images
 cache images on load
