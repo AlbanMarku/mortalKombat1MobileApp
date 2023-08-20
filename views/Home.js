@@ -14,7 +14,17 @@ export default function Home({ navigation, loading }) {
   const [avatarInfo, setAvatarInfo] = useState([]);
   const [kameoAvatarInfo, setKameoAvatarInfo] = useState([]);
 
-  const loadAvatar = () => {
+  const loadAvatar = async () => {
+    try {
+      const kharacterImages = avatarInfo.map((item) => Asset.fromURI(item.avatar).downloadAsync());
+      const kameoImages = kameoAvatarInfo.map((item) => Asset.fromURI(item.avatar).downloadAsync());
+
+      await Promise.all([...kharacterImages, ...kameoImages]);
+
+      console.log('loaded images');
+    } catch (error) {
+      console.log(error);
+    }
     db.transaction((tx) => {
       //Search names
       tx.executeSql(
