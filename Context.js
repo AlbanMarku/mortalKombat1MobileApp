@@ -1,5 +1,6 @@
 import { createContext, useState } from 'react';
 import { Image } from 'react-native';
+import { Asset } from 'expo-asset';
 
 //If context requires more operations, make context file for each value instead of all together.
 
@@ -8,6 +9,38 @@ export const MyContext = createContext();
 const MyProvider = ({ children }) => {
   const [input, setInput] = useState(0);
   const [rosterData, setRosterData] = useState([]);
+
+  const loadImages = async () => {
+    try {
+      const imageAssets = [
+        require('./assets/imgs/ps4Square.png'),
+        require('./assets/imgs/ps4Triangle.png'),
+        require('./assets/imgs/ps4X.png'),
+        require('./assets/imgs/ps4Circle.png'),
+        require('./assets/imgs/AMP.png'),
+        require('./assets/imgs/xboxX.png'),
+        require('./assets/imgs/xboxY.png'),
+        require('./assets/imgs/xboxA.png'),
+        require('./assets/imgs/xboxB.png'),
+        require('./assets/imgs/AMP.png'),
+        require('./assets/imgs/nintendoY.png'),
+        require('./assets/imgs/nintendoX.png'),
+        require('./assets/imgs/nintendoB.png'),
+        require('./assets/imgs/nintendoA.png'),
+        require('./assets/imgs/AMP.png'),
+        require('./assets/imgs/1.png'),
+        require('./assets/imgs/2.png'),
+        require('./assets/imgs/3.png'),
+        require('./assets/imgs/4.png'),
+        require('./assets/imgs/AMP.png'),
+      ];
+      await Asset.loadAsync(imageAssets);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  loadImages();
 
   const getIcon = (inputValue) => {
     if (inputValue === 1) {
