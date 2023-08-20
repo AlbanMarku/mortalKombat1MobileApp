@@ -1,4 +1,5 @@
 Verify data in app and sanity. first time check.
 held, assist
 suitable images
-cache images on load
+
+test if first time check is working.
