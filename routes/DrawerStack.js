@@ -8,9 +8,8 @@ import { client, urlFor } from '../components/SanityClient';
 import { setupDb } from '../myDb';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Drawer = createDrawerNavigator();
-
 export default function DrawerStack() {
+  const Drawer = createDrawerNavigator();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -20,7 +19,6 @@ export default function DrawerStack() {
         if (!value) {
           // This is the first time the app is opened
           AsyncStorage.setItem('appOpened', 'true'); // Set the flag
-
           fetchroster();
         }
       });
@@ -34,9 +32,26 @@ export default function DrawerStack() {
     setLoading(true);
     //Fetch all karacters. Get their name, avatar, profile image. Send the fetched roster to the database for offline access.
     try {
-      const queryData = await client.fetch(
-        "*[_type == 'kharacter']{ _id,name, avatar, profile, basicAttacks[]{..., attackType->{name}},stringAttacks[]{..., attackType->{name}},basicAttacks[]{..., attackType->{name}},specialAttacks[]{...,attackType->{name}}, guide}"
-      );
+      const timeoutPromise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          reject(new Error('Fetch timeout'));
+        }, 10000);
+      });
+
+      const queryDataPromise = new Promise(async (resolve, reject) => {
+        try {
+          const queryData = await client.fetch(
+            "*[_type == 'kharacter']{ _id,name, avatar, profile, basicAttacks[]{..., attackType->{name}},stringAttacks[]{..., attackType->{name}},basicAttacks[]{..., attackType->{name}},specialAttacks[]{...,attackType->{name}}, guide}"
+          );
+          resolve(queryData);
+        } catch (error) {
+          reject(error);
+        }
+      });
+
+      await Promise.race([queryDataPromise, timeoutPromise]);
+      const queryData = await queryDataPromise;
+
       const mainData = queryData.map((item) => {
         const parsedAvatarImg = urlFor(item.avatar.asset._ref);
         const parsedProfileImg = urlFor(item.profile.asset._ref);
@@ -78,11 +93,19 @@ export default function DrawerStack() {
     } catch (err) {
       console.log(err);
       setLoading(false);
-      ToastAndroid.showWithGravity(
-        'Something went wrong. Are you online?',
-        ToastAndroid.SHORT,
-        ToastAndroid.BOTTOM
-      );
+      if (err.message === 'Fetch timeout') {
+        ToastAndroid.showWithGravity(
+          'Something went wrong. Internet is too slow.',
+          ToastAndroid.SHORT,
+          ToastAndroid.BOTTOM
+        );
+      } else {
+        ToastAndroid.showWithGravity(
+          'Something went wrong. Are you online?',
+          ToastAndroid.SHORT,
+          ToastAndroid.BOTTOM
+        );
+      }
     }
   };
 

@@ -5,6 +5,7 @@ import Title from '../components/Title';
 import { globalStyles } from '../styles/global';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useEffect, useState } from 'react';
+import { Asset } from 'expo-asset';
 
 import { db } from '../myDb';
 
