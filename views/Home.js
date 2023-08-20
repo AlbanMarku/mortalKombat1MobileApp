@@ -1,7 +1,6 @@
 import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
 import LessonButtons from '../components/LessonButtons';
-import KharacterAvatar from '../components/KharacterAvatar';
-import KameoAvatar from '../components/KameoAvatar';
+import Avatar from '../components/Avatar';
 import Title from '../components/Title';
 import { globalStyles } from '../styles/global';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -56,11 +55,12 @@ export default function Home({ navigation, loading }) {
           <ActivityIndicator color={'white'} size={'large'} />
         ) : (
           avatarInfo.map((item, index) => (
-            <KharacterAvatar
+            <Avatar
               key={index.toString()}
               img={item.avatar}
               name={item.name ? item.name : 'unknown name'}
               profile={item.profile}
+              type={'kharacter'}
             />
           ))
         )}
@@ -72,11 +72,12 @@ export default function Home({ navigation, loading }) {
             <ActivityIndicator color={'white'} size={'large'} />
           ) : (
             kameoAvatarInfo.map((item, index) => (
-              <KameoAvatar
+              <Avatar
                 key={index.toString()}
                 img={item.avatar}
                 name={item.name ? item.name : 'unknown name'}
                 profile={item.profile}
+                type={'kameo'}
               />
             ))
           )}
