@@ -14,43 +14,43 @@ export default function DrawerStack() {
 
   useEffect(() => {
     // Check if the app has been opened before
-    try {
-      AsyncStorage.getItem('appOpened').then((value) => {
-        if (!value) {
-          // This is the first time the app is opened
-          AsyncStorage.setItem('appOpened', 'true'); // Set the flag
-          fetchroster();
-        }
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    const checkOpened = async () => {
+      try {
+        AsyncStorage.getItem('appOpened').then((value) => {
+          if (!value) {
+            // This is the first time the app is opened
+            AsyncStorage.setItem('appOpened', 'true'); // Set the flag
+            fetchroster();
+            ToastAndroid.showWithGravity(
+              'this was the first launch',
+              ToastAndroid.SHORT,
+              ToastAndroid.BOTTOM
+            );
+            console.log('changed to opened');
+          } else {
+            ToastAndroid.showWithGravity(
+              'this was the SECOND launch',
+              ToastAndroid.SHORT,
+              ToastAndroid.BOTTOM
+            );
+          }
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    checkOpened();
   }, []);
 
   const fetchRoster = async () => {
     console.log('fetching...');
     setLoading(true);
-    //Fetch all karacters. Get their name, avatar, profile image. Send the fetched roster to the database for offline access.
+
     try {
-      const timeoutPromise = new Promise((resolve, reject) => {
-        setTimeout(() => {
-          reject(new Error('Fetch timeout'));
-        }, 10000);
-      });
-
-      const queryDataPromise = new Promise(async (resolve, reject) => {
-        try {
-          const queryData = await client.fetch(
-            "*[_type == 'kharacter']{ _id,name, avatar, profile, basicAttacks[]{..., attackType->{name}},stringAttacks[]{..., attackType->{name}},basicAttacks[]{..., attackType->{name}},specialAttacks[]{...,attackType->{name}}, guide}"
-          );
-          resolve(queryData);
-        } catch (error) {
-          reject(error);
-        }
-      });
-
-      await Promise.race([queryDataPromise, timeoutPromise]);
-      const queryData = await queryDataPromise;
+      const queryData = await client.fetch(
+        "*[_type == 'kharacter']{ _id,name, avatar, profile, basicAttacks[]{..., attackType->{name}},stringAttacks[]{..., attackType->{name}},basicAttacks[]{..., attackType->{name}},specialAttacks[]{...,attackType->{name}}, guide}"
+      );
 
       const mainData = queryData.map((item) => {
         const parsedAvatarImg = urlFor(item.avatar.asset._ref);
@@ -70,7 +70,6 @@ export default function DrawerStack() {
         };
       });
 
-      //kameo
       const kameoQuery = await client.fetch(
         "*[_type == 'kameo']{_id, name, avatar, profile, moves, guide}"
       );
@@ -87,21 +86,23 @@ export default function DrawerStack() {
           guide: guide,
         };
       });
+
       setupDb(mainData, kameoExtracted);
       setLoading(false);
       ToastAndroid.showWithGravity('Roster data updated!', ToastAndroid.SHORT, ToastAndroid.BOTTOM);
     } catch (err) {
       console.log(err);
       setLoading(false);
-      if (err.message === 'Fetch timeout') {
+
+      if (err.message.includes('Network request failed')) {
         ToastAndroid.showWithGravity(
-          'Something went wrong. Internet is too slow.',
+          'Something went wrong. Are you online?',
           ToastAndroid.SHORT,
           ToastAndroid.BOTTOM
         );
       } else {
         ToastAndroid.showWithGravity(
-          'Something went wrong. Are you online?',
+          'Something went wrong with the fetch',
           ToastAndroid.SHORT,
           ToastAndroid.BOTTOM
         );
