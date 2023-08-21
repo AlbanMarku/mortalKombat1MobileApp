@@ -12,34 +12,44 @@ export default function DrawerStack() {
   const Drawer = createDrawerNavigator();
   const [loading, setLoading] = useState(false);
 
+  const checkOpened = async () => {
+    try {
+      const value = await AsyncStorage.getItem('appOpened');
+
+      if (value === null || value === 'false') {
+        // This is the first time the app is opened
+        await AsyncStorage.setItem('appOpened', 'true'); // Set the flag
+        fetchRoster();
+        ToastAndroid.showWithGravity(
+          'This was the first launch',
+          ToastAndroid.SHORT,
+          ToastAndroid.BOTTOM
+        );
+        console.log('Changed to opened');
+      } else {
+        ToastAndroid.showWithGravity(
+          'This was the SECOND launch',
+          ToastAndroid.SHORT,
+          ToastAndroid.BOTTOM
+        );
+        console.log('This was the SECOND launch');
+      }
+    } catch (error) {
+      console.log('Error:', error);
+    }
+  };
+
+  const clearAppOpenedFlag = async () => {
+    try {
+      await AsyncStorage.removeItem('appOpened');
+      console.log('Cleared appOpened flag');
+    } catch (error) {
+      console.log('Error clearing appOpened flag:', error);
+    }
+  };
+
   useEffect(() => {
     // Check if the app has been opened before
-    const checkOpened = async () => {
-      try {
-        AsyncStorage.getItem('appOpened').then((value) => {
-          if (!value) {
-            // This is the first time the app is opened
-            AsyncStorage.setItem('appOpened', 'true'); // Set the flag
-            fetchroster();
-            ToastAndroid.showWithGravity(
-              'this was the first launch',
-              ToastAndroid.SHORT,
-              ToastAndroid.BOTTOM
-            );
-            console.log('changed to opened');
-          } else {
-            ToastAndroid.showWithGravity(
-              'this was the SECOND launch',
-              ToastAndroid.SHORT,
-              ToastAndroid.BOTTOM
-            );
-          }
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
     checkOpened();
   }, []);
 
