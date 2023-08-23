@@ -117,8 +117,25 @@ const MyProvider = ({ children }) => {
     }
   };
 
+  const getButton = (button, iconSet) => {
+    switch (button) {
+      case 1:
+        return iconSet.fp;
+      case 2:
+        return iconSet.bp;
+      case 3:
+        return iconSet.fk;
+      case 4:
+        return iconSet.bk;
+      case 5:
+        return iconSet.amp;
+      default:
+        return null;
+    }
+  };
+
   return (
-    <MyContext.Provider value={[input, setInput, rosterData, setRosterData, getIcon]}>
+    <MyContext.Provider value={[input, setInput, rosterData, setRosterData, getIcon, getButton]}>
       {children}
     </MyContext.Provider>
   );

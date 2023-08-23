@@ -1,9 +1,12 @@
 import { View, StyleSheet, Text, TouchableOpacity, Modal } from 'react-native';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Entypo } from '@expo/vector-icons';
 import ModalComp from './ModalComp';
+import { MyContext } from '../Context';
 
 export default function MoveBox({ attack, iconSet, style }) {
+  const [input, setInput, rosterData, setRosterData, getIcon, getButton] = useContext(MyContext);
+
   //Grab attackinputs array form the attack prop. Grab attack properties. Map through attackinputs array to display in div. In depth stats passed as props to modal.
   const kombo = attack.attackInputs;
   const [openModal, setOpenModal] = useState(false);
@@ -21,24 +24,6 @@ export default function MoveBox({ attack, iconSet, style }) {
     damageHit: attack.damageHit,
     hitAdv: attack.hitAdv,
     airOk: attack.airOk,
-  };
-
-  const buttonComp = (button) => {
-    //Attack use NRS notation. Return icon depending on number.
-    switch (button) {
-      case 1:
-        return iconSet.fp;
-      case 2:
-        return iconSet.bp;
-      case 3:
-        return iconSet.fk;
-      case 4:
-        return iconSet.bk;
-      case 5:
-        return iconSet.amp;
-      default:
-        return null;
-    }
   };
 
   const directionComp = (direction) => {
@@ -88,7 +73,7 @@ export default function MoveBox({ attack, iconSet, style }) {
               return (
                 <View style={styles.input} key={item._key}>
                   <View style={styles.but}>{directionComp(item.direction)}</View>
-                  <View style={styles.but}>{buttonComp(item.button)}</View>
+                  <View style={styles.but}>{getButton(item.button, iconSet)}</View>
                 </View>
               );
             })}

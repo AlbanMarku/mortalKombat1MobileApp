@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import { MyContext } from '../Context';
 
 export default function StrategyComp({ para }) {
-  const [input, setInput, rosterData, setRosterData, getIcon] = useContext(MyContext);
+  const [input, setInput, rosterData, setRosterData, getIcon, getButton] = useContext(MyContext);
   const iconSet = getIcon(input);
 
   const ReplaceDir = (direction) => {
@@ -25,18 +25,7 @@ export default function StrategyComp({ para }) {
 
   const ReplaceBut = (button) => {
     //Attack use NRS notation. Return icon depending on number.
-    switch (button.number) {
-      case 1:
-        return iconSet.fp;
-      case 2:
-        return iconSet.bp;
-      case 3:
-        return iconSet.fk;
-      case 4:
-        return iconSet.bk;
-      default:
-        null;
-    }
+    return getButton(button.number, iconSet);
   };
 
   const AttackConverter = ({ para }) => {

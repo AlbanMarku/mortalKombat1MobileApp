@@ -1,6 +1,4 @@
-Verify data in app and sanity. first time check.
+Verify data in app and sanity
 held, assist
 suitable images
 fix jitter navigate
-
-test if first time check is working.
