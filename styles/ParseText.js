@@ -11,21 +11,29 @@ export default function StrategyComp({ para }) {
     switch (direction.number) {
       case 4:
         return (
-          <Image style={{ width: 20, height: 20 }} source={require('../assets/imgs/LEFT.png')} />
+          <View style={styles.input}>
+            <Image style={{ width: 18, height: 18 }} source={require('../assets/imgs/LEFT.png')} />
+          </View>
         );
       case 6:
         return (
-          <Image style={{ width: 20, height: 20 }} source={require('../assets/imgs/RIGHT.png')} />
+          <View style={styles.input}>
+            <Image style={{ width: 18, height: 18 }} source={require('../assets/imgs/RIGHT.png')} />
+          </View>
         );
 
       case 2:
         return (
-          <Image style={{ width: 20, height: 20 }} source={require('../assets/imgs/DOWN.png')} />
+          <View style={styles.input}>
+            <Image style={{ width: 18, height: 18 }} source={require('../assets/imgs/DOWN.png')} />
+          </View>
         );
 
       case 8:
         return (
-          <Image style={{ width: 20, height: 20 }} source={require('../assets/imgs/UP.png')} />
+          <View style={styles.input}>
+            <Image style={{ width: 18, height: 18 }} source={require('../assets/imgs/UP.png')} />
+          </View>
         );
 
       default:
@@ -35,7 +43,7 @@ export default function StrategyComp({ para }) {
 
   const ReplaceBut = (button) => {
     //Attack use NRS notation. Return icon depending on number.
-    return getButton(button.number, iconSet);
+    return <View style={styles.input}>{getButton(button.number, iconSet)}</View>;
   };
 
   const AttackConverter = ({ para }) => {
@@ -74,5 +82,9 @@ const styles = StyleSheet.create({
   attacksDiv: {
     flexDirection: 'row',
     marginBottom: -5,
+    marginRight: -5,
+  },
+  input: {
+    marginRight: 5,
   },
 });
