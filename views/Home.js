@@ -39,8 +39,18 @@ export default function Home({ navigation, loading }) {
       tx.executeSql(
         'SELECT name, avatar, profile FROM kameos ORDER BY name ASC',
         null,
-        (txObj, resultSet) => {
-          setKameoAvatarInfo(resultSet.rows._array);
+        async (txObj, resultSet) => {
+          const kameoArray = resultSet.rows._array;
+          const avatarPromises = kameoArray.map(async (item) => {
+            const profileAsset = await Asset.fromURI(item.profile).downloadAsync();
+            return {
+              name: item.name,
+              avatar: item.avatar,
+              profile: profileAsset.localUri,
+            };
+          });
+          const updatedAvatarInfo = await Promise.all(avatarPromises);
+          setKameoAvatarInfo(updatedAvatarInfo);
         }
       );
     });
