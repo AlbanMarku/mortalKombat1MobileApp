@@ -48,25 +48,30 @@ const MyProvider = ({ children }) => {
 
   loadImages();
 
-  const getIcon = (inputValue) => {
+  const getIcon = (inputValue, size) => {
     if (inputValue === 1) {
       const iconSet = {
         fp: (
           <Image
-            style={{ width: 20, height: 20 }}
+            style={{ width: size || 20, height: size || 20 }}
             source={require('./assets/imgs/ps4Square.png')}
           />
         ),
         bp: (
           <Image
-            style={{ width: 20, height: 20 }}
+            style={{ width: size || 20, height: size || 20 }}
             source={require('./assets/imgs/ps4Triangle.png')}
           />
         ),
-        fk: <Image style={{ width: 20, height: 20 }} source={require('./assets/imgs/ps4X.png')} />,
+        fk: (
+          <Image
+            style={{ width: size || 20, height: size || 20 }}
+            source={require('./assets/imgs/ps4X.png')}
+          />
+        ),
         bk: (
           <Image
-            style={{ width: 20, height: 20 }}
+            style={{ width: size || 20, height: size || 20 }}
             source={require('./assets/imgs/ps4Circle.png')}
           />
         ),
@@ -81,10 +86,30 @@ const MyProvider = ({ children }) => {
       return iconSet;
     } else if (inputValue === 2) {
       const iconSet = {
-        fp: <Image style={{ width: 20, height: 20 }} source={require('./assets/imgs/xboxX.png')} />,
-        bp: <Image style={{ width: 20, height: 20 }} source={require('./assets/imgs/xboxY.png')} />,
-        fk: <Image style={{ width: 20, height: 20 }} source={require('./assets/imgs/xboxA.png')} />,
-        bk: <Image style={{ width: 20, height: 20 }} source={require('./assets/imgs/xboxB.png')} />,
+        fp: (
+          <Image
+            style={{ width: size || 20, height: size || 20 }}
+            source={require('./assets/imgs/xboxX.png')}
+          />
+        ),
+        bp: (
+          <Image
+            style={{ width: size || 20, height: size || 20 }}
+            source={require('./assets/imgs/xboxY.png')}
+          />
+        ),
+        fk: (
+          <Image
+            style={{ width: size || 20, height: size || 20 }}
+            source={require('./assets/imgs/xboxA.png')}
+          />
+        ),
+        bk: (
+          <Image
+            style={{ width: size || 20, height: size || 20 }}
+            source={require('./assets/imgs/xboxB.png')}
+          />
+        ),
         amp: <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/AMP.png')} />,
         assist: (
           <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/ASSIST.png')} />
@@ -98,25 +123,45 @@ const MyProvider = ({ children }) => {
       const iconSet = {
         fp: (
           <Image
-            style={{ width: 20, height: 20, backgroundColor: 'white', borderRadius: 20 }}
+            style={{
+              width: size || 20,
+              height: size || 20,
+              backgroundColor: 'white',
+              borderRadius: size || 20,
+            }}
             source={require('./assets/imgs/nintendoY.png')}
           />
         ),
         bp: (
           <Image
-            style={{ width: 20, height: 20, backgroundColor: 'white', borderRadius: 20 }}
+            style={{
+              width: size || 20,
+              height: size || 20,
+              backgroundColor: 'white',
+              borderRadius: size || 20,
+            }}
             source={require('./assets/imgs/nintendoX.png')}
           />
         ),
         fk: (
           <Image
-            style={{ width: 20, height: 20, backgroundColor: 'white', borderRadius: 20 }}
+            style={{
+              width: size || 20,
+              height: size || 20,
+              backgroundColor: 'white',
+              borderRadius: size || 20,
+            }}
             source={require('./assets/imgs/nintendoB.png')}
           />
         ),
         bk: (
           <Image
-            style={{ width: 20, height: 20, backgroundColor: 'white', borderRadius: 20 }}
+            style={{
+              width: size || 20,
+              height: size || 20,
+              backgroundColor: 'white',
+              borderRadius: size || 20,
+            }}
             source={require('./assets/imgs/nintendoA.png')}
           />
         ),
@@ -131,10 +176,30 @@ const MyProvider = ({ children }) => {
       return iconSet;
     } else if (input == 0) {
       const iconSet = {
-        fp: <Image style={{ width: 20, height: 20 }} source={require('./assets/imgs/1.png')} />,
-        bp: <Image style={{ width: 20, height: 20 }} source={require('./assets/imgs/2.png')} />,
-        fk: <Image style={{ width: 20, height: 20 }} source={require('./assets/imgs/3.png')} />,
-        bk: <Image style={{ width: 20, height: 20 }} source={require('./assets/imgs/4.png')} />,
+        fp: (
+          <Image
+            style={{ width: size || 20, height: size || 20 }}
+            source={require('./assets/imgs/1.png')}
+          />
+        ),
+        bp: (
+          <Image
+            style={{ width: size || 20, height: size || 20 }}
+            source={require('./assets/imgs/2.png')}
+          />
+        ),
+        fk: (
+          <Image
+            style={{ width: size || 20, height: size || 20 }}
+            source={require('./assets/imgs/3.png')}
+          />
+        ),
+        bk: (
+          <Image
+            style={{ width: size || 20, height: size || 20 }}
+            source={require('./assets/imgs/4.png')}
+          />
+        ),
         amp: <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/AMP.png')} />,
         assist: (
           <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/ASSIST.png')} />

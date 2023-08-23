@@ -10,7 +10,7 @@ export default function FrameData({ route, navigation }) {
   const { basicAttacks, stringAttacks, specialAttacks } = route.params;
   const [input, setInput, rosterData, setRosterData, getIcon] = useContext(MyContext);
   const [dataPage, setDataPage] = useState(0);
-  const iconSet = getIcon(input);
+  const iconSet = getIcon(input, 30);
 
   const handlePress = (pageValue) => {
     setDataPage(pageValue);
