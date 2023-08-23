@@ -31,21 +31,21 @@ export default function MoveBox({ attack, iconSet, style }) {
     switch (direction) {
       case 4:
         return (
-          <Image style={{ width: 20, height: 20 }} source={require('../assets/imgs/LEFT.png')} />
+          <Image style={{ width: 25, height: 25 }} source={require('../assets/imgs/LEFT.png')} />
         );
       case 6:
         return (
-          <Image style={{ width: 20, height: 20 }} source={require('../assets/imgs/RIGHT.png')} />
+          <Image style={{ width: 25, height: 25 }} source={require('../assets/imgs/RIGHT.png')} />
         );
 
       case 2:
         return (
-          <Image style={{ width: 20, height: 20 }} source={require('../assets/imgs/DOWN.png')} />
+          <Image style={{ width: 25, height: 25 }} source={require('../assets/imgs/DOWN.png')} />
         );
 
       case 8:
         return (
-          <Image style={{ width: 20, height: 20 }} source={require('../assets/imgs/UP.png')} />
+          <Image style={{ width: 25, height: 25 }} source={require('../assets/imgs/UP.png')} />
         );
 
       default:
@@ -80,10 +80,15 @@ export default function MoveBox({ attack, iconSet, style }) {
         <View style={styles.buttonInfoContainer}>
           <View style={styles.buttonIconsContainer}>
             {kombo.map((item) => {
+              //clean up this conditional render.
               return (
                 <View style={styles.input} key={item._key}>
-                  <View style={styles.but}>{directionComp(item.direction)}</View>
-                  <View style={styles.but}>{getButton(item.button, iconSet)}</View>
+                  {item.direction === 0 ? null : (
+                    <View style={styles.but}>{directionComp(item.direction)}</View>
+                  )}
+                  {item.button === 0 ? null : (
+                    <View style={styles.but}>{getButton(item.button, iconSet)}</View>
+                  )}
                 </View>
               );
             })}
@@ -93,7 +98,7 @@ export default function MoveBox({ attack, iconSet, style }) {
 
         <View style={styles.dataInfoContainer}>
           <View style={styles.dataDiv}>
-            <Text style={[styles.data, colorStyleBlockAdvStartup, { marginRight: 20 }]}>
+            <Text style={[styles.data, colorStyleBlockAdvStartup, { marginRight: 25 }]}>
               {detailedInfo.startup}
             </Text>
             <Text style={[styles.data, colorStyleBlockAdv]}>{detailedInfo.blockAdv}</Text>
@@ -120,7 +125,7 @@ const styles = StyleSheet.create({
   },
   buttonIconsContainer: {
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     flexDirection: 'row',
   },
   input: {
@@ -129,7 +134,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginRight: 5,
   },
-  but: {},
+  but: {
+    marginRight: 5,
+  },
   dataInfoContainer: {
     alignItems: 'center',
     justifyContent: 'center',
