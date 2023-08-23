@@ -33,6 +33,8 @@ const MyProvider = ({ children }) => {
         require('./assets/imgs/3.png'),
         require('./assets/imgs/4.png'),
         require('./assets/imgs/AMP.png'),
+        require('./assets/imgs/ASSIST.png'),
+        require('./assets/imgs/HELD.png'),
         require('./assets/imgs/UP.png'),
         require('./assets/imgs/DOWN.png'),
         require('./assets/imgs/LEFT.png'),
@@ -69,6 +71,12 @@ const MyProvider = ({ children }) => {
           />
         ),
         amp: <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/AMP.png')} />,
+        assist: (
+          <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/ASSIST.png')} />
+        ),
+        held: (
+          <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/HELD.png')} />
+        ),
       };
       return iconSet;
     } else if (inputValue === 2) {
@@ -78,6 +86,12 @@ const MyProvider = ({ children }) => {
         fk: <Image style={{ width: 20, height: 20 }} source={require('./assets/imgs/xboxA.png')} />,
         bk: <Image style={{ width: 20, height: 20 }} source={require('./assets/imgs/xboxB.png')} />,
         amp: <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/AMP.png')} />,
+        assist: (
+          <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/ASSIST.png')} />
+        ),
+        held: (
+          <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/HELD.png')} />
+        ),
       };
       return iconSet;
     } else if (inputValue === 3) {
@@ -107,6 +121,12 @@ const MyProvider = ({ children }) => {
           />
         ),
         amp: <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/AMP.png')} />,
+        assist: (
+          <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/ASSIST.png')} />
+        ),
+        held: (
+          <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/HELD.png')} />
+        ),
       };
       return iconSet;
     } else if (input == 0) {
@@ -116,6 +136,12 @@ const MyProvider = ({ children }) => {
         fk: <Image style={{ width: 20, height: 20 }} source={require('./assets/imgs/3.png')} />,
         bk: <Image style={{ width: 20, height: 20 }} source={require('./assets/imgs/4.png')} />,
         amp: <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/AMP.png')} />,
+        assist: (
+          <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/ASSIST.png')} />
+        ),
+        held: (
+          <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/HELD.png')} />
+        ),
       };
       return iconSet;
     }
@@ -138,9 +164,9 @@ const MyProvider = ({ children }) => {
       case 5:
         return iconSet.amp;
       case 6:
-        return iconSet.amp;
+        return iconSet.held;
       case 7:
-        return iconSet.amp;
+        return iconSet.assist;
       default:
         return null;
     }

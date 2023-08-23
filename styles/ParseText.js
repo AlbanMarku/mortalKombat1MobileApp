@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, Image } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import { useContext } from 'react';
 import { MyContext } from '../Context';
@@ -11,21 +11,21 @@ export default function StrategyComp({ para }) {
     switch (direction.number) {
       case 4:
         return (
-          <Image style={{ width: 20, height: 20 }} source={require('../assets/imgs/LEFT.png')} />
+          <Image style={{ width: 40, height: 40 }} source={require('../assets/imgs/LEFT.png')} />
         );
       case 6:
         return (
-          <Image style={{ width: 20, height: 20 }} source={require('../assets/imgs/RIGHT.png')} />
+          <Image style={{ width: 40, height: 40 }} source={require('../assets/imgs/RIGHT.png')} />
         );
 
       case 2:
         return (
-          <Image style={{ width: 20, height: 20 }} source={require('../assets/imgs/DOWN.png')} />
+          <Image style={{ width: 40, height: 40 }} source={require('../assets/imgs/DOWN.png')} />
         );
 
       case 8:
         return (
-          <Image style={{ width: 20, height: 20 }} source={require('../assets/imgs/UP.png')} />
+          <Image style={{ width: 40, height: 40 }} source={require('../assets/imgs/UP.png')} />
         );
 
       default:
