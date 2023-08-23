@@ -21,8 +21,18 @@ export default function Home({ navigation, loading }) {
       tx.executeSql(
         'SELECT name, avatar, profile FROM kharacters ORDER BY name ASC',
         null,
-        (txObj, resultSet) => {
-          setAvatarInfo(resultSet.rows._array);
+        async (txObj, resultSet) => {
+          const avatarArray = resultSet.rows._array;
+          const avatarPromises = avatarArray.map(async (item) => {
+            const profileAsset = await Asset.fromURI(item.profile).downloadAsync();
+            return {
+              name: item.name,
+              avatar: item.avatar,
+              profile: profileAsset.localUri,
+            };
+          });
+          const updatedAvatarInfo = await Promise.all(avatarPromises);
+          setAvatarInfo(updatedAvatarInfo); //figure out promises
         }
       );
 
