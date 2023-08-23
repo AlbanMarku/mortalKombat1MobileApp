@@ -1,5 +1,5 @@
 import { createContext, useState } from 'react';
-import { Image } from 'react-native';
+import { Image, Text } from 'react-native';
 import { Asset } from 'expo-asset';
 
 //If context requires more operations, make context file for each value instead of all together.
@@ -48,7 +48,8 @@ const MyProvider = ({ children }) => {
 
   loadImages();
 
-  const getIcon = (inputValue, size) => {
+  const getIcon = (inputValue, size, fontSize) => {
+    const heldText = '(held)';
     if (inputValue === 1) {
       const iconSet = {
         fp: (
@@ -79,9 +80,7 @@ const MyProvider = ({ children }) => {
         assist: (
           <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/ASSIST.png')} />
         ),
-        held: (
-          <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/HELD.png')} />
-        ),
+        held: <Text style={{ color: 'white', fontSize: fontSize || 16 }}>{heldText}</Text>,
       };
       return iconSet;
     } else if (inputValue === 2) {
@@ -114,9 +113,7 @@ const MyProvider = ({ children }) => {
         assist: (
           <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/ASSIST.png')} />
         ),
-        held: (
-          <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/HELD.png')} />
-        ),
+        held: <Text style={{ color: 'white', fontSize: fontSize || 16 }}>{heldText}</Text>,
       };
       return iconSet;
     } else if (inputValue === 3) {
@@ -169,9 +166,7 @@ const MyProvider = ({ children }) => {
         assist: (
           <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/ASSIST.png')} />
         ),
-        held: (
-          <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/HELD.png')} />
-        ),
+        held: <Text style={{ color: 'white', fontSize: fontSize || 16 }}>{heldText}</Text>,
       };
       return iconSet;
     } else if (input == 0) {
@@ -204,9 +199,7 @@ const MyProvider = ({ children }) => {
         assist: (
           <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/ASSIST.png')} />
         ),
-        held: (
-          <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/HELD.png')} />
-        ),
+        held: <Text style={{ color: 'white', fontSize: fontSize || 16 }}>{heldText}</Text>,
       };
       return iconSet;
     }

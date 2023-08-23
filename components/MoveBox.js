@@ -83,12 +83,10 @@ export default function MoveBox({ attack, iconSet, style }) {
               //clean up this conditional render.
               return (
                 <View style={styles.input} key={item._key}>
-                  {item.direction === 0 ? null : (
+                  {item.direction === 5 ? null : (
                     <View style={styles.but}>{directionComp(item.direction)}</View>
                   )}
-                  {item.button === 0 ? null : (
-                    <View style={styles.but}>{getButton(item.button, iconSet)}</View>
-                  )}
+                  {item.button === 0 ? null : getButton(item.button, iconSet)}
                 </View>
               );
             })}
@@ -136,6 +134,7 @@ const styles = StyleSheet.create({
   },
   but: {
     marginRight: 5,
+    color: 'white',
   },
   dataInfoContainer: {
     alignItems: 'center',
