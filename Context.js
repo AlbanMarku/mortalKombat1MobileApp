@@ -117,6 +117,10 @@ const MyProvider = ({ children }) => {
     }
   };
 
+  //1-4, nrs attack notation.
+  //5, amp/enhance move.
+  //6, button was held.
+  //7, assist button
   const getButton = (button, iconSet) => {
     switch (button) {
       case 1:
@@ -128,6 +132,10 @@ const MyProvider = ({ children }) => {
       case 4:
         return iconSet.bk;
       case 5:
+        return iconSet.amp;
+      case 6:
+        return iconSet.amp;
+      case 7:
         return iconSet.amp;
       default:
         return null;
