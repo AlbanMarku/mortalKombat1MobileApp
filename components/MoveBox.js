@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text, TouchableOpacity, Modal } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, Modal, Image } from 'react-native';
 import { useState, useContext } from 'react';
 import { Entypo } from '@expo/vector-icons';
 import ModalComp from './ModalComp';
@@ -30,13 +30,23 @@ export default function MoveBox({ attack, iconSet, style }) {
     //Direction uses numpad notation. Return icon depending on number.
     switch (direction) {
       case 4:
-        return <Entypo name="arrow-bold-left" size={32} color="white" />;
-
+        return (
+          <Image style={{ width: 20, height: 20 }} source={require('../assets/imgs/LEFT.png')} />
+        );
       case 6:
-        return <Entypo name="arrow-bold-right" size={32} color="white" />;
+        return (
+          <Image style={{ width: 20, height: 20 }} source={require('../assets/imgs/RIGHT.png')} />
+        );
 
       case 2:
-        return <Entypo name="arrow-bold-down" size={32} color="white" />;
+        return (
+          <Image style={{ width: 20, height: 20 }} source={require('../assets/imgs/DOWN.png')} />
+        );
+
+      case 8:
+        return (
+          <Image style={{ width: 20, height: 20 }} source={require('../assets/imgs/UP.png')} />
+        );
 
       default:
         return null;

@@ -10,13 +10,23 @@ export default function StrategyComp({ para }) {
   const ReplaceDir = (direction) => {
     switch (direction.number) {
       case 4:
-        return <Entypo name="arrow-bold-left" size={20} color="white" />;
-
+        return (
+          <Image style={{ width: 20, height: 20 }} source={require('../assets/imgs/LEFT.png')} />
+        );
       case 6:
-        return <Entypo name="arrow-bold-right" size={20} color="white" />;
+        return (
+          <Image style={{ width: 20, height: 20 }} source={require('../assets/imgs/RIGHT.png')} />
+        );
 
       case 2:
-        return <Entypo name="arrow-bold-down" size={20} color="white" />;
+        return (
+          <Image style={{ width: 20, height: 20 }} source={require('../assets/imgs/DOWN.png')} />
+        );
+
+      case 8:
+        return (
+          <Image style={{ width: 20, height: 20 }} source={require('../assets/imgs/UP.png')} />
+        );
 
       default:
         return null;
