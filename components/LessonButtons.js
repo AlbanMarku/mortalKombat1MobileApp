@@ -3,11 +3,11 @@ import { useNavigation } from '@react-navigation/native';
 
 //call func multiple times to make components with params.
 
-export default function LessonButtons() {
+export default function LessonButtons({ myLessons }) {
   const navigation = useNavigation();
 
-  const onPress = (title) => {
-    navigation.navigate('LessonOptions', {});
+  const onPress = (title, lessons) => {
+    navigation.navigate('LessonOptions', { title, lessons });
   };
 
   const sources = {
@@ -16,9 +16,9 @@ export default function LessonButtons() {
     source3: require('../assets/imgs/adv.jpg'),
   };
 
-  const imageComp = (title, img) => {
+  const imageComp = (title, img, lessons) => {
     return (
-      <TouchableOpacity onPress={() => onPress(title)} style={styles.box}>
+      <TouchableOpacity onPress={() => onPress(title, lessons)} style={styles.box}>
         <ImageBackground style={styles.imger} source={img}>
           <View style={styles.textContainer}>
             <Text style={{ fontFamily: 'mk11', fontSize: 25, color: 'white' }}>{title}</Text>
@@ -31,10 +31,10 @@ export default function LessonButtons() {
   return (
     <View>
       <View style={{ flexDirection: 'row' }}>
-        {imageComp('Beginner', sources.source1)}
-        {imageComp('Intermediate', sources.source2)}
+        {imageComp('Beginner', sources.source1, myLessons.beginner)}
+        {imageComp('Intermediate', sources.source2, myLessons.intermediate)}
       </View>
-      <View>{imageComp('Advanced', sources.source3)}</View>
+      <View>{imageComp('Advanced', sources.source3, myLessons.advance)}</View>
     </View>
   );
 }

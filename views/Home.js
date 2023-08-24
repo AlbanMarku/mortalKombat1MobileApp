@@ -14,6 +14,7 @@ import { db } from '../myDb';
 export default function Home({ navigation, loading }) {
   const [avatarInfo, setAvatarInfo] = useState([]);
   const [kameoAvatarInfo, setKameoAvatarInfo] = useState([]);
+  const [myLessons, setMylessons] = useState({});
 
   const loadAvatar = async () => {
     db.transaction((tx) => {
@@ -56,21 +57,39 @@ export default function Home({ navigation, loading }) {
     });
   };
 
-  const loadLessons = async () => {};
+  const loadLessons = () => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        'SELECT beginner, intermediate, advance FROM lessons',
+        null,
+        (txObj, resultSet) => {
+          const extractedLessons = resultSet.rows._array[0];
+          setMylessons(extractedLessons);
+        }
+      );
+    });
+  };
 
   useEffect(() => {
     loadAvatar();
+    loadLessons();
   }, []);
 
   useEffect(() => {
     loadAvatar();
+    loadLessons();
+    console.log(myLessons);
   }, [loading]);
 
   return (
     <ScrollView style={[globalStyles.color, styles.container]}>
       <Title name={'Lessons'} />
       <View>
-        <LessonButtons />
+        {loading ? (
+          <ActivityIndicator color={'white'} size={'large'} />
+        ) : (
+          <LessonButtons myLessons={myLessons} />
+        )}
       </View>
       <Title name={'Kharacters'} />
       <View style={styles.columnContainer}>
