@@ -1,6 +1,5 @@
 import { View, StyleSheet, Text, TouchableOpacity, Modal, Image } from 'react-native';
 import { useState, useContext } from 'react';
-import { Entypo } from '@expo/vector-icons';
 import ModalComp from './ModalComp';
 import { MyContext } from '../Context';
 

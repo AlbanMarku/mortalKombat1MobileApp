@@ -1,5 +1,4 @@
 import { Text, View, StyleSheet, Image } from 'react-native';
-import { Entypo } from '@expo/vector-icons';
 import { useContext } from 'react';
 import { MyContext } from '../Context';
 
