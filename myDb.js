@@ -2,12 +2,13 @@ import * as SQLite from 'expo-sqlite';
 
 export const db = SQLite.openDatabase('main.db');
 
-export const setupDb = async (mainData, kameoData) => {
+export const setupDb = async (mainData, kameoData, lessonExtracted) => {
   console.log('Setting up db:');
 
   db.transaction((tx) => {
     tx.executeSql('DROP TABLE IF EXISTS kharacters');
     tx.executeSql('DROP TABLE IF EXISTS kameos');
+    tx.executeSql('DROP TABLE IF EXISTS lessons');
   });
 
   db.transaction((tx) => {
@@ -17,6 +18,9 @@ export const setupDb = async (mainData, kameoData) => {
     );
     tx.executeSql(
       'CREATE TABLE IF NOT EXISTS kameos (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE, avatar TEXT, profile TEXT, moves TEXT, guide TEXT)'
+    );
+    tx.executeSql(
+      'CREATE TABLE IF NOT EXISTS lessons (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE, beginner TEXT, intermediate TEXT, advance TEXT)'
     );
   });
 
@@ -48,6 +52,36 @@ export const setupDb = async (mainData, kameoData) => {
         }
       });
     });
+
+    const lessonQuery = `INSERT OR REPLACE INTO lessons (name, beginner, intermediate, advance) 
+    VALUES (?, ?, ?, ?)`;
+    const { name, beginner, intermediate, advance } = lessonExtracted;
+
+    const beginnerJSON = JSON.stringify(beginner);
+    const intermediateJSON = JSON.stringify(intermediate);
+    const advanceJSON = JSON.stringify(advance);
+
+    tx.executeSql(
+      'SELECT * FROM lessons WHERE name = ?',
+      [name],
+      (txObj, resultSet) => {
+        if (resultSet.rows.length > 0) {
+          console.log('Already exists', name);
+        } else {
+          tx.executeSql(
+            lessonQuery,
+            [name, beginnerJSON, intermediateJSON, advanceJSON],
+            (txObj, resultSet) => {
+              console.log('Insert success lessons:', resultSet);
+            },
+            (txObj, error) => {
+              console.log('Insert failed lessons:', error);
+            }
+          );
+        }
+      },
+      (txObj, err) => console.log('Insert failed:', err)
+    );
 
     //Insert all the data into the table. For each kharacter, get the properties and stringify. If doesn't exist, insert data.
     const insertQuery = `INSERT OR REPLACE INTO kharacters (name, avatar, profile, basicAttacks, stringAttacks, specialAttacks, guide) 

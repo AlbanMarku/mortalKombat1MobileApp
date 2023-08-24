@@ -97,7 +97,12 @@ export default function DrawerStack() {
         };
       });
 
-      setupDb(mainData, kameoExtracted);
+      const lessonQuery = await client.fetch(
+        "*[_type == 'lesson']{name, beginner, intermediate, advance}"
+      );
+      const lessonExtracted = lessonQuery[0];
+
+      setupDb(mainData, kameoExtracted, lessonExtracted);
       setLoading(false);
       ToastAndroid.showWithGravity('Roster data updated!', ToastAndroid.SHORT, ToastAndroid.BOTTOM);
     } catch (err) {

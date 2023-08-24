@@ -5,6 +5,7 @@ import Kameo from '../views/Kameo';
 import DrawerStack from './DrawerStack';
 import HeaderComp from '../components/HeaderComp';
 import FrameData from '../views/FrameData';
+import LessonOptions from '../views/LessonOptions';
 
 //add box shadow
 
@@ -54,6 +55,17 @@ export default function MyStack() {
           options={{
             headerShown: true,
             animation: 'slide_from_bottom',
+            gestureEnabled: true,
+            gestureDirection: 'horizontal',
+            headerRight: () => <HeaderComp />,
+          }}
+        />
+        <Stack.Screen
+          name="LessonOptions"
+          component={LessonOptions}
+          options={{
+            headerShown: true,
+            animation: 'slide_from_right',
             gestureEnabled: true,
             gestureDirection: 'horizontal',
             headerRight: () => <HeaderComp />,

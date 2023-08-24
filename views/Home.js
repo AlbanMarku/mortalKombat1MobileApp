@@ -56,6 +56,8 @@ export default function Home({ navigation, loading }) {
     });
   };
 
+  const loadLessons = async () => {};
+
   useEffect(() => {
     loadAvatar();
   }, []);

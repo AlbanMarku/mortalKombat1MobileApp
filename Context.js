@@ -39,6 +39,9 @@ const MyProvider = ({ children }) => {
         require('./assets/imgs/DOWN.png'),
         require('./assets/imgs/LEFT.png'),
         require('./assets/imgs/RIGHT.png'),
+        require('./assets/imgs/beg.jpg'),
+        require('./assets/imgs/int.jpg'),
+        require('./assets/imgs/adv.jpg'),
       ];
       await Asset.loadAsync(imageAssets);
     } catch (error) {

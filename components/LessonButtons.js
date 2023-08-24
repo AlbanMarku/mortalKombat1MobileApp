@@ -1,10 +1,13 @@
 import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 //call func multiple times to make components with params.
 
 export default function LessonButtons() {
+  const navigation = useNavigation();
+
   const onPress = (title) => {
-    console.log(title);
+    navigation.navigate('LessonOptions', {});
   };
 
   const sources = {
