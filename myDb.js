@@ -1,10 +1,10 @@
 import * as SQLite from 'expo-sqlite';
+import { Asset } from 'expo-asset';
 
 export const db = SQLite.openDatabase('main.db');
 
 export const setupDb = async (mainData, kameoData, lessonExtracted) => {
   console.log('Setting up db:');
-  console.log(lessonExtracted);
   db.transaction((tx) => {
     tx.executeSql('DROP TABLE IF EXISTS kharacters');
     tx.executeSql('DROP TABLE IF EXISTS kameos');
@@ -35,13 +35,15 @@ export const setupDb = async (mainData, kameoData, lessonExtracted) => {
       const movesJSON = JSON.stringify(moves);
       const guideJSON = JSON.stringify(guide);
 
-      tx.executeSql('SELECT * FROM kameos WHERE name = ?', [name], (txObj, resultSet) => {
+      tx.executeSql('SELECT * FROM kameos WHERE name = ?', [name], async (txObj, resultSet) => {
         if (resultSet.rows.length > 0) {
           console.log('Already exists', name);
         } else {
+          const cacheAvatar = await Asset.fromURI(avatar).downloadAsync();
+          const cacheProfile = await Asset.fromURI(profile).downloadAsync();
           tx.executeSql(
             kameoInsertQuery,
-            [name, avatar, profile, movesJSON, guideJSON],
+            [name, cacheAvatar.localUri, cacheProfile.localUri, movesJSON, guideJSON],
             (txObj, resultSet) => {
               console.log('Insert success kameo:', resultSet);
             },
@@ -98,16 +100,18 @@ export const setupDb = async (mainData, kameoData, lessonExtracted) => {
       tx.executeSql(
         'SELECT * FROM kharacters WHERE name = ?',
         [name],
-        (txObj, resultSet) => {
+        async (txObj, resultSet) => {
           if (resultSet.rows.length > 0) {
             console.log('Already exists', name);
           } else {
+            const cacheAvatar = await Asset.fromURI(avatar).downloadAsync();
+            const cacheProfile = await Asset.fromURI(profile).downloadAsync();
             tx.executeSql(
               insertQuery,
               [
                 name,
-                avatar,
-                profile,
+                cacheAvatar.localUri,
+                cacheProfile.localUri,
                 basicAttacksJSON,
                 stringAttacksJSON,
                 specialAttacksJSON,
@@ -117,7 +121,7 @@ export const setupDb = async (mainData, kameoData, lessonExtracted) => {
                 console.log('Insert success:', resultSet);
               },
               (txObj, error) => {
-                console.log('Insert failed:', error);
+                console.log('Insert failed kharacter:', error);
               }
             );
           }

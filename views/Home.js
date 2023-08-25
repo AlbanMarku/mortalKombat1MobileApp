@@ -26,20 +26,16 @@ export default function Home({ navigation, loading }) {
         null,
         async (txObj, resultSet) => {
           const avatarArray = resultSet.rows._array;
-          if (netInfo.isConnected) {
-            const avatarPromises = avatarArray.map(async (item) => {
-              const profileAsset = await Asset.fromURI(item.profile).downloadAsync();
-              return {
-                name: item.name,
-                avatar: item.avatar,
-                profile: profileAsset.localUri,
-              };
-            });
-            const updatedAvatarInfo = await Promise.all(avatarPromises);
-            setAvatarInfo(updatedAvatarInfo); //figure out promises
-          } else {
-            setAvatarInfo(avatarArray);
-          }
+          // const avatarPromises = avatarArray.map(async (item) => {
+          //   const profileAsset = await Asset.fromURI(item.profile).downloadAsync();
+          //   return {
+          //     name: item.name,
+          //     avatar: item.avatar,
+          //     profile: profileAsset.localUri,
+          //   };
+          // });
+          // const updatedAvatarInfo = await Promise.all(avatarPromises);
+          setAvatarInfo(avatarArray); //figure out promises
         }
       );
 
@@ -48,20 +44,17 @@ export default function Home({ navigation, loading }) {
         null,
         async (txObj, resultSet) => {
           const kameoArray = resultSet.rows._array;
-          if (netInfo.isConnected) {
-            const avatarPromises = kameoArray.map(async (item) => {
-              const profileAsset = await Asset.fromURI(item.profile).downloadAsync();
-              return {
-                name: item.name,
-                avatar: item.avatar,
-                profile: profileAsset.localUri,
-              };
-            });
-            const updatedAvatarInfo = await Promise.all(avatarPromises);
-            setKameoAvatarInfo(updatedAvatarInfo);
-          } else {
-            setKameoAvatarInfo(kameoArray);
-          }
+
+          // const avatarPromises = kameoArray.map(async (item) => {
+          //   const profileAsset = await Asset.fromURI(item.profile).downloadAsync();
+          //   return {
+          //     name: item.name,
+          //     avatar: item.avatar,
+          //     profile: profileAsset.localUri,
+          //   };
+          // });
+          // const updatedAvatarInfo = await Promise.all(avatarPromises);
+          setKameoAvatarInfo(kameoArray);
         }
       );
     });
@@ -125,7 +118,6 @@ export default function Home({ navigation, loading }) {
   };
 
   useEffect(() => {
-    console.log(netInfo.isConnected);
     loadAvatar();
     loadLessons();
   }, []);
