@@ -24,7 +24,7 @@ export const setupDb = async (mainData, kameoData, lessonExtracted) => {
     );
   });
 
-  db.transaction((tx) => {
+  db.transaction(async (tx) => {
     //KAMEO
     const kameoInsertQuery =
       'INSERT OR REPLACE INTO kameos (name, avatar, profile, moves, guide) VALUES (?,?,?,?,?)';
@@ -59,9 +59,28 @@ export const setupDb = async (mainData, kameoData, lessonExtracted) => {
     VALUES (?, ?, ?, ?)`;
     const { name, beginner, intermediate, advance } = lessonExtracted;
 
-    const beginnerJSON = JSON.stringify(beginner);
-    const intermediateJSON = JSON.stringify(intermediate);
-    const advanceJSON = JSON.stringify(advance);
+    const newBeg = await Promise.all(
+      beginner.map(async (item) => {
+        const cacheThumb = await Asset.fromURI(item.adviceThumbnail).downloadAsync();
+        return { ...item, adviceThumbnail: cacheThumb };
+      })
+    );
+    const newInt = await Promise.all(
+      intermediate.map(async (item) => {
+        const cacheThumb = await Asset.fromURI(item.adviceThumbnail).downloadAsync();
+        return { ...item, adviceThumbnail: cacheThumb };
+      })
+    );
+    const newAdv = await Promise.all(
+      advance.map(async (item) => {
+        const cacheThumb = await Asset.fromURI(item.adviceThumbnail).downloadAsync();
+        return { ...item, adviceThumbnail: cacheThumb };
+      })
+    );
+
+    const beginnerJSON = JSON.stringify(newBeg);
+    const intermediateJSON = JSON.stringify(newInt);
+    const advanceJSON = JSON.stringify(newAdv);
 
     tx.executeSql(
       'SELECT * FROM lessons WHERE name = ?',

@@ -60,61 +60,33 @@ export default function Home({ navigation, loading }) {
     });
   };
 
-  const loadLessons = () => {
-    db.transaction((tx) => {
-      tx.executeSql(
-        'SELECT beginner, intermediate, advance FROM lessons',
-        null,
-        async (txObj, resultSet) => {
-          const extractedLesson = resultSet.rows._array[0];
-          try {
-            const p = {
-              beginner: JSON.parse(extractedLesson.beginner),
-              intermediate: JSON.parse(extractedLesson.intermediate),
-              advance: JSON.parse(extractedLesson.advance),
-            };
-
-            if (netInfo.isConnected) {
-              const newBeg = p.beginner.map(async (item) => {
-                const cacheThumb = await Asset.fromURI(item.adviceThumbnail).downloadAsync();
-                return {
-                  ...item,
-                  adviceThumbnail: cacheThumb.localUri,
-                };
-              });
-              const newInt = p.intermediate.map(async (item) => {
-                const cacheThumb = await Asset.fromURI(item.adviceThumbnail).downloadAsync();
-                return {
-                  ...item,
-                  adviceThumbnail: cacheThumb.localUri,
-                };
-              });
-              const newAdv = p.advance.map(async (item) => {
-                const cacheThumb = await Asset.fromURI(item.adviceThumbnail).downloadAsync();
-                return {
-                  ...item,
-                  adviceThumbnail: cacheThumb.localUri,
-                };
-              });
-
-              const updatedBeg = await Promise.all(newBeg);
-              const updatedInt = await Promise.all(newInt);
-              const updatedAdv = await Promise.all(newAdv);
-              const finalLessonObj = {
-                beginner: updatedBeg,
-                intermediate: updatedInt,
-                advance: updatedAdv,
-              };
-              setMyLessons(finalLessonObj);
-            } else {
-              setMyLessons(p);
+  const loadLessons = async () => {
+    try {
+      const resultSet = await new Promise((resolve, reject) => {
+        db.transaction((tx) => {
+          tx.executeSql(
+            'SELECT beginner, intermediate, advance FROM lessons',
+            null,
+            (txObj, resultSet) => {
+              resolve(resultSet);
+            },
+            (txObj, error) => {
+              reject(error);
             }
-          } catch (error) {
-            console.log(error);
-          }
-        }
-      );
-    });
+          );
+        });
+      });
+
+      const extractedLesson = resultSet.rows._array[0];
+      const p = {
+        beginner: await Promise.all(JSON.parse(extractedLesson.beginner)),
+        intermediate: await Promise.all(JSON.parse(extractedLesson.intermediate)),
+        advance: await Promise.all(JSON.parse(extractedLesson.advance)),
+      };
+      setMyLessons(p);
+    } catch (error) {
+      console.log('load lesson error: ', error);
+    }
   };
 
   useEffect(() => {
