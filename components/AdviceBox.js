@@ -1,4 +1,4 @@
-import { View, Text, Pressable, Image, StyleSheet } from 'react-native';
+import { View, Text, Pressable, Image, ImageBackground, StyleSheet } from 'react-native';
 import React from 'react';
 
 export default function AdviceBox({
@@ -12,17 +12,34 @@ export default function AdviceBox({
     console.log('clicked advice');
   };
   return (
-    <Pressable style={{ height: 100, borderColor: 'red', borderWidth: 1 }} onPress={handlePress}>
-      <Image source={{ uri: adviceThumbnail }} style={styles.imger} />
+    <Pressable style={styles.button} onPress={handlePress}>
+      <ImageBackground source={{ uri: adviceThumbnail }} style={styles.imger}>
+        <View style={styles.textContainer}>
+          <Text style={styles.buttonText}>{adviceTitle}</Text>
+        </View>
+      </ImageBackground>
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
+  button: {
+    height: 100,
+    marginTop: 10,
+  },
   imger: {
     height: 100,
     width: '100%',
-    borderColor: 'red',
-    borderWidth: 1,
+  },
+  textContainer: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100%',
+  },
+  buttonText: {
+    fontFamily: 'mk11',
+    fontSize: 24,
+    color: 'white',
   },
 });

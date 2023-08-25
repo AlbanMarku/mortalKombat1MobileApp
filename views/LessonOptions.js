@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native';
 import { globalStyles } from '../styles/global';
 import AdviceBox from '../components/AdviceBox';
+import Title from '../components/Title';
 import { urlFor } from '../components/SanityClient';
 import { useState, useEffect } from 'react';
 
@@ -30,7 +31,7 @@ export default function LessonOptions({ route, navigation }) {
 
   return (
     <View style={[globalStyles.color, { flex: 1 }]}>
-      <Text style={{ color: 'white' }}>{title}</Text>
+      <Title name={title} underline />
       {exctractedLessons.map((item, index) => (
         <AdviceBox
           key={index}
