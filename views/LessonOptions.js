@@ -1,8 +1,46 @@
-import { View, Text } from 'react-native';
-import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { globalStyles } from '../styles/global';
+import AdviceBox from '../components/AdviceBox';
+import { urlFor } from '../components/SanityClient';
+import { useState, useEffect } from 'react';
 
 export default function LessonOptions({ route, navigation }) {
   const { title, lessons } = route.params;
-  console.log(lessons);
-  return <View></View>;
+  const parsedLessons = JSON.parse(lessons);
+  const [exctractedLessons, setExtractedLessons] = useState([]);
+
+  const handleArray = () => {
+    const lessonArray = parsedLessons.map((item) => {
+      const parsedThumbnail = urlFor(item.adviceThumbnail.asset._ref).url();
+      const parsedUrl = item?.adviceUrl || null;
+      const parsedHeader = item?.adviceHeader || null;
+      return {
+        ...item,
+        adviceThumbnail: parsedThumbnail,
+        adviceUrl: parsedUrl,
+        adviceHeader: parsedHeader,
+      };
+    });
+    setExtractedLessons(lessonArray);
+  };
+
+  useEffect(() => {
+    handleArray();
+  }, []);
+
+  return (
+    <View style={[globalStyles.color, { flex: 1 }]}>
+      <Text style={{ color: 'white' }}>{title}</Text>
+      {exctractedLessons.map((item, index) => (
+        <AdviceBox
+          key={index}
+          adviceTitle={item.adviceTitle}
+          adviceInfo={item.adviceInfo}
+          adviceThumbnail={item.adviceThumbnail}
+          adviceHeader={item.adviceHeader}
+          adviceUrl={item.adviceUrl}
+        />
+      ))}
+    </View>
+  );
 }

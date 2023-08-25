@@ -5,9 +5,14 @@ import { useNavigation } from '@react-navigation/native';
 
 export default function LessonButtons({ myLessons }) {
   const navigation = useNavigation();
-
   const onPress = (title, lessons) => {
     navigation.navigate('LessonOptions', { title, lessons });
+  };
+
+  const parsedLessons = {
+    beginner: myLessons.beginner,
+    intermediate: myLessons.intermediate,
+    advance: myLessons.advance,
   };
 
   const sources = {
@@ -31,10 +36,10 @@ export default function LessonButtons({ myLessons }) {
   return (
     <View>
       <View style={{ flexDirection: 'row' }}>
-        {imageComp('Beginner', sources.source1, myLessons.beginner)}
-        {imageComp('Intermediate', sources.source2, myLessons.intermediate)}
+        {imageComp('Beginner', sources.source1, parsedLessons.beginner)}
+        {imageComp('Intermediate', sources.source2, parsedLessons.intermediate)}
       </View>
-      <View>{imageComp('Advanced', sources.source3, myLessons.advance)}</View>
+      <View>{imageComp('Advanced', sources.source3, parsedLessons.advance)}</View>
     </View>
   );
 }

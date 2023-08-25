@@ -20,19 +20,6 @@ export default function DrawerStack() {
         // This is the first time the app is opened
         await AsyncStorage.setItem('appOpened', 'true'); // Set the flag
         fetchRoster();
-        ToastAndroid.showWithGravity(
-          'This was the first launch',
-          ToastAndroid.SHORT,
-          ToastAndroid.BOTTOM
-        );
-        console.log('Changed to opened');
-      } else {
-        ToastAndroid.showWithGravity(
-          'This was the SECOND launch',
-          ToastAndroid.SHORT,
-          ToastAndroid.BOTTOM
-        );
-        console.log('This was the SECOND launch');
       }
     } catch (error) {
       console.log('Error:', error);
