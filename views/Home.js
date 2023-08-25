@@ -6,15 +6,17 @@ import { globalStyles } from '../styles/global';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useEffect, useState } from 'react';
 import { Asset } from 'expo-asset';
+import { useNetInfo } from '@react-native-community/netinfo';
 
 import { db } from '../myDb';
 
 //Some temp data to map through. Components for homescreen.
 
 export default function Home({ navigation, loading }) {
+  const netInfo = useNetInfo();
   const [avatarInfo, setAvatarInfo] = useState([]);
   const [kameoAvatarInfo, setKameoAvatarInfo] = useState([]);
-  const [myLessons, setMylessons] = useState({});
+  const [myLessons, setMyLessons] = useState({});
 
   const loadAvatar = async () => {
     db.transaction((tx) => {
@@ -24,16 +26,20 @@ export default function Home({ navigation, loading }) {
         null,
         async (txObj, resultSet) => {
           const avatarArray = resultSet.rows._array;
-          const avatarPromises = avatarArray.map(async (item) => {
-            const profileAsset = await Asset.fromURI(item.profile).downloadAsync();
-            return {
-              name: item.name,
-              avatar: item.avatar,
-              profile: profileAsset.localUri,
-            };
-          });
-          const updatedAvatarInfo = await Promise.all(avatarPromises);
-          setAvatarInfo(updatedAvatarInfo); //figure out promises
+          if (netInfo.isConnected) {
+            const avatarPromises = avatarArray.map(async (item) => {
+              const profileAsset = await Asset.fromURI(item.profile).downloadAsync();
+              return {
+                name: item.name,
+                avatar: item.avatar,
+                profile: profileAsset.localUri,
+              };
+            });
+            const updatedAvatarInfo = await Promise.all(avatarPromises);
+            setAvatarInfo(updatedAvatarInfo); //figure out promises
+          } else {
+            setAvatarInfo(avatarArray);
+          }
         }
       );
 
@@ -42,16 +48,20 @@ export default function Home({ navigation, loading }) {
         null,
         async (txObj, resultSet) => {
           const kameoArray = resultSet.rows._array;
-          const avatarPromises = kameoArray.map(async (item) => {
-            const profileAsset = await Asset.fromURI(item.profile).downloadAsync();
-            return {
-              name: item.name,
-              avatar: item.avatar,
-              profile: profileAsset.localUri,
-            };
-          });
-          const updatedAvatarInfo = await Promise.all(avatarPromises);
-          setKameoAvatarInfo(updatedAvatarInfo);
+          if (netInfo.isConnected) {
+            const avatarPromises = kameoArray.map(async (item) => {
+              const profileAsset = await Asset.fromURI(item.profile).downloadAsync();
+              return {
+                name: item.name,
+                avatar: item.avatar,
+                profile: profileAsset.localUri,
+              };
+            });
+            const updatedAvatarInfo = await Promise.all(avatarPromises);
+            setKameoAvatarInfo(updatedAvatarInfo);
+          } else {
+            setKameoAvatarInfo(kameoArray);
+          }
         }
       );
     });
@@ -71,37 +81,41 @@ export default function Home({ navigation, loading }) {
               advance: JSON.parse(extractedLesson.advance),
             };
 
-            const newBeg = p.beginner.map(async (item) => {
-              const cacheThumb = await Asset.fromURI(item.adviceThumbnail).downloadAsync();
-              return {
-                ...item,
-                adviceThumbnail: cacheThumb.localUri,
-              };
-            });
-            const newInt = p.intermediate.map(async (item) => {
-              const cacheThumb = await Asset.fromURI(item.adviceThumbnail).downloadAsync();
-              return {
-                ...item,
-                adviceThumbnail: cacheThumb.localUri,
-              };
-            });
-            const newAdv = p.advance.map(async (item) => {
-              const cacheThumb = await Asset.fromURI(item.adviceThumbnail).downloadAsync();
-              return {
-                ...item,
-                adviceThumbnail: cacheThumb.localUri,
-              };
-            });
+            if (netInfo.isConnected) {
+              const newBeg = p.beginner.map(async (item) => {
+                const cacheThumb = await Asset.fromURI(item.adviceThumbnail).downloadAsync();
+                return {
+                  ...item,
+                  adviceThumbnail: cacheThumb.localUri,
+                };
+              });
+              const newInt = p.intermediate.map(async (item) => {
+                const cacheThumb = await Asset.fromURI(item.adviceThumbnail).downloadAsync();
+                return {
+                  ...item,
+                  adviceThumbnail: cacheThumb.localUri,
+                };
+              });
+              const newAdv = p.advance.map(async (item) => {
+                const cacheThumb = await Asset.fromURI(item.adviceThumbnail).downloadAsync();
+                return {
+                  ...item,
+                  adviceThumbnail: cacheThumb.localUri,
+                };
+              });
 
-            const updatedBeg = await Promise.all(newBeg);
-            const updatedInt = await Promise.all(newInt);
-            const updatedAdv = await Promise.all(newAdv);
-            const finalLessonObj = {
-              beginner: updatedBeg,
-              intermediate: updatedInt,
-              advance: updatedAdv,
-            };
-            setMylessons(finalLessonObj);
+              const updatedBeg = await Promise.all(newBeg);
+              const updatedInt = await Promise.all(newInt);
+              const updatedAdv = await Promise.all(newAdv);
+              const finalLessonObj = {
+                beginner: updatedBeg,
+                intermediate: updatedInt,
+                advance: updatedAdv,
+              };
+              setMyLessons(finalLessonObj);
+            } else {
+              setMyLessons(p);
+            }
           } catch (error) {
             console.log(error);
           }
@@ -111,6 +125,7 @@ export default function Home({ navigation, loading }) {
   };
 
   useEffect(() => {
+    console.log(netInfo.isConnected);
     loadAvatar();
     loadLessons();
   }, []);
