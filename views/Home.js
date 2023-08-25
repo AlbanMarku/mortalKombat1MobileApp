@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, Text, ActivityIndicator, Pressable } from 'react-native';
 import LessonButtons from '../components/LessonButtons';
 import Avatar from '../components/Avatar';
 import Title from '../components/Title';
@@ -18,7 +18,7 @@ export default function Home({ navigation, loading }) {
   const [kameoAvatarInfo, setKameoAvatarInfo] = useState([]);
   const [myLessons, setMyLessons] = useState({});
 
-  const loadAvatar = async () => {
+  const loadAvatar = () => {
     db.transaction((tx) => {
       //Search names
       tx.executeSql(
@@ -26,16 +26,7 @@ export default function Home({ navigation, loading }) {
         null,
         async (txObj, resultSet) => {
           const avatarArray = resultSet.rows._array;
-          // const avatarPromises = avatarArray.map(async (item) => {
-          //   const profileAsset = await Asset.fromURI(item.profile).downloadAsync();
-          //   return {
-          //     name: item.name,
-          //     avatar: item.avatar,
-          //     profile: profileAsset.localUri,
-          //   };
-          // });
-          // const updatedAvatarInfo = await Promise.all(avatarPromises);
-          setAvatarInfo(avatarArray); //figure out promises
+          setAvatarInfo(avatarArray);
         }
       );
 
@@ -44,70 +35,51 @@ export default function Home({ navigation, loading }) {
         null,
         async (txObj, resultSet) => {
           const kameoArray = resultSet.rows._array;
-
-          // const avatarPromises = kameoArray.map(async (item) => {
-          //   const profileAsset = await Asset.fromURI(item.profile).downloadAsync();
-          //   return {
-          //     name: item.name,
-          //     avatar: item.avatar,
-          //     profile: profileAsset.localUri,
-          //   };
-          // });
-          // const updatedAvatarInfo = await Promise.all(avatarPromises);
           setKameoAvatarInfo(kameoArray);
         }
       );
     });
   };
 
-  const loadLessons = async () => {
-    try {
-      const resultSet = await new Promise((resolve, reject) => {
-        db.transaction((tx) => {
-          tx.executeSql(
-            'SELECT beginner, intermediate, advance FROM lessons',
-            null,
-            (txObj, resultSet) => {
-              resolve(resultSet);
-            },
-            (txObj, error) => {
-              reject(error);
-            }
-          );
-        });
-      });
-
-      const extractedLesson = resultSet.rows._array[0];
-      const p = {
-        beginner: await Promise.all(JSON.parse(extractedLesson.beginner)),
-        intermediate: await Promise.all(JSON.parse(extractedLesson.intermediate)),
-        advance: await Promise.all(JSON.parse(extractedLesson.advance)),
-      };
-      setMyLessons(p);
-    } catch (error) {
-      console.log('load lesson error: ', error);
-    }
+  const loadLessons = () => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        'SELECT beginner, intermediate, advance FROM lessons',
+        null,
+        async (txObj, resultSet) => {
+          const extractedLesson = resultSet.rows._array[0];
+          try {
+            const p = {
+              beginner: await Promise.all(JSON.parse(extractedLesson.beginner)),
+              intermediate: await Promise.all(JSON.parse(extractedLesson.intermediate)),
+              advance: await Promise.all(JSON.parse(extractedLesson.advance)),
+            };
+            setMyLessons(p);
+          } catch (error) {
+            console.log('load lesson error: ', error);
+          }
+        }
+      );
+    });
   };
 
   useEffect(() => {
     loadAvatar();
-    loadLessons();
   }, []);
 
   useEffect(() => {
     loadAvatar();
-    loadLessons();
   }, [loading]);
 
   return (
     <ScrollView style={[globalStyles.color, styles.container]}>
       <Title name={'Lessons'} />
       <View>
-        {loading ? (
+        {/* {loading ? (
           <ActivityIndicator color={'white'} size={'large'} />
         ) : (
           <LessonButtons myLessons={myLessons} />
-        )}
+        )} */}
       </View>
       <Title name={'Kharacters'} />
       <View style={styles.columnContainer}>

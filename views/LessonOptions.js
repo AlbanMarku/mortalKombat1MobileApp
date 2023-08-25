@@ -2,7 +2,6 @@ import { View, Text, StyleSheet } from 'react-native';
 import { globalStyles } from '../styles/global';
 import AdviceBox from '../components/AdviceBox';
 import Title from '../components/Title';
-import { urlFor } from '../components/SanityClient';
 import { useState, useEffect } from 'react';
 
 export default function LessonOptions({ route, navigation }) {

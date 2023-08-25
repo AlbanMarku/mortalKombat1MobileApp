@@ -39,13 +39,15 @@ export const setupDb = async (mainData, kameoData, lessonExtracted) => {
         if (resultSet.rows.length > 0) {
           console.log('Already exists', name);
         } else {
+          console.log('BEGIN');
           const cacheAvatar = await Asset.fromURI(avatar).downloadAsync();
           const cacheProfile = await Asset.fromURI(profile).downloadAsync();
+          console.log(cacheAvatar);
           tx.executeSql(
             kameoInsertQuery,
             [name, cacheAvatar.localUri, cacheProfile.localUri, movesJSON, guideJSON],
             (txObj, resultSet) => {
-              console.log('Insert success kameo:', resultSet);
+              console.log('Insert success kameo:', resultSet.rows._array);
             },
             (txObj, error) => {
               console.log('Insert failed kameo:', error);
