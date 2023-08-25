@@ -62,9 +62,49 @@ export default function Home({ navigation, loading }) {
       tx.executeSql(
         'SELECT beginner, intermediate, advance FROM lessons',
         null,
-        (txObj, resultSet) => {
-          const extractedLessons = resultSet.rows._array[0];
-          setMylessons(extractedLessons);
+        async (txObj, resultSet) => {
+          const extractedLesson = resultSet.rows._array[0];
+          try {
+            const p = {
+              beginner: JSON.parse(extractedLesson.beginner),
+              intermediate: JSON.parse(extractedLesson.intermediate),
+              advance: JSON.parse(extractedLesson.advance),
+            };
+
+            const newBeg = p.beginner.map(async (item) => {
+              const cacheThumb = await Asset.fromURI(item.adviceThumbnail).downloadAsync();
+              return {
+                ...item,
+                adviceThumbnail: cacheThumb.localUri,
+              };
+            });
+            const newInt = p.intermediate.map(async (item) => {
+              const cacheThumb = await Asset.fromURI(item.adviceThumbnail).downloadAsync();
+              return {
+                ...item,
+                adviceThumbnail: cacheThumb.localUri,
+              };
+            });
+            const newAdv = p.advance.map(async (item) => {
+              const cacheThumb = await Asset.fromURI(item.adviceThumbnail).downloadAsync();
+              return {
+                ...item,
+                adviceThumbnail: cacheThumb.localUri,
+              };
+            });
+
+            const updatedBeg = await Promise.all(newBeg);
+            const updatedInt = await Promise.all(newInt);
+            const updatedAdv = await Promise.all(newAdv);
+            const finalLessonObj = {
+              beginner: updatedBeg,
+              intermediate: updatedInt,
+              advance: updatedAdv,
+            };
+            setMylessons(finalLessonObj);
+          } catch (error) {
+            console.log(error);
+          }
         }
       );
     });
@@ -73,24 +113,24 @@ export default function Home({ navigation, loading }) {
   useEffect(() => {
     loadAvatar();
     loadLessons();
+    console.log(myLessons);
   }, []);
 
   useEffect(() => {
     loadAvatar();
     loadLessons();
-    console.log(myLessons);
   }, [loading]);
 
   return (
     <ScrollView style={[globalStyles.color, styles.container]}>
       <Title name={'Lessons'} />
-      <View>
+      {/* <View>
         {loading ? (
           <ActivityIndicator color={'white'} size={'large'} />
         ) : (
           <LessonButtons myLessons={myLessons} />
         )}
-      </View>
+      </View> */}
       <Title name={'Kharacters'} />
       <View style={styles.columnContainer}>
         {loading ? (

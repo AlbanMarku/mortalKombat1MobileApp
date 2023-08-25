@@ -5,15 +5,18 @@ import { useNavigation } from '@react-navigation/native';
 
 export default function LessonButtons({ myLessons }) {
   const navigation = useNavigation();
+
   const onPress = (title, lessons) => {
     navigation.navigate('LessonOptions', { title, lessons });
   };
 
-  const parsedLessons = {
-    beginner: myLessons.beginner,
-    intermediate: myLessons.intermediate,
-    advance: myLessons.advance,
-  };
+  // const parsedLessons = {
+  //   beginner: JSON.parse(myLessons.beginner),
+  //   intermediate: JSON.parse(myLessons.intermediate),
+  //   advance: JSON.parse(myLessons.advance),
+  // };
+
+  // console.log(parsedLessons);
 
   const sources = {
     source1: require('../assets/imgs/beg.jpg'),
@@ -36,10 +39,10 @@ export default function LessonButtons({ myLessons }) {
   return (
     <View>
       <View style={{ flexDirection: 'row' }}>
-        {imageComp('Beginner', sources.source1, parsedLessons.beginner)}
-        {imageComp('Intermediate', sources.source2, parsedLessons.intermediate)}
+        {imageComp('Beginner', sources.source1, myLessons.beginner)}
+        {imageComp('Intermediate', sources.source2, myLessons.intermediate)}
       </View>
-      <View>{imageComp('Advanced', sources.source3, parsedLessons.advance)}</View>
+      <View>{imageComp('Advanced', sources.source3, myLessons.advance)}</View>
     </View>
   );
 }

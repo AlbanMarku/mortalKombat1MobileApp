@@ -4,7 +4,7 @@ export const db = SQLite.openDatabase('main.db');
 
 export const setupDb = async (mainData, kameoData, lessonExtracted) => {
   console.log('Setting up db:');
-
+  console.log(lessonExtracted);
   db.transaction((tx) => {
     tx.executeSql('DROP TABLE IF EXISTS kharacters');
     tx.executeSql('DROP TABLE IF EXISTS kameos');

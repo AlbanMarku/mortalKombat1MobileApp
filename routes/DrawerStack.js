@@ -87,9 +87,42 @@ export default function DrawerStack() {
       const lessonQuery = await client.fetch(
         "*[_type == 'lesson']{name, beginner, intermediate, advance}"
       );
-      const lessonExtracted = lessonQuery[0];
+      const lesson = lessonQuery[0];
 
-      setupDb(mainData, kameoExtracted, lessonExtracted);
+      const beginnerArray = lesson.beginner;
+      const intermediateArray = lesson.intermediate;
+      const advanceArray = lesson.advance;
+
+      const parsedBeginnerObj = beginnerArray.map((item) => {
+        const thumbnailUrl = urlFor(item.adviceThumbnail.asset._ref).url();
+        return {
+          ...item,
+          adviceThumbnail: thumbnailUrl,
+        };
+      });
+      const parsedIntermediateObj = intermediateArray.map((item) => {
+        const thumbnailUrl = urlFor(item.adviceThumbnail.asset._ref).url();
+        return {
+          ...item,
+          adviceThumbnail: thumbnailUrl,
+        };
+      });
+      const parsedAdvanceObj = advanceArray.map((item) => {
+        const thumbnailUrl = urlFor(item.adviceThumbnail.asset._ref).url();
+        return {
+          ...item,
+          adviceThumbnail: thumbnailUrl,
+        };
+      });
+
+      const lessonObj = {
+        beginner: parsedBeginnerObj,
+        intermediate: parsedIntermediateObj,
+        advance: parsedAdvanceObj,
+        name: lesson.name,
+      };
+
+      setupDb(mainData, kameoExtracted, lessonObj);
       setLoading(false);
       ToastAndroid.showWithGravity('Roster data updated!', ToastAndroid.SHORT, ToastAndroid.BOTTOM);
     } catch (err) {
