@@ -10,14 +10,6 @@ export default function LessonButtons({ myLessons }) {
     navigation.navigate('LessonOptions', { title, lessons });
   };
 
-  // const parsedLessons = {
-  //   beginner: JSON.parse(myLessons.beginner),
-  //   intermediate: JSON.parse(myLessons.intermediate),
-  //   advance: JSON.parse(myLessons.advance),
-  // };
-
-  // console.log(parsedLessons);
-
   const sources = {
     source1: require('../assets/imgs/beg.jpg'),
     source2: require('../assets/imgs/int.jpg'),

@@ -113,7 +113,6 @@ export default function Home({ navigation, loading }) {
   useEffect(() => {
     loadAvatar();
     loadLessons();
-    console.log(myLessons);
   }, []);
 
   useEffect(() => {
@@ -124,13 +123,13 @@ export default function Home({ navigation, loading }) {
   return (
     <ScrollView style={[globalStyles.color, styles.container]}>
       <Title name={'Lessons'} />
-      {/* <View>
+      <View>
         {loading ? (
           <ActivityIndicator color={'white'} size={'large'} />
         ) : (
           <LessonButtons myLessons={myLessons} />
         )}
-      </View> */}
+      </View>
       <Title name={'Kharacters'} />
       <View style={styles.columnContainer}>
         {loading ? (

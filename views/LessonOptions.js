@@ -7,17 +7,14 @@ import { useState, useEffect } from 'react';
 
 export default function LessonOptions({ route, navigation }) {
   const { title, lessons } = route.params;
-  const parsedLessons = JSON.parse(lessons);
   const [exctractedLessons, setExtractedLessons] = useState([]);
 
   const handleArray = () => {
-    const lessonArray = parsedLessons.map((item) => {
-      const parsedThumbnail = urlFor(item.adviceThumbnail.asset._ref).url();
+    const lessonArray = lessons.map((item) => {
       const parsedUrl = item?.adviceUrl || null;
       const parsedHeader = item?.adviceHeader || null;
       return {
         ...item,
-        adviceThumbnail: parsedThumbnail,
         adviceUrl: parsedUrl,
         adviceHeader: parsedHeader,
       };
