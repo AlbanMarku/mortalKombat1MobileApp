@@ -65,21 +65,25 @@ export default function Home({ navigation, loading }) {
 
   useEffect(() => {
     loadAvatar();
+    loadLessons();
+    console.log(myLessons);
+    console.log(kameoAvatarInfo);
   }, []);
 
   useEffect(() => {
     loadAvatar();
+    loadLessons();
   }, [loading]);
 
   return (
     <ScrollView style={[globalStyles.color, styles.container]}>
       <Title name={'Lessons'} />
       <View>
-        {/* {loading ? (
+        {loading ? (
           <ActivityIndicator color={'white'} size={'large'} />
         ) : (
           <LessonButtons myLessons={myLessons} />
-        )} */}
+        )}
       </View>
       <Title name={'Kharacters'} />
       <View style={styles.columnContainer}>

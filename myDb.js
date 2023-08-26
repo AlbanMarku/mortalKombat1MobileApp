@@ -29,20 +29,18 @@ export const setupDb = async (mainData, kameoData, lessonExtracted) => {
     const kameoInsertQuery =
       'INSERT OR REPLACE INTO kameos (name, avatar, profile, moves, guide) VALUES (?,?,?,?,?)';
 
-    kameoData.forEach((kameo) => {
+    kameoData.forEach(async (kameo) => {
       const { name, avatar, profile, moves, guide } = kameo;
 
       const movesJSON = JSON.stringify(moves);
       const guideJSON = JSON.stringify(guide);
+      const cacheAvatar = await Asset.fromURI(avatar).downloadAsync();
+      const cacheProfile = await Asset.fromURI(profile).downloadAsync();
 
-      tx.executeSql('SELECT * FROM kameos WHERE name = ?', [name], async (txObj, resultSet) => {
+      tx.executeSql('SELECT * FROM kameos WHERE name = ?', [name], (txObj, resultSet) => {
         if (resultSet.rows.length > 0) {
           console.log('Already exists', name);
         } else {
-          console.log('BEGIN');
-          const cacheAvatar = await Asset.fromURI(avatar).downloadAsync();
-          const cacheProfile = await Asset.fromURI(profile).downloadAsync();
-          console.log(cacheAvatar);
           tx.executeSql(
             kameoInsertQuery,
             [name, cacheAvatar.localUri, cacheProfile.localUri, movesJSON, guideJSON],
@@ -57,7 +55,7 @@ export const setupDb = async (mainData, kameoData, lessonExtracted) => {
       });
     });
 
-    const lessonQuery = `INSERT OR REPLACE INTO lessons (name, beginner, intermediate, advance) 
+    const lessonQuery = `INSERT OR REPLACE INTO lessons (name, beginner, intermediate, advance)
     VALUES (?, ?, ?, ?)`;
     const { name, beginner, intermediate, advance } = lessonExtracted;
 
@@ -109,7 +107,8 @@ export const setupDb = async (mainData, kameoData, lessonExtracted) => {
     //Insert all the data into the table. For each kharacter, get the properties and stringify. If doesn't exist, insert data.
     const insertQuery = `INSERT OR REPLACE INTO kharacters (name, avatar, profile, basicAttacks, stringAttacks, specialAttacks, guide) 
         VALUES (?, ?, ?, ?, ?, ?, ?)`;
-    mainData.forEach((kharacter) => {
+
+    mainData.forEach(async (kharacter) => {
       const { name, avatar, profile, basicAttacks, stringAttacks, specialAttacks, guide } =
         kharacter;
 
@@ -117,16 +116,16 @@ export const setupDb = async (mainData, kameoData, lessonExtracted) => {
       const stringAttacksJSON = JSON.stringify(stringAttacks);
       const specialAttacksJSON = JSON.stringify(specialAttacks);
       const guideJSON = JSON.stringify(guide);
+      const cacheAvatar = await Asset.fromURI(avatar).downloadAsync();
+      const cacheProfile = await Asset.fromURI(profile).downloadAsync();
 
       tx.executeSql(
         'SELECT * FROM kharacters WHERE name = ?',
         [name],
-        async (txObj, resultSet) => {
+        (txObj, resultSet) => {
           if (resultSet.rows.length > 0) {
             console.log('Already exists', name);
           } else {
-            const cacheAvatar = await Asset.fromURI(avatar).downloadAsync();
-            const cacheProfile = await Asset.fromURI(profile).downloadAsync();
             tx.executeSql(
               insertQuery,
               [
