@@ -5,7 +5,6 @@ import { useNavigation } from '@react-navigation/native';
 
 export default function LessonButtons({ myLessons }) {
   const navigation = useNavigation();
-  console.log(myLessons.beginner);
 
   const onPress = (title, lessons) => {
     navigation.navigate('LessonOptions', { title, lessons });

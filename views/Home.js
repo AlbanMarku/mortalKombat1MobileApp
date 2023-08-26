@@ -5,20 +5,21 @@ import Title from '../components/Title';
 import { globalStyles } from '../styles/global';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useEffect, useState } from 'react';
-import { Asset } from 'expo-asset';
-import { useNetInfo } from '@react-native-community/netinfo';
-
 import { db } from '../myDb';
+import { ToastAndroid } from 'react-native';
 
 //Some temp data to map through. Components for homescreen.
 
 export default function Home({ navigation, loading }) {
-  const netInfo = useNetInfo();
   const [avatarInfo, setAvatarInfo] = useState([]);
   const [kameoAvatarInfo, setKameoAvatarInfo] = useState([]);
   const [myLessons, setMyLessons] = useState({});
+  const [aLoad, setALoad] = useState(true);
+  const [bLoad, setBLoad] = useState(true);
 
   const loadAvatar = () => {
+    setALoad(true);
+    setBLoad(true);
     db.transaction((tx) => {
       //Search names
       tx.executeSql(
@@ -27,6 +28,7 @@ export default function Home({ navigation, loading }) {
         async (txObj, resultSet) => {
           const avatarArray = resultSet.rows._array;
           setAvatarInfo(avatarArray);
+          setALoad(false);
         }
       );
 
@@ -35,7 +37,14 @@ export default function Home({ navigation, loading }) {
         null,
         async (txObj, resultSet) => {
           const kameoArray = resultSet.rows._array;
+          console.log(kameoArray);
+          ToastAndroid.showWithGravity(
+            kameoArray.toString(),
+            ToastAndroid.SHORT,
+            ToastAndroid.BOTTOM
+          );
           setKameoAvatarInfo(kameoArray);
+          setBLoad(false);
         }
       );
     });
@@ -85,7 +94,7 @@ export default function Home({ navigation, loading }) {
       </View>
       <Title name={'Kharacters'} />
       <View style={styles.columnContainer}>
-        {loading ? (
+        {aLoad ? (
           <ActivityIndicator color={'white'} size={'large'} />
         ) : (
           avatarInfo.map((item, index) => (
@@ -102,7 +111,7 @@ export default function Home({ navigation, loading }) {
       <Title name={'Kameos'} />
       <View>
         <View style={styles.columnContainer}>
-          {loading ? (
+          {bLoad ? (
             <ActivityIndicator color={'white'} size={'large'} />
           ) : (
             kameoAvatarInfo.map((item, index) => (
