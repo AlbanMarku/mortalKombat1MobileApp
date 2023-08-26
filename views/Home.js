@@ -66,8 +66,6 @@ export default function Home({ navigation, loading }) {
   useEffect(() => {
     loadAvatar();
     loadLessons();
-    console.log(myLessons);
-    console.log(kameoAvatarInfo);
   }, []);
 
   useEffect(() => {

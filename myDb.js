@@ -62,19 +62,19 @@ export const setupDb = async (mainData, kameoData, lessonExtracted) => {
     const newBeg = await Promise.all(
       beginner.map(async (item) => {
         const cacheThumb = await Asset.fromURI(item.adviceThumbnail).downloadAsync();
-        return { ...item, adviceThumbnail: cacheThumb };
+        return { ...item, adviceThumbnail: cacheThumb.localUri };
       })
     );
     const newInt = await Promise.all(
       intermediate.map(async (item) => {
         const cacheThumb = await Asset.fromURI(item.adviceThumbnail).downloadAsync();
-        return { ...item, adviceThumbnail: cacheThumb };
+        return { ...item, adviceThumbnail: cacheThumb.localUri };
       })
     );
     const newAdv = await Promise.all(
       advance.map(async (item) => {
         const cacheThumb = await Asset.fromURI(item.adviceThumbnail).downloadAsync();
-        return { ...item, adviceThumbnail: cacheThumb };
+        return { ...item, adviceThumbnail: cacheThumb.localUri };
       })
     );
 
