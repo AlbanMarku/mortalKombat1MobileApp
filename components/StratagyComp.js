@@ -22,21 +22,7 @@ export default function StrategyComp({ info, videoUrl, title }) {
         <Text style={styles.stratTitle}>{title}</Text>
         <ParseText para={info} />
       </View>
-      {videoUrl && (
-        <View style={styles.videoDiv}>
-          <Pressable style={styles.pressableDiv} onPress={() => setIsVisible(!isVisible)}>
-            <Text style={styles.pressableText}>{isVisible ? 'Hide video' : 'Show video'}</Text>
-            {isVisible ? (
-              <AntDesign style={styles.arrow} name="up" size={24} color="white" />
-            ) : (
-              <AntDesign style={styles.arrow} name="down" size={24} color="white" />
-            )}
-          </Pressable>
-          <Animated.View style={{ height: heightAnim, overflow: 'hidden' }}>
-            {isVisible && <VideoPlayer source={videoUrl} />}
-          </Animated.View>
-        </View>
-      )}
+      {videoUrl && <VideoPlayer source={videoUrl} />}
     </View>
   );
 }
