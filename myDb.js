@@ -1,10 +1,10 @@
 import * as SQLite from 'expo-sqlite';
-import { Asset } from 'expo-asset';
 
 export const db = SQLite.openDatabase('main.db');
 
 export const setupDb = async (mainData, kameoData, lessonExtracted) => {
   console.log('Setting up db:');
+  console.log(lessonExtracted);
   db.transaction((tx) => {
     tx.executeSql('DROP TABLE IF EXISTS kharacters');
     tx.executeSql('DROP TABLE IF EXISTS kameos');
@@ -24,18 +24,16 @@ export const setupDb = async (mainData, kameoData, lessonExtracted) => {
     );
   });
 
-  db.transaction(async (tx) => {
+  db.transaction((tx) => {
     //KAMEO
     const kameoInsertQuery =
       'INSERT OR REPLACE INTO kameos (name, avatar, profile, moves, guide) VALUES (?,?,?,?,?)';
 
-    kameoData.forEach(async (kameo) => {
+    kameoData.forEach((kameo) => {
       const { name, avatar, profile, moves, guide } = kameo;
 
       const movesJSON = JSON.stringify(moves);
       const guideJSON = JSON.stringify(guide);
-      const cacheAvatar = await Asset.fromURI(avatar).downloadAsync();
-      const cacheProfile = await Asset.fromURI(profile).downloadAsync();
 
       tx.executeSql('SELECT * FROM kameos WHERE name = ?', [name], (txObj, resultSet) => {
         if (resultSet.rows.length > 0) {
@@ -43,9 +41,9 @@ export const setupDb = async (mainData, kameoData, lessonExtracted) => {
         } else {
           tx.executeSql(
             kameoInsertQuery,
-            [name, cacheAvatar.localUri, cacheProfile.localUri, movesJSON, guideJSON],
+            [name, avatar, profile, movesJSON, guideJSON],
             (txObj, resultSet) => {
-              console.log('Insert success kameo:', resultSet.rows._array);
+              console.log('Insert success kameo:', resultSet);
             },
             (txObj, error) => {
               console.log('Insert failed kameo:', error);
@@ -55,32 +53,13 @@ export const setupDb = async (mainData, kameoData, lessonExtracted) => {
       });
     });
 
-    const lessonQuery = `INSERT OR REPLACE INTO lessons (name, beginner, intermediate, advance)
+    const lessonQuery = `INSERT OR REPLACE INTO lessons (name, beginner, intermediate, advance) 
     VALUES (?, ?, ?, ?)`;
     const { name, beginner, intermediate, advance } = lessonExtracted;
 
-    const newBeg = await Promise.all(
-      beginner.map(async (item) => {
-        const cacheThumb = await Asset.fromURI(item.adviceThumbnail).downloadAsync();
-        return { ...item, adviceThumbnail: cacheThumb.localUri };
-      })
-    );
-    const newInt = await Promise.all(
-      intermediate.map(async (item) => {
-        const cacheThumb = await Asset.fromURI(item.adviceThumbnail).downloadAsync();
-        return { ...item, adviceThumbnail: cacheThumb.localUri };
-      })
-    );
-    const newAdv = await Promise.all(
-      advance.map(async (item) => {
-        const cacheThumb = await Asset.fromURI(item.adviceThumbnail).downloadAsync();
-        return { ...item, adviceThumbnail: cacheThumb.localUri };
-      })
-    );
-
-    const beginnerJSON = JSON.stringify(newBeg);
-    const intermediateJSON = JSON.stringify(newInt);
-    const advanceJSON = JSON.stringify(newAdv);
+    const beginnerJSON = JSON.stringify(beginner);
+    const intermediateJSON = JSON.stringify(intermediate);
+    const advanceJSON = JSON.stringify(advance);
 
     tx.executeSql(
       'SELECT * FROM lessons WHERE name = ?',
@@ -107,8 +86,7 @@ export const setupDb = async (mainData, kameoData, lessonExtracted) => {
     //Insert all the data into the table. For each kharacter, get the properties and stringify. If doesn't exist, insert data.
     const insertQuery = `INSERT OR REPLACE INTO kharacters (name, avatar, profile, basicAttacks, stringAttacks, specialAttacks, guide) 
         VALUES (?, ?, ?, ?, ?, ?, ?)`;
-
-    mainData.forEach(async (kharacter) => {
+    mainData.forEach((kharacter) => {
       const { name, avatar, profile, basicAttacks, stringAttacks, specialAttacks, guide } =
         kharacter;
 
@@ -116,8 +94,6 @@ export const setupDb = async (mainData, kameoData, lessonExtracted) => {
       const stringAttacksJSON = JSON.stringify(stringAttacks);
       const specialAttacksJSON = JSON.stringify(specialAttacks);
       const guideJSON = JSON.stringify(guide);
-      const cacheAvatar = await Asset.fromURI(avatar).downloadAsync();
-      const cacheProfile = await Asset.fromURI(profile).downloadAsync();
 
       tx.executeSql(
         'SELECT * FROM kharacters WHERE name = ?',
@@ -130,8 +106,8 @@ export const setupDb = async (mainData, kameoData, lessonExtracted) => {
               insertQuery,
               [
                 name,
-                cacheAvatar.localUri,
-                cacheProfile.localUri,
+                avatar,
+                profile,
                 basicAttacksJSON,
                 stringAttacksJSON,
                 specialAttacksJSON,
@@ -141,7 +117,7 @@ export const setupDb = async (mainData, kameoData, lessonExtracted) => {
                 console.log('Insert success:', resultSet);
               },
               (txObj, error) => {
-                console.log('Insert failed kharacter:', error);
+                console.log('Insert failed:', error);
               }
             );
           }

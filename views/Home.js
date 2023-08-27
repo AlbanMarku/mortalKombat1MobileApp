@@ -1,25 +1,22 @@
-import { StyleSheet, View, Text, ActivityIndicator, Pressable } from 'react-native';
+import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
 import LessonButtons from '../components/LessonButtons';
 import Avatar from '../components/Avatar';
 import Title from '../components/Title';
 import { globalStyles } from '../styles/global';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useEffect, useState } from 'react';
+import { Asset } from 'expo-asset';
+
 import { db } from '../myDb';
-import { ToastAndroid } from 'react-native';
 
 //Some temp data to map through. Components for homescreen.
 
 export default function Home({ navigation, loading }) {
   const [avatarInfo, setAvatarInfo] = useState([]);
   const [kameoAvatarInfo, setKameoAvatarInfo] = useState([]);
-  const [myLessons, setMyLessons] = useState({});
-  const [aLoad, setALoad] = useState(true);
-  const [bLoad, setBLoad] = useState(true);
+  const [myLessons, setMylessons] = useState({});
 
-  const loadAvatar = () => {
-    setALoad(true);
-    setBLoad(true);
+  const loadAvatar = async () => {
     db.transaction((tx) => {
       //Search names
       tx.executeSql(
@@ -27,8 +24,16 @@ export default function Home({ navigation, loading }) {
         null,
         async (txObj, resultSet) => {
           const avatarArray = resultSet.rows._array;
-          setAvatarInfo(avatarArray);
-          setALoad(false);
+          const avatarPromises = avatarArray.map(async (item) => {
+            const profileAsset = await Asset.fromURI(item.profile).downloadAsync();
+            return {
+              name: item.name,
+              avatar: item.avatar,
+              profile: profileAsset.localUri,
+            };
+          });
+          const updatedAvatarInfo = await Promise.all(avatarPromises);
+          setAvatarInfo(updatedAvatarInfo); //figure out promises
         }
       );
 
@@ -37,14 +42,16 @@ export default function Home({ navigation, loading }) {
         null,
         async (txObj, resultSet) => {
           const kameoArray = resultSet.rows._array;
-          console.log(kameoArray);
-          ToastAndroid.showWithGravity(
-            kameoArray.toString(),
-            ToastAndroid.SHORT,
-            ToastAndroid.BOTTOM
-          );
-          setKameoAvatarInfo(kameoArray);
-          setBLoad(false);
+          const avatarPromises = kameoArray.map(async (item) => {
+            const profileAsset = await Asset.fromURI(item.profile).downloadAsync();
+            return {
+              name: item.name,
+              avatar: item.avatar,
+              profile: profileAsset.localUri,
+            };
+          });
+          const updatedAvatarInfo = await Promise.all(avatarPromises);
+          setKameoAvatarInfo(updatedAvatarInfo);
         }
       );
     });
@@ -59,13 +66,44 @@ export default function Home({ navigation, loading }) {
           const extractedLesson = resultSet.rows._array[0];
           try {
             const p = {
-              beginner: await Promise.all(JSON.parse(extractedLesson.beginner)),
-              intermediate: await Promise.all(JSON.parse(extractedLesson.intermediate)),
-              advance: await Promise.all(JSON.parse(extractedLesson.advance)),
+              beginner: JSON.parse(extractedLesson.beginner),
+              intermediate: JSON.parse(extractedLesson.intermediate),
+              advance: JSON.parse(extractedLesson.advance),
             };
-            setMyLessons(p);
+
+            const newBeg = p.beginner.map(async (item) => {
+              const cacheThumb = await Asset.fromURI(item.adviceThumbnail).downloadAsync();
+              return {
+                ...item,
+                adviceThumbnail: cacheThumb.localUri,
+              };
+            });
+            const newInt = p.intermediate.map(async (item) => {
+              const cacheThumb = await Asset.fromURI(item.adviceThumbnail).downloadAsync();
+              return {
+                ...item,
+                adviceThumbnail: cacheThumb.localUri,
+              };
+            });
+            const newAdv = p.advance.map(async (item) => {
+              const cacheThumb = await Asset.fromURI(item.adviceThumbnail).downloadAsync();
+              return {
+                ...item,
+                adviceThumbnail: cacheThumb.localUri,
+              };
+            });
+
+            const updatedBeg = await Promise.all(newBeg);
+            const updatedInt = await Promise.all(newInt);
+            const updatedAdv = await Promise.all(newAdv);
+            const finalLessonObj = {
+              beginner: updatedBeg,
+              intermediate: updatedInt,
+              advance: updatedAdv,
+            };
+            setMylessons(finalLessonObj);
           } catch (error) {
-            console.log('load lesson error: ', error);
+            console.log(error);
           }
         }
       );
@@ -88,13 +126,15 @@ export default function Home({ navigation, loading }) {
       <View>
         {loading ? (
           <ActivityIndicator color={'white'} size={'large'} />
+        ) : myLessons === null || myLessons === {} || myLessons === '' ? (
+          <Title name={'No data'} />
         ) : (
           <LessonButtons myLessons={myLessons} />
         )}
       </View>
       <Title name={'Kharacters'} />
       <View style={styles.columnContainer}>
-        {aLoad ? (
+        {loading ? (
           <ActivityIndicator color={'white'} size={'large'} />
         ) : (
           avatarInfo.map((item, index) => (
@@ -111,7 +151,7 @@ export default function Home({ navigation, loading }) {
       <Title name={'Kameos'} />
       <View>
         <View style={styles.columnContainer}>
-          {bLoad ? (
+          {loading ? (
             <ActivityIndicator color={'white'} size={'large'} />
           ) : (
             kameoAvatarInfo.map((item, index) => (

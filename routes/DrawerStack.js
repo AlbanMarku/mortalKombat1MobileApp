@@ -19,7 +19,11 @@ export default function DrawerStack() {
       if (value === null || value === 'false') {
         // This is the first time the app is opened
         await AsyncStorage.setItem('appOpened', 'true'); // Set the flag
-        ToastAndroid.showWithGravity('first launch fetch', ToastAndroid.SHORT, ToastAndroid.BOTTOM);
+        ToastAndroid.showWithGravity(
+          'first launch fetch CURRENT BUILD',
+          ToastAndroid.SHORT,
+          ToastAndroid.BOTTOM
+        );
         return true;
       } else {
         return false;
