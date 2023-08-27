@@ -47,9 +47,6 @@ const styles = StyleSheet.create({
   videoStyle: {
     flex: 1,
   },
-  container: {
-    marginBottom: 20,
-  },
   videoDiv: {
     // alignItems: 'center',
   },
@@ -64,12 +61,6 @@ const styles = StyleSheet.create({
   pressableText: {
     fontSize: 20,
     color: 'white',
-  },
-  stratTitle: {
-    color: 'white',
-    fontFamily: 'mk11',
-    fontSize: 24,
-    paddingBottom: 10,
   },
   arrow: {
     position: 'absolute',

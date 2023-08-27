@@ -2,6 +2,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { globalStyles } from '../styles/global';
 import VideoPlayer from '../components/VideoPlayer';
 import Title from '../components/Title';
+import ParseText from '../styles/ParseText';
 const Lesson = ({ route, navigation }) => {
   const { adviceContent, adviceTitle } = route.params;
   console.log(adviceContent);
@@ -10,12 +11,12 @@ const Lesson = ({ route, navigation }) => {
     return (
       <View>
         <Title name={name} subHeader />
-        <View style={{ backgroundColor: 'red' }}>
-          <Text style={styles.adviceText}>{text}</Text>
+        <View style={{}}>
+          <ParseText para={text} />
           {videoText ? <Text style={styles.adviceText}>{videoText}</Text> : null}
         </View>
         {video && (
-          <View style={{ backgroundColor: 'red' }}>
+          <View style={{}}>
             <VideoPlayer source={video} />
           </View>
         )}
