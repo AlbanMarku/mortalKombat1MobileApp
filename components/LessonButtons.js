@@ -7,7 +7,7 @@ export default function LessonButtons({ myLessons }) {
   const navigation = useNavigation();
 
   const onPress = (title, lessons) => {
-    navigation.navigate('LessonOptions', { title, lessons });
+    navigation.navigate('LessonsList', { title, lessons });
   };
 
   const sources = {

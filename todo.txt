@@ -2,3 +2,5 @@ Verify data in app and sanity
 held, assist
 suitable images
 fix jitter navigate
+
+make adviceinfo and object

@@ -1,15 +1,11 @@
 import { View, Text, Pressable, Image, ImageBackground, StyleSheet } from 'react-native';
-import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 
-export default function AdviceBox({
-  adviceTitle,
-  adviceInfo,
-  adviceThumbnail,
-  adviceHeader,
-  adviceUrl,
-}) {
+export default function AdviceBox({ adviceTitle, adviceContent, adviceThumbnail }) {
+  const navigation = useNavigation();
+
   const handlePress = () => {
-    console.log('clicked advice');
+    navigation.navigate('Lesson', { adviceContent });
   };
   return (
     <Pressable style={styles.button} onPress={handlePress}>

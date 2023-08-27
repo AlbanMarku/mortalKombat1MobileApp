@@ -126,6 +126,8 @@ export default function Home({ navigation, loading }) {
       <View>
         {loading ? (
           <ActivityIndicator color={'white'} size={'large'} />
+        ) : myLessons === null || myLessons === {} || myLessons === '' ? (
+          <Title name={'No data'} />
         ) : (
           <LessonButtons myLessons={myLessons} />
         )}
