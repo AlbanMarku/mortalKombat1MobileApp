@@ -5,7 +5,7 @@ export default function AdviceBox({ adviceTitle, adviceContent, adviceThumbnail 
   const navigation = useNavigation();
 
   const handlePress = () => {
-    navigation.navigate('Lesson', { adviceContent });
+    navigation.navigate('Lesson', { adviceContent, adviceTitle });
   };
   return (
     <Pressable style={styles.button} onPress={handlePress}>

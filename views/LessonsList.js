@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native';
 import { globalStyles } from '../styles/global';
-import AdviceBox from '../components/AdviceBox';
+import LessonThumbnail from '../components/LessonThumbnail';
 import Title from '../components/Title';
 import { useState, useEffect } from 'react';
 
@@ -11,7 +11,7 @@ export default function LessonsList({ route, navigation }) {
     <View style={[globalStyles.color, { flex: 1 }]}>
       <Title name={title} underline />
       {lessons.map((item, index) => (
-        <AdviceBox
+        <LessonThumbnail
           key={index}
           adviceTitle={item.adviceTitle}
           adviceContent={item.adviceContent}
