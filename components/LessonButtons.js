@@ -31,9 +31,9 @@ export default function LessonButtons({ myLessons }) {
     <View>
       <View style={{ flexDirection: 'row' }}>
         {imageComp('Beginner', sources.source1, myLessons.beginner)}
-        {imageComp('dont click', sources.source2, myLessons.intermediate)}
+        {imageComp('Intermediate', sources.source2, myLessons.intermediate)}
       </View>
-      <View>{imageComp('dont click', sources.source3, myLessons.advance)}</View>
+      <View>{imageComp('Advanced', sources.source3, myLessons.advance)}</View>
     </View>
   );
 }
