@@ -4,7 +4,6 @@ Allows users to view detailed game information for the video game Mortal Kombat 
 
 Built using React Native JavaScript. Data fetched from Sanity content management system.
 
-
 ## Features
 
 - View all Kharacters.
@@ -12,14 +11,14 @@ Built using React Native JavaScript. Data fetched from Sanity content management
 - Easy to read move information with colour coded text.
 - Show attacks in selected gaming platform buttons.
 - Kharacter guides.
-
-
-## Work in progress
 - Offline support.
-- Pin moves.
 - Kombo data.
 - Kameo data.
 - How to play information.
+
+## Work in progress
+
+- Pin moves.
 - Fully support iOS.
 - QOL
 

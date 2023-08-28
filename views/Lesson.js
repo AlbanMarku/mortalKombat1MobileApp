@@ -26,7 +26,7 @@ const Lesson = ({ route, navigation }) => {
   };
   return (
     <ScrollView style={[globalStyles.color]}>
-      <Title name={adviceTitle} />
+      <Title name={adviceTitle} underline />
       {adviceContent.map((item, index) => {
         return (
           <AdviceSection
