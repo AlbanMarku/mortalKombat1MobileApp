@@ -3,13 +3,14 @@ import { globalStyles } from '../styles/global';
 import VideoPlayer from '../components/VideoPlayer';
 import Title from '../components/Title';
 import ParseText from '../styles/ParseText';
+import { ScrollView } from 'react-native-gesture-handler';
 const Lesson = ({ route, navigation }) => {
   const { adviceContent, adviceTitle } = route.params;
   console.log(adviceContent);
 
   const AdviceSection = ({ name, text, videoText, video }) => {
     return (
-      <View>
+      <View style={{ marginBottom: 20 }}>
         <Title name={name} subHeader />
         <View style={{}}>
           <ParseText para={text} />
@@ -24,7 +25,7 @@ const Lesson = ({ route, navigation }) => {
     );
   };
   return (
-    <View style={[globalStyles.color, { flex: 1 }]}>
+    <ScrollView style={[globalStyles.color]}>
       <Title name={adviceTitle} />
       {adviceContent.map((item, index) => {
         return (
@@ -37,7 +38,7 @@ const Lesson = ({ route, navigation }) => {
           />
         );
       })}
-    </View>
+    </ScrollView>
   );
 };
 

@@ -1,11 +1,10 @@
-import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, ActivityIndicator } from 'react-native';
 import LessonButtons from '../components/LessonButtons';
 import Avatar from '../components/Avatar';
 import Title from '../components/Title';
 import { globalStyles } from '../styles/global';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useEffect, useState } from 'react';
-import { Asset } from 'expo-asset';
 
 import { db } from '../myDb';
 
@@ -24,16 +23,7 @@ export default function Home({ navigation, loading }) {
         null,
         async (txObj, resultSet) => {
           const avatarArray = resultSet.rows._array;
-          const avatarPromises = avatarArray.map(async (item) => {
-            const profileAsset = await Asset.fromURI(item.profile).downloadAsync();
-            return {
-              name: item.name,
-              avatar: item.avatar,
-              profile: profileAsset.localUri,
-            };
-          });
-          const updatedAvatarInfo = await Promise.all(avatarPromises);
-          setAvatarInfo(updatedAvatarInfo); //figure out promises
+          setAvatarInfo(avatarArray); //figure out promises
         }
       );
 
@@ -42,16 +32,7 @@ export default function Home({ navigation, loading }) {
         null,
         async (txObj, resultSet) => {
           const kameoArray = resultSet.rows._array;
-          const avatarPromises = kameoArray.map(async (item) => {
-            const profileAsset = await Asset.fromURI(item.profile).downloadAsync();
-            return {
-              name: item.name,
-              avatar: item.avatar,
-              profile: profileAsset.localUri,
-            };
-          });
-          const updatedAvatarInfo = await Promise.all(avatarPromises);
-          setKameoAvatarInfo(updatedAvatarInfo);
+          setKameoAvatarInfo(kameoArray);
         }
       );
     });
@@ -70,38 +51,7 @@ export default function Home({ navigation, loading }) {
               intermediate: JSON.parse(extractedLesson.intermediate),
               advance: JSON.parse(extractedLesson.advance),
             };
-
-            const newBeg = p.beginner.map(async (item) => {
-              const cacheThumb = await Asset.fromURI(item.adviceThumbnail).downloadAsync();
-              return {
-                ...item,
-                adviceThumbnail: cacheThumb.localUri,
-              };
-            });
-            const newInt = p.intermediate.map(async (item) => {
-              const cacheThumb = await Asset.fromURI(item.adviceThumbnail).downloadAsync();
-              return {
-                ...item,
-                adviceThumbnail: cacheThumb.localUri,
-              };
-            });
-            const newAdv = p.advance.map(async (item) => {
-              const cacheThumb = await Asset.fromURI(item.adviceThumbnail).downloadAsync();
-              return {
-                ...item,
-                adviceThumbnail: cacheThumb.localUri,
-              };
-            });
-
-            const updatedBeg = await Promise.all(newBeg);
-            const updatedInt = await Promise.all(newInt);
-            const updatedAdv = await Promise.all(newAdv);
-            const finalLessonObj = {
-              beginner: updatedBeg,
-              intermediate: updatedInt,
-              advance: updatedAdv,
-            };
-            setMylessons(finalLessonObj);
+            setMylessons(p);
           } catch (error) {
             console.log(error);
           }
@@ -121,7 +71,7 @@ export default function Home({ navigation, loading }) {
   }, [loading]);
 
   return (
-    <ScrollView style={[globalStyles.color, styles.container]}>
+    <ScrollView style={[globalStyles.color, { flex: 1 }]}>
       <Title name={'Lessons'} />
       <View>
         {loading ? (
@@ -172,9 +122,6 @@ export default function Home({ navigation, loading }) {
 
 const styles = StyleSheet.create({
   buttonArea: {},
-  container: {
-    flex: 1,
-  },
   boxContainer: {
     flex: 1,
   },

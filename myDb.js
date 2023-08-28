@@ -35,6 +35,8 @@ export const setupDb = async (mainData, kameoData, lessonExtracted) => {
       const movesJSON = JSON.stringify(moves);
       const guideJSON = JSON.stringify(guide);
 
+      console.log('the profile db is ', profile);
+
       tx.executeSql('SELECT * FROM kameos WHERE name = ?', [name], (txObj, resultSet) => {
         if (resultSet.rows.length > 0) {
           console.log('Already exists', name);

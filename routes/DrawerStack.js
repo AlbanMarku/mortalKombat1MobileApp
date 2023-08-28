@@ -7,6 +7,7 @@ import HeaderComp from '../components/HeaderComp';
 import { client, urlFor } from '../components/SanityClient';
 import { setupDb } from '../myDb';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Asset } from 'expo-asset';
 
 export default function DrawerStack() {
   const Drawer = createDrawerNavigator();
@@ -19,14 +20,20 @@ export default function DrawerStack() {
       if (value === null || value === 'false') {
         // This is the first time the app is opened
         await AsyncStorage.setItem('appOpened', 'true'); // Set the flag
+        fetchRoster();
         ToastAndroid.showWithGravity(
-          'first launch fetch CURRENT BUILD',
+          'This was the first launch',
           ToastAndroid.SHORT,
           ToastAndroid.BOTTOM
         );
-        return true;
+        console.log('Changed to opened');
       } else {
-        return false;
+        ToastAndroid.showWithGravity(
+          'This was the SECOND launch',
+          ToastAndroid.SHORT,
+          ToastAndroid.BOTTOM
+        );
+        console.log('This was the SECOND launch');
       }
     } catch (error) {
       console.log('Error:', error);
@@ -44,9 +51,7 @@ export default function DrawerStack() {
 
   useEffect(() => {
     // Check if the app has been opened before
-    if (checkOpened()) {
-      fetchRoster();
-    }
+    checkOpened();
     // clearAppOpenedFlag();
   }, []);
 
@@ -59,17 +64,19 @@ export default function DrawerStack() {
         "*[_type == 'kharacter']{ _id,name, avatar, profile, basicAttacks[]{..., attackType->{name}},stringAttacks[]{..., attackType->{name}},basicAttacks[]{..., attackType->{name}},specialAttacks[]{...,attackType->{name}}, guide}"
       );
 
-      const mainData = queryData.map((item) => {
+      const mainDataPromises = queryData.map(async (item) => {
         const parsedAvatarImg = urlFor(item.avatar.asset._ref);
         const parsedProfileImg = urlFor(item.profile.asset._ref);
+        const cachedAvatar = await Asset.fromURI(parsedAvatarImg.url()).downloadAsync();
+        const cachedImage = await Asset.fromURI(parsedProfileImg.url()).downloadAsync();
         const basicAttacks = item.basicAttacks ? item.basicAttacks : [];
         const stringAttacks = item.stringAttacks ? item.stringAttacks : [];
         const specialAttacks = item.specialAttacks ? item.specialAttacks : [];
         const guide = item.guide;
         return {
           name: item.name,
-          avatar: parsedAvatarImg.url(),
-          profile: parsedProfileImg.url(),
+          avatar: cachedAvatar.localUri,
+          profile: cachedImage.localUri,
           basicAttacks: basicAttacks,
           stringAttacks: stringAttacks,
           specialAttacks: specialAttacks,
@@ -77,22 +84,30 @@ export default function DrawerStack() {
         };
       });
 
+      const mainData = await Promise.all(mainDataPromises);
+
       const kameoQuery = await client.fetch(
         "*[_type == 'kameo']{_id, name, avatar, profile, moves, guide}"
       );
-      const kameoExtracted = kameoQuery.map((item) => {
+
+      const kameoExtractedPromises = kameoQuery.map(async (item) => {
         const parsedKameoAvatar = urlFor(item.avatar.asset._ref);
         const parsedKameoImg = urlFor(item.profile.asset._ref);
+        const cachedAvatar = await Asset.fromURI(parsedKameoAvatar.url()).downloadAsync();
+        const cachedImage = await Asset.fromURI(parsedKameoImg.url()).downloadAsync();
         const moves = item.moves ? item.moves : [];
         const guide = item.guide;
+
         return {
           name: item.name,
-          avatar: parsedKameoAvatar.url(),
-          profile: parsedKameoImg.url(),
+          avatar: cachedAvatar.localUri,
+          profile: cachedImage.localUri,
           moves: moves,
           guide: guide,
         };
       });
+
+      const kameoExtracted = await Promise.all(kameoExtractedPromises);
 
       const lessonQuery = await client.fetch(
         "*[_type == 'lesson']{name, beginner, intermediate, advance}"
@@ -103,27 +118,51 @@ export default function DrawerStack() {
       const intermediateArray = lesson.intermediate;
       const advanceArray = lesson.advance;
 
-      const parsedBeginnerObj = beginnerArray.map((item) => {
-        const thumbnailUrl = urlFor(item.adviceThumbnail.asset._ref).url();
-        return {
-          ...item,
-          adviceThumbnail: thumbnailUrl,
-        };
+      const parsedBeginnerPromise = beginnerArray.map(async (item) => {
+        try {
+          const thumbnailUrl = urlFor(item.adviceThumbnail.asset._ref);
+          const cachedThumbnail = await Asset.fromURI(thumbnailUrl.url()).downloadAsync();
+          return {
+            ...item,
+            adviceThumbnail: cachedThumbnail.localUri,
+          };
+        } catch (error) {
+          console.log(error);
+          return item;
+        }
       });
-      const parsedIntermediateObj = intermediateArray.map((item) => {
-        const thumbnailUrl = urlFor(item.adviceThumbnail.asset._ref).url();
-        return {
-          ...item,
-          adviceThumbnail: thumbnailUrl,
-        };
+
+      const parsedIntermediatePromise = intermediateArray.map(async (item) => {
+        try {
+          const thumbnailUrl = urlFor(item.adviceThumbnail.asset._ref).url();
+          const cachedThumbnail = await Asset.fromURI(thumbnailUrl.url()).downloadAsync();
+          return {
+            ...item,
+            adviceThumbnail: cachedThumbnail.localUri,
+          };
+        } catch (error) {
+          console.log(error);
+          return item;
+        }
       });
-      const parsedAdvanceObj = advanceArray.map((item) => {
-        const thumbnailUrl = urlFor(item.adviceThumbnail.asset._ref).url();
-        return {
-          ...item,
-          adviceThumbnail: thumbnailUrl,
-        };
+
+      const parsedAdvancePromise = advanceArray.map(async (item) => {
+        try {
+          const thumbnailUrl = urlFor(item.adviceThumbnail.asset._ref).url();
+          const cachedThumbnail = await Asset.fromURI(thumbnailUrl.url()).downloadAsync();
+          return {
+            ...item,
+            adviceThumbnail: cachedThumbnail.localUri,
+          };
+        } catch (error) {
+          console.log(error);
+          return item;
+        }
       });
+
+      const parsedBeginnerObj = await Promise.all(parsedBeginnerPromise);
+      const parsedIntermediateObj = await Promise.all(parsedIntermediatePromise);
+      const parsedAdvanceObj = await Promise.all(parsedAdvancePromise);
 
       const lessonObj = {
         beginner: parsedBeginnerObj,

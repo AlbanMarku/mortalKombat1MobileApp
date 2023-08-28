@@ -10,7 +10,7 @@ export default function VideoPlayer({ source }) {
 
   useEffect(() => {
     Animated.timing(heightAnim, {
-      toValue: isVisible ? 200 : 0,
+      toValue: isVisible ? 230 : 0,
       duration: 500, // Animation duration in milliseconds
       useNativeDriver: false,
     }).start();
