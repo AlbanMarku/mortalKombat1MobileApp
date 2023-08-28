@@ -6,7 +6,6 @@ import ParseText from '../styles/ParseText';
 import { ScrollView } from 'react-native-gesture-handler';
 const Lesson = ({ route, navigation }) => {
   const { adviceContent, adviceTitle } = route.params;
-  console.log(adviceContent);
 
   const AdviceSection = ({ name, text, videoText, video }) => {
     return (

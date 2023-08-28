@@ -1,8 +1,6 @@
 import { Text, View, StyleSheet } from 'react-native';
 
 export default function OverviewComp({ overviewObj }) {
-  console.log(overviewObj.strengths);
-
   const RenderStrengths = () => {
     return (
       <View>

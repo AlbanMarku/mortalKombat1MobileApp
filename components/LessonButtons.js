@@ -9,7 +9,6 @@ export default function LessonButtons({ myLessons }) {
   const onPress = (title, lessons) => {
     navigation.navigate('LessonsList', { title, lessons });
   };
-
   const sources = {
     source1: require('../assets/imgs/beg.jpg'),
     source2: require('../assets/imgs/int.jpg'),
@@ -32,9 +31,9 @@ export default function LessonButtons({ myLessons }) {
     <View>
       <View style={{ flexDirection: 'row' }}>
         {imageComp('Beginner', sources.source1, myLessons.beginner)}
-        {imageComp('Intermediate', sources.source2, myLessons.intermediate)}
+        {imageComp('dont click', sources.source2, myLessons.intermediate)}
       </View>
-      <View>{imageComp('Advanced', sources.source3, myLessons.advance)}</View>
+      <View>{imageComp('dont click', sources.source3, myLessons.advance)}</View>
     </View>
   );
 }

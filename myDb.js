@@ -4,7 +4,6 @@ export const db = SQLite.openDatabase('main.db');
 
 export const setupDb = async (mainData, kameoData, lessonExtracted) => {
   console.log('Setting up db:');
-  console.log(lessonExtracted);
   db.transaction((tx) => {
     tx.executeSql('DROP TABLE IF EXISTS kharacters');
     tx.executeSql('DROP TABLE IF EXISTS kameos');
@@ -34,8 +33,6 @@ export const setupDb = async (mainData, kameoData, lessonExtracted) => {
 
       const movesJSON = JSON.stringify(moves);
       const guideJSON = JSON.stringify(guide);
-
-      console.log('the profile db is ', profile);
 
       tx.executeSql('SELECT * FROM kameos WHERE name = ?', [name], (txObj, resultSet) => {
         if (resultSet.rows.length > 0) {

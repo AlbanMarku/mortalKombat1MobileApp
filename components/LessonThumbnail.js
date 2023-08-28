@@ -7,13 +7,14 @@ export default function AdviceBox({ adviceTitle, adviceContent, adviceThumbnail 
   const handlePress = () => {
     navigation.navigate('Lesson', { adviceContent, adviceTitle });
   };
+  console.log(adviceThumbnail);
   return (
     <Pressable style={styles.button} onPress={handlePress}>
-      <ImageBackground source={{ uri: adviceThumbnail }} style={styles.imger}>
+      {/* <ImageBackground source={{ uri: adviceThumbnail }} style={styles.imger}>
         <View style={styles.textContainer}>
           <Text style={styles.buttonText}>{adviceTitle}</Text>
         </View>
-      </ImageBackground>
+      </ImageBackground> */}
     </Pressable>
   );
 }

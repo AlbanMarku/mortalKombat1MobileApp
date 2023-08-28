@@ -26,14 +26,12 @@ export default function DrawerStack() {
           ToastAndroid.SHORT,
           ToastAndroid.BOTTOM
         );
-        console.log('Changed to opened');
       } else {
         ToastAndroid.showWithGravity(
           'This was the SECOND launch',
           ToastAndroid.SHORT,
           ToastAndroid.BOTTOM
         );
-        console.log('This was the SECOND launch');
       }
     } catch (error) {
       console.log('Error:', error);
@@ -134,7 +132,7 @@ export default function DrawerStack() {
 
       const parsedIntermediatePromise = intermediateArray.map(async (item) => {
         try {
-          const thumbnailUrl = urlFor(item.adviceThumbnail.asset._ref).url();
+          const thumbnailUrl = urlFor(item.adviceThumbnail.asset._ref);
           const cachedThumbnail = await Asset.fromURI(thumbnailUrl.url()).downloadAsync();
           return {
             ...item,
@@ -148,7 +146,7 @@ export default function DrawerStack() {
 
       const parsedAdvancePromise = advanceArray.map(async (item) => {
         try {
-          const thumbnailUrl = urlFor(item.adviceThumbnail.asset._ref).url();
+          const thumbnailUrl = urlFor(item.adviceThumbnail.asset._ref);
           const cachedThumbnail = await Asset.fromURI(thumbnailUrl.url()).downloadAsync();
           return {
             ...item,
