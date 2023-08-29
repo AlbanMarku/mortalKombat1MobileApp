@@ -60,6 +60,41 @@ export default function Home({ navigation, loading }) {
     });
   };
 
+  const HomeScreen = () => {
+    return (
+      <View>
+        <Title name={'Lessons'} />
+        <View>
+          <LessonButtons myLessons={myLessons} />
+        </View>
+        <Title name={'Kharacters'} />
+        <View style={styles.columnContainer}>
+          {avatarInfo.map((item, index) => (
+            <Avatar
+              key={index.toString()}
+              img={item.avatar}
+              name={item.name ? item.name : 'unknown name'}
+              profile={item.profile}
+              type={'kharacter'}
+            />
+          ))}
+        </View>
+        <Title name={'Kameos'} />
+        <View style={styles.columnContainer}>
+          {kameoAvatarInfo.map((item, index) => (
+            <Avatar
+              key={index.toString()}
+              img={item.avatar}
+              name={item.name ? item.name : 'unknown name'}
+              profile={item.profile}
+              type={'kameo'}
+            />
+          ))}
+        </View>
+      </View>
+    );
+  };
+
   useEffect(() => {
     loadAvatar();
     loadLessons();
@@ -72,59 +107,18 @@ export default function Home({ navigation, loading }) {
 
   return (
     <ScrollView style={[globalStyles.color, { flex: 1 }]}>
-      <Title name={'Lessons'} />
-      <View>
-        {loading ? (
+      {loading ? (
+        <View style={{ height: 500, justifyContent: 'center' }}>
           <ActivityIndicator color={'white'} size={'large'} />
-        ) : myLessons === null || myLessons === {} || myLessons === '' ? (
-          <Title name={'No data'} />
-        ) : (
-          <LessonButtons myLessons={myLessons} />
-        )}
-      </View>
-      <Title name={'Kharacters'} />
-      <View style={styles.columnContainer}>
-        {loading ? (
-          <ActivityIndicator color={'white'} size={'large'} />
-        ) : (
-          avatarInfo.map((item, index) => (
-            <Avatar
-              key={index.toString()}
-              img={item.avatar}
-              name={item.name ? item.name : 'unknown name'}
-              profile={item.profile}
-              type={'kharacter'}
-            />
-          ))
-        )}
-      </View>
-      <Title name={'Kameos'} />
-      <View>
-        <View style={styles.columnContainer}>
-          {loading ? (
-            <ActivityIndicator color={'white'} size={'large'} />
-          ) : (
-            kameoAvatarInfo.map((item, index) => (
-              <Avatar
-                key={index.toString()}
-                img={item.avatar}
-                name={item.name ? item.name : 'unknown name'}
-                profile={item.profile}
-                type={'kameo'}
-              />
-            ))
-          )}
         </View>
-      </View>
+      ) : (
+        <HomeScreen />
+      )}
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  buttonArea: {},
-  boxContainer: {
-    flex: 1,
-  },
   columnContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
