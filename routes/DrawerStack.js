@@ -85,7 +85,7 @@ export default function DrawerStack() {
       const mainData = await Promise.all(mainDataPromises);
 
       const kameoQuery = await client.fetch(
-        "*[_type == 'kameo']{_id, name, avatar, profile, moves, guide}"
+        "*[_type == 'kameo']{_id, name, avatar, profile, moves[]{..., attackType->{name}}, guide}"
       );
 
       const kameoExtractedPromises = kameoQuery.map(async (item) => {

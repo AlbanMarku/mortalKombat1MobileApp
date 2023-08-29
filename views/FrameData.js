@@ -7,7 +7,7 @@ import Title from '../components/Title';
 
 export default function FrameData({ route, navigation }) {
   //Conditionally render movelist components. Could be change to horizontal scrollview and render all three movelists at once.
-  const { basicAttacks, stringAttacks, specialAttacks } = route.params;
+  const { basicAttacks, stringAttacks, specialAttacks, kameo } = route.params;
   const [input, setInput, rosterData, setRosterData, getIcon] = useContext(MyContext);
   const [dataPage, setDataPage] = useState(0);
   const iconSet = getIcon(input, 30, 24);
@@ -19,17 +19,31 @@ export default function FrameData({ route, navigation }) {
   return (
     <View style={[globalStyles.color, { flex: 1 }]}>
       <Title name={'Frame Data'} underline />
-      <View style={styles.optionsContainer}>
-        <Pressable onPressIn={() => handlePress(0)}>
-          <Text style={[styles.optionText, dataPage === 0 && styles.selectedOption]}>Buttons</Text>
-        </Pressable>
-        <Pressable onPressIn={() => handlePress(1)}>
-          <Text style={[styles.optionText, dataPage === 1 && styles.selectedOption]}>Strings</Text>
-        </Pressable>
-        <Pressable onPressIn={() => handlePress(2)}>
-          <Text style={[styles.optionText, dataPage === 2 && styles.selectedOption]}>Specials</Text>
-        </Pressable>
-      </View>
+      {kameo ? (
+        <View style={styles.optionsContainer}>
+          <Text style={[styles.optionText, dataPage === 0 && styles.selectedOption]}>
+            Kameo assists
+          </Text>
+        </View>
+      ) : (
+        <View style={styles.optionsContainer}>
+          <Pressable onPressIn={() => handlePress(0)}>
+            <Text style={[styles.optionText, dataPage === 0 && styles.selectedOption]}>
+              Buttons
+            </Text>
+          </Pressable>
+          <Pressable onPressIn={() => handlePress(1)}>
+            <Text style={[styles.optionText, dataPage === 1 && styles.selectedOption]}>
+              Strings
+            </Text>
+          </Pressable>
+          <Pressable onPressIn={() => handlePress(2)}>
+            <Text style={[styles.optionText, dataPage === 2 && styles.selectedOption]}>
+              Specials
+            </Text>
+          </Pressable>
+        </View>
+      )}
       <View style={{ flex: 1 }}>
         {dataPage === 0 ? (
           <MoveList attacks={basicAttacks} iconSet={iconSet} />

@@ -1,13 +1,13 @@
 import { Text, View, StyleSheet, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-export default function BottomNav({ basicAttacks, stringAttacks, specialAttacks }) {
+export default function BottomNav({ basicAttacks, stringAttacks, specialAttacks, kameo }) {
   //Navbar comp with on click that navigates to screens. Drills attack info to FrameData screen.
   const navigation = useNavigation();
   return (
     <Pressable
       onPress={() =>
-        navigation.navigate('FrameData', { basicAttacks, stringAttacks, specialAttacks })
+        navigation.navigate('FrameData', { basicAttacks, stringAttacks, specialAttacks, kameo })
       }
       style={styles.bar}
     >

@@ -1,7 +1,6 @@
-import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import BottomNav from '../routes/BottomNav';
 import { globalStyles } from '../styles/global';
-import Title from '../components/Title';
 import { useState, useEffect } from 'react';
 import KharacterGuide from '../components/KharacterGuide';
 import { db } from '../myDb';
@@ -43,6 +42,7 @@ export default function Kameo({ route, navigation }) {
       <ScrollView>
         <KharacterGuide name={name} profile={profile} type={'kameo'} />
       </ScrollView>
+      <BottomNav basicAttacks={moves} kameo />
     </View>
   );
 }
