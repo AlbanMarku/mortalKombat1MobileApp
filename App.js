@@ -8,12 +8,18 @@ import MyStack from './routes/HomeStack';
 import { StatusBar } from 'expo-status-bar';
 import MyProvider from './Context';
 import { setupURLPolyfill } from 'react-native-url-polyfill';
+import mobileAds from 'react-native-google-mobile-ads';
 
 export default function App() {
   setupURLPolyfill();
   const [fontsLoaded] = useFonts({ mk11: require('./assets/fonts/mk11Reg.otf') });
 
   useEffect(() => {
+    mobileAds()
+      .initialize()
+      .then((adapterStatuses) => {
+        // Initialization complete!
+      });
     async function prepare() {
       await Splashscreen.preventAutoHideAsync();
     }

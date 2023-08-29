@@ -5,15 +5,16 @@ import Title from '../components/Title';
 import { globalStyles } from '../styles/global';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useEffect, useState } from 'react';
-
 import { db } from '../myDb';
-
+import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
 //Some temp data to map through. Components for homescreen.
 
 export default function Home({ navigation, loading }) {
   const [avatarInfo, setAvatarInfo] = useState([]);
   const [kameoAvatarInfo, setKameoAvatarInfo] = useState([]);
   const [myLessons, setMylessons] = useState({});
+
+  const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-xxxxxxxxxxxxx/yyyyyyyyyyyyyy';
 
   const loadAvatar = async () => {
     db.transaction((tx) => {
@@ -114,6 +115,16 @@ export default function Home({ navigation, loading }) {
       ) : (
         <HomeScreen />
       )}
+      <BannerAd
+        unitId={adUnitId}
+        size={BannerAdSize.FULL_BANNER}
+        requestOptions={{
+          requestNonPersonalizedAdsOnly: true,
+        }}
+        onAdFailedToLoad={(error) => {
+          console.log('Ad failed to load:', error);
+        }}
+      />
     </ScrollView>
   );
 }
