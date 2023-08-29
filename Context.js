@@ -42,6 +42,10 @@ const MyProvider = ({ children }) => {
         require('./assets/imgs/beg.jpg'),
         require('./assets/imgs/int.jpg'),
         require('./assets/imgs/adv.jpg'),
+        require('./assets/imgs/L.png'),
+        require('./assets/imgs/K.png'),
+        require('./assets/imgs/I.png'),
+        require('./assets/imgs/J.png'),
       ];
       await Asset.loadAsync(imageAssets);
     } catch (error) {
@@ -196,6 +200,39 @@ const MyProvider = ({ children }) => {
           <Image
             style={{ width: size || 20, height: size || 20 }}
             source={require('./assets/imgs/4.png')}
+          />
+        ),
+        amp: <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/AMP.png')} />,
+        assist: (
+          <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/ASSIST.png')} />
+        ),
+        held: <Text style={{ color: 'white', fontSize: fontSize || 16 }}>{heldText}</Text>,
+      };
+      return iconSet;
+    } else if (input == 4) {
+      const iconSet = {
+        fp: (
+          <Image
+            style={{ width: size || 20, height: size || 20 }}
+            source={require('./assets/imgs/J.png')}
+          />
+        ),
+        bp: (
+          <Image
+            style={{ width: size || 20, height: size || 20 }}
+            source={require('./assets/imgs/I.png')}
+          />
+        ),
+        fk: (
+          <Image
+            style={{ width: size || 20, height: size || 20 }}
+            source={require('./assets/imgs/K.png')}
+          />
+        ),
+        bk: (
+          <Image
+            style={{ width: size || 20, height: size || 20 }}
+            source={require('./assets/imgs/L.png')}
           />
         ),
         amp: <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/AMP.png')} />,

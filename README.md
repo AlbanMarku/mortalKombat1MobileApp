@@ -12,15 +12,14 @@ Built using React Native JavaScript. Data fetched from Sanity content management
 - Show attacks in selected gaming platform buttons.
 - Kharacter guides.
 - Offline support.
-- Kombo data.
-- Kameo data.
 - How to play information.
 
 ## Work in progress
 
 - Pin moves.
+- Kombo data.
 - Fully support iOS.
-- QOL
+- QOL (UI improvements, performance)
 
 ## Installation
 
