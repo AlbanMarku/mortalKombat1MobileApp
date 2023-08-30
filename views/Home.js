@@ -14,7 +14,7 @@ export default function Home({ navigation, loading }) {
   const [kameoAvatarInfo, setKameoAvatarInfo] = useState([]);
   const [myLessons, setMylessons] = useState({});
 
-  const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-xxxxxxxxxxxxx/yyyyyyyyyyyyyy';
+  const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-6095333575737174~9129811839';
 
   const loadAvatar = async () => {
     db.transaction((tx) => {
@@ -107,14 +107,17 @@ export default function Home({ navigation, loading }) {
   }, [loading]);
 
   return (
-    <ScrollView style={[globalStyles.color, { flex: 1 }]}>
-      {loading ? (
-        <View style={{ height: 500, justifyContent: 'center' }}>
-          <ActivityIndicator color={'white'} size={'large'} />
-        </View>
-      ) : (
-        <HomeScreen />
-      )}
+    <View style={{ flex: 1 }}>
+      <ScrollView style={[globalStyles.color, { flex: 1 }]}>
+        {loading ? (
+          <View style={{ height: 500, justifyContent: 'center' }}>
+            <ActivityIndicator color={'orange'} size={'large'} />
+          </View>
+        ) : (
+          <HomeScreen />
+        )}
+      </ScrollView>
+
       <BannerAd
         unitId={adUnitId}
         size={BannerAdSize.FULL_BANNER}
@@ -125,7 +128,7 @@ export default function Home({ navigation, loading }) {
           console.log('Ad failed to load:', error);
         }}
       />
-    </ScrollView>
+    </View>
   );
 }
 
