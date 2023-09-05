@@ -1,7 +1,7 @@
 import { Text, View, StyleSheet, Linking, Pressable } from 'react-native';
 import { globalStyles } from '../styles/global';
 
-export default function About() {
+export default function Kontribute() {
   return (
     <View style={[globalStyles.color, styles.container]}>
       <Text style={{ color: 'white', fontSize: 26, textAlign: 'center', lineHeight: 35 }}>

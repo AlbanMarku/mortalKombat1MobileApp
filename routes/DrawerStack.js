@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { ToastAndroid } from 'react-native';
 import Home from '../views/Home';
 import Kontribute from '../views/Kontribute';
+import About from '../views/About';
 import HeaderComp from '../components/HeaderComp';
 import { client, urlFor } from '../components/SanityClient';
 import { setupDb } from '../myDb';
@@ -218,6 +219,7 @@ export default function DrawerStack() {
         {() => <Home loading={loading} />}
       </Drawer.Screen>
       <Drawer.Screen name="Kontribute" component={Kontribute} />
+      <Drawer.Screen name="About" component={About} />
     </Drawer.Navigator>
   );
 }
