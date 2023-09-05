@@ -13,8 +13,9 @@ export default function Home({ navigation, loading }) {
   const [avatarInfo, setAvatarInfo] = useState([]);
   const [kameoAvatarInfo, setKameoAvatarInfo] = useState([]);
   const [myLessons, setMylessons] = useState({});
+  const [adLoaded, setAdLoaded] = useState(true); // Initialize as false
 
-  const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-6095333575737174~9129811839';
+  const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-6095333575737174/1918031069';
 
   const loadAvatar = async () => {
     db.transaction((tx) => {
@@ -104,6 +105,7 @@ export default function Home({ navigation, loading }) {
   useEffect(() => {
     loadAvatar();
     loadLessons();
+    console.log(adLoaded);
   }, [loading]);
 
   return (
@@ -117,17 +119,22 @@ export default function Home({ navigation, loading }) {
           <HomeScreen />
         )}
       </ScrollView>
-
-      <BannerAd
-        unitId={adUnitId}
-        size={BannerAdSize.FULL_BANNER}
-        requestOptions={{
-          requestNonPersonalizedAdsOnly: true,
-        }}
-        onAdFailedToLoad={(error) => {
-          console.log('Ad failed to load:', error);
-        }}
-      />
+      {adLoaded && (
+        <BannerAd
+          unitId={adUnitId}
+          size={BannerAdSize.FULL_BANNER}
+          requestOptions={{
+            requestNonPersonalizedAdsOnly: true,
+          }}
+          onAdLoaded={() => {
+            console.log('ad loaded');
+            setAdLoaded(true); // Set the state to true when the ad is loaded
+          }}
+          onAdFailedToLoad={(error) => {
+            console.log('Ad failed to load:', error);
+          }}
+        />
+      )}
     </View>
   );
 }

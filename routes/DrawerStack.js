@@ -2,7 +2,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { useState, useEffect } from 'react';
 import { ToastAndroid } from 'react-native';
 import Home from '../views/Home';
-import About from '../views/About';
+import Kontribute from '../views/Kontribute';
 import HeaderComp from '../components/HeaderComp';
 import { client, urlFor } from '../components/SanityClient';
 import { setupDb } from '../myDb';
@@ -21,17 +21,9 @@ export default function DrawerStack() {
         // This is the first time the app is opened
         await AsyncStorage.setItem('appOpened', 'true'); // Set the flag
         fetchRoster();
-        ToastAndroid.showWithGravity(
-          'This was the first launch',
-          ToastAndroid.SHORT,
-          ToastAndroid.BOTTOM
-        );
+        console.log('fist launch');
       } else {
-        ToastAndroid.showWithGravity(
-          'This was the SECOND launch',
-          ToastAndroid.SHORT,
-          ToastAndroid.BOTTOM
-        );
+        console.log('second launch');
       }
     } catch (error) {
       console.log('Error:', error);
@@ -205,10 +197,15 @@ export default function DrawerStack() {
           fontFamily: 'mk11',
         },
         drawerItemStyle: {
-          backgroundColor: 'red',
+          backgroundColor: '#212120',
         },
         drawerContentStyle: {
-          backgroundColor: 'red',
+          backgroundColor: 'black',
+        },
+        drawerLabelStyle: {
+          color: 'orange',
+          fontFamily: 'mk11',
+          fontSize: 18,
         },
       }}
     >
@@ -220,7 +217,7 @@ export default function DrawerStack() {
       >
         {() => <Home loading={loading} />}
       </Drawer.Screen>
-      <Drawer.Screen name="About" component={About} />
+      <Drawer.Screen name="Kontribute" component={Kontribute} />
     </Drawer.Navigator>
   );
 }

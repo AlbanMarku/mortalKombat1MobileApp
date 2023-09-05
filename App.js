@@ -19,6 +19,7 @@ export default function App() {
       .initialize()
       .then((adapterStatuses) => {
         // Initialization complete!
+        console.log(adapterStatuses);
       });
     async function prepare() {
       await Splashscreen.preventAutoHideAsync();
