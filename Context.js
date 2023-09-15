@@ -83,9 +83,17 @@ const MyProvider = ({ children }) => {
             source={require('./assets/imgs/ps4Circle.png')}
           />
         ),
-        amp: <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/AMP.png')} />,
+        amp: (
+          <Image
+            style={{ width: size || 30, height: size || 30 }}
+            source={require('./assets/imgs/AMP.png')}
+          />
+        ),
         assist: (
-          <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/ASSIST.png')} />
+          <Image
+            style={{ width: size || 30, height: size || 30 }}
+            source={require('./assets/imgs/ASSIST.png')}
+          />
         ),
         held: <Text style={{ color: 'white', fontSize: fontSize || 16 }}>{heldText}</Text>,
       };
@@ -116,9 +124,17 @@ const MyProvider = ({ children }) => {
             source={require('./assets/imgs/xboxB.png')}
           />
         ),
-        amp: <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/AMP.png')} />,
+        amp: (
+          <Image
+            style={{ width: size || 30, height: size || 30 }}
+            source={require('./assets/imgs/AMP.png')}
+          />
+        ),
         assist: (
-          <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/ASSIST.png')} />
+          <Image
+            style={{ width: size || 30, height: size || 30 }}
+            source={require('./assets/imgs/ASSIST.png')}
+          />
         ),
         held: <Text style={{ color: 'white', fontSize: fontSize || 16 }}>{heldText}</Text>,
       };
@@ -169,9 +185,17 @@ const MyProvider = ({ children }) => {
             source={require('./assets/imgs/nintendoA.png')}
           />
         ),
-        amp: <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/AMP.png')} />,
+        amp: (
+          <Image
+            style={{ width: size || 30, height: size || 30 }}
+            source={require('./assets/imgs/AMP.png')}
+          />
+        ),
         assist: (
-          <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/ASSIST.png')} />
+          <Image
+            style={{ width: size || 30, height: size || 30 }}
+            source={require('./assets/imgs/ASSIST.png')}
+          />
         ),
         held: <Text style={{ color: 'white', fontSize: fontSize || 16 }}>{heldText}</Text>,
       };
@@ -202,9 +226,17 @@ const MyProvider = ({ children }) => {
             source={require('./assets/imgs/4.png')}
           />
         ),
-        amp: <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/AMP.png')} />,
+        amp: (
+          <Image
+            style={{ width: size || 30, height: size || 30 }}
+            source={require('./assets/imgs/AMP.png')}
+          />
+        ),
         assist: (
-          <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/ASSIST.png')} />
+          <Image
+            style={{ width: size || 30, height: size || 30 }}
+            source={require('./assets/imgs/ASSIST.png')}
+          />
         ),
         held: <Text style={{ color: 'white', fontSize: fontSize || 16 }}>{heldText}</Text>,
       };
@@ -235,9 +267,17 @@ const MyProvider = ({ children }) => {
             source={require('./assets/imgs/L.png')}
           />
         ),
-        amp: <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/AMP.png')} />,
+        amp: (
+          <Image
+            style={{ width: size || 30, height: size || 30 }}
+            source={require('./assets/imgs/AMP.png')}
+          />
+        ),
         assist: (
-          <Image style={{ width: 30, height: 30 }} source={require('./assets/imgs/ASSIST.png')} />
+          <Image
+            style={{ width: size || 30, height: size || 30 }}
+            source={require('./assets/imgs/ASSIST.png')}
+          />
         ),
         held: <Text style={{ color: 'white', fontSize: fontSize || 16 }}>{heldText}</Text>,
       };

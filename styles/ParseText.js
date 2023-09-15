@@ -4,7 +4,7 @@ import { MyContext } from '../Context';
 
 export default function StrategyComp({ para }) {
   const [input, setInput, rosterData, setRosterData, getIcon, getButton] = useContext(MyContext);
-  const iconSet = getIcon(input);
+  const iconSet = getIcon(input, 21);
 
   const ReplaceDir = (direction) => {
     switch (direction.number) {
