@@ -7,7 +7,7 @@ export default function LessonButtons({ myLessons }) {
   const navigation = useNavigation();
 
   const onPress = (title, lessons) => {
-    navigation.navigate('LessonsList', { title, lessons });
+    navigation.navigate('Lesson List', { title, lessons });
   };
   const sources = {
     source1: require('../assets/imgs/beg.jpg'),

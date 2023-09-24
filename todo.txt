@@ -1,4 +1,4 @@
 Verify data in app and sanity
-held, assist
-suitable images
+make icons look better
 fix jitter navigate
+clean up code

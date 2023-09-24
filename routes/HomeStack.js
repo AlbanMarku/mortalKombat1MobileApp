@@ -62,7 +62,7 @@ export default function MyStack() {
           }}
         />
         <Stack.Screen
-          name="LessonsList"
+          name="Lesson List"
           component={LessonsList}
           options={{
             headerShown: true,

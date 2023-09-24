@@ -1,8 +1,7 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import { globalStyles } from '../styles/global';
 import LessonThumbnail from '../components/LessonThumbnail';
 import Title from '../components/Title';
-import { useState, useEffect } from 'react';
 
 export default function LessonsList({ route, navigation }) {
   const { title, lessons } = route.params;
