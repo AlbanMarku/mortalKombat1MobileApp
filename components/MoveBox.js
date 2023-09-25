@@ -47,6 +47,11 @@ export default function MoveBox({ attack, iconSet, style }) {
           <Image style={{ width: 25, height: 25 }} source={require('../assets/imgs/UP.png')} />
         );
 
+      case 9:
+        return (
+          <Image style={{ width: 25, height: 25 }} source={require('../assets/imgs/JUMP.png')} />
+        );
+
       default:
         return null;
     }

@@ -35,6 +35,13 @@ export default function StrategyComp({ para }) {
           </View>
         );
 
+      case 9:
+        return (
+          <View style={styles.input}>
+            <Image style={{ width: 18, height: 18 }} source={require('../assets/imgs/JUMP.png')} />
+          </View>
+        );
+
       default:
         return null;
     }
