@@ -148,8 +148,8 @@ const styles = StyleSheet.create({
   },
   dataDiv: {
     flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: 80,
+    justifyContent: 'space-around',
   },
   moveName: {
     fontSize: 18,
