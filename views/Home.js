@@ -119,7 +119,7 @@ export default function Home({ navigation, loading }) {
           <HomeScreen />
         )}
       </ScrollView>
-      {/* {adLoaded && (
+      {adLoaded && (
         <BannerAd
           unitId={adUnitId}
           size={BannerAdSize.FULL_BANNER}
@@ -134,7 +134,7 @@ export default function Home({ navigation, loading }) {
             console.log('Ad failed to load:', error);
           }}
         />
-      )} */}
+      )}
     </View>
   );
 }
