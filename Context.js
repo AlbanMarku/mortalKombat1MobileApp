@@ -23,6 +23,7 @@ const MyProvider = ({ children }) => {
         require('./assets/imgs/xboxA.png'),
         require('./assets/imgs/xboxB.png'),
         require('./assets/imgs/AMP.png'),
+        require('./assets/imgs/THROW.png'),
         require('./assets/imgs/nintendoY.png'),
         require('./assets/imgs/nintendoX.png'),
         require('./assets/imgs/nintendoB.png'),
@@ -96,6 +97,12 @@ const MyProvider = ({ children }) => {
             source={require('./assets/imgs/ASSIST.png')}
           />
         ),
+        throw: (
+          <Image
+            style={{ width: size || 20, height: size || 20 }}
+            source={require('./assets/imgs/THROW.png')}
+          />
+        ),
         held: <Text style={{ color: 'white', fontSize: fontSize || 16 }}>{heldText}</Text>,
       };
       return iconSet;
@@ -135,6 +142,12 @@ const MyProvider = ({ children }) => {
           <Image
             style={{ width: size || 30, height: size || 30 }}
             source={require('./assets/imgs/ASSIST.png')}
+          />
+        ),
+        throw: (
+          <Image
+            style={{ width: size || 20, height: size || 20 }}
+            source={require('./assets/imgs/THROW.png')}
           />
         ),
         held: <Text style={{ color: 'white', fontSize: fontSize || 16 }}>{heldText}</Text>,
@@ -198,6 +211,12 @@ const MyProvider = ({ children }) => {
             source={require('./assets/imgs/ASSIST.png')}
           />
         ),
+        throw: (
+          <Image
+            style={{ width: size || 20, height: size || 20 }}
+            source={require('./assets/imgs/THROW.png')}
+          />
+        ),
         held: <Text style={{ color: 'white', fontSize: fontSize || 16 }}>{heldText}</Text>,
       };
       return iconSet;
@@ -237,6 +256,12 @@ const MyProvider = ({ children }) => {
           <Image
             style={{ width: size || 30, height: size || 30 }}
             source={require('./assets/imgs/ASSIST.png')}
+          />
+        ),
+        throw: (
+          <Image
+            style={{ width: size || 20, height: size || 20 }}
+            source={require('./assets/imgs/THROW.png')}
           />
         ),
         held: <Text style={{ color: 'white', fontSize: fontSize || 16 }}>{heldText}</Text>,
@@ -280,6 +305,12 @@ const MyProvider = ({ children }) => {
             source={require('./assets/imgs/ASSIST.png')}
           />
         ),
+        throw: (
+          <Image
+            style={{ width: size || 20, height: size || 20 }}
+            source={require('./assets/imgs/THROW.png')}
+          />
+        ),
         held: <Text style={{ color: 'white', fontSize: fontSize || 16 }}>{heldText}</Text>,
       };
       return iconSet;
@@ -306,6 +337,8 @@ const MyProvider = ({ children }) => {
         return iconSet.held;
       case 7:
         return iconSet.assist;
+      case 8:
+        return iconSet.throw;
       default:
         return null;
     }
