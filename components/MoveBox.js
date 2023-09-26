@@ -7,22 +7,26 @@ export default function MoveBox({ attack, iconSet, style }) {
   const [input, setInput, rosterData, setRosterData, getIcon, getButton] = useContext(MyContext);
 
   //Grab attackinputs array form the attack prop. Grab attack properties. Map through attackinputs array to display in div. In depth stats passed as props to modal.
-  const kombo = attack.attackInputs;
+  const kombo = attack.attackInputs ?? [
+    { button: 8, direction: 2 },
+    { button: 8, direction: 2 },
+  ];
   const [openModal, setOpenModal] = useState(false);
+  console.log(kombo);
 
   const detailedInfo = {
-    name: attack.attackName,
-    attackType: attack.attackType.name,
-    blockAdv: attack.blockAdv,
-    active: attack.active,
-    damageBlock: attack.damageBlock,
-    startup: attack.startup,
-    recovery: attack.recovery,
-    cancelAdv: attack.cancelAdv,
-    flawlessBlockAdv: attack.flawlessBlockAdv,
-    damageHit: attack.damageHit,
-    hitAdv: attack.hitAdv,
-    airOk: attack.airOk,
+    name: attack.attackName ?? 'Undefined',
+    attackType: attack.attackType?.name ?? 'Undefined',
+    blockAdv: attack.blockAdv ?? 0,
+    active: attack.active ?? 0,
+    damageBlock: attack.damageBlock ?? 0,
+    startup: attack.startup ?? 0,
+    recovery: attack.recovery ?? 0,
+    cancelAdv: attack.cancelAdv ?? 0,
+    flawlessBlockAdv: attack.flawlessBlockAdv ?? 0,
+    damageHit: attack.damageHit ?? 0,
+    hitAdv: attack.hitAdv ?? 0,
+    airOk: attack.airOk ?? false,
   };
 
   const directionComp = (direction) => {
@@ -101,11 +105,11 @@ export default function MoveBox({ attack, iconSet, style }) {
         <View style={styles.dataInfoContainer}>
           <View style={styles.dataDiv}>
             <Text style={[styles.data, colorStyleBlockAdvStartup, { marginRight: 25 }]}>
-              {detailedInfo.startup}
+              {detailedInfo.startup || 0}
             </Text>
-            <Text style={[styles.data, colorStyleBlockAdv]}>{detailedInfo.blockAdv}</Text>
+            <Text style={[styles.data, colorStyleBlockAdv]}>{detailedInfo.blockAdv || 0}</Text>
           </View>
-          <Text style={styles.moveName}>{detailedInfo.attackType}</Text>
+          <Text style={styles.moveName}>{detailedInfo.attackType || 'undefined'}</Text>
         </View>
       </TouchableOpacity>
     </View>
