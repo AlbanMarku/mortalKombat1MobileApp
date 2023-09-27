@@ -137,25 +137,33 @@ export default function KharacterGuide({ name, profile, type }) {
         <Image style={{ height: 300, width: 300 }} source={{ uri: profile }} />
       </View>
       <Title name={'Guide'} underline />
-      {type === 'kharacter' ? ( // Render different comps depending if khar or kameo.
-        fetchComplete && strategyInfo.length > 0 && overviewInfo ? (
-          <DisplayKharacterPage />
-        ) : fetchComplete && strategyInfo.length === 0 && overviewInfo === null ? (
-          <View style={styles.noItemDiv}>
-            <Text style={{ color: 'white' }}>Kharacter not finished</Text>
-          </View>
+      {type === 'kharacter' ? (
+        fetchComplete && overviewInfo ? (
+          strategyInfo && strategyInfo.length > 0 ? (
+            <DisplayKharacterPage />
+          ) : (
+            <View style={styles.noItemDiv}>
+              <Text style={{ color: 'white' }}>Kharacter not finished</Text>
+            </View>
+          )
         ) : (
-          <ActivityIndicator color={'white'} size={'large'} />
+          <View style={{ height: 300 }}>
+            {/* <ActivityIndicator color={'white'} size={'large'} /> */}
+          </View>
         )
       ) : type === 'kameo' ? (
-        fetchComplete && kameoStrategyInfo.length > 0 && kameoOverviewInfo ? (
-          <DisplayKameoPage />
-        ) : fetchComplete && strategyInfo.length === 0 && overviewInfo === null ? (
-          <View style={styles.noItemDiv}>
-            <Text style={{ color: 'white' }}>Kharacter not finished</Text>
-          </View>
+        fetchComplete && kameoOverviewInfo ? (
+          kameoStrategyInfo && kameoStrategyInfo.length > 0 ? (
+            <DisplayKameoPage />
+          ) : (
+            <View style={styles.noItemDiv}>
+              <Text style={{ color: 'white' }}>Kharacter not finished</Text>
+            </View>
+          )
         ) : (
-          <ActivityIndicator color={'white'} size={'large'} />
+          <View style={{ height: 300 }}>
+            {/* <ActivityIndicator color={'white'} size={'large'} /> */}
+          </View>
         )
       ) : null}
     </View>
