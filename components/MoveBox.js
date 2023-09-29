@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
   dataDiv: {
     flexDirection: 'row',
     width: 80,
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
   },
   moveName: {
     fontSize: 18,
