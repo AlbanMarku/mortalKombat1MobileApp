@@ -17,10 +17,10 @@ export default function MoveBox({ attack, iconSet, style }) {
   const detailedInfo = {
     name: attack.attackName ?? 'Undefined',
     attackType: attack.attackType?.name ?? 'Undefined',
-    blockAdv: attack.blockAdv ?? 0,
-    active: attack.active ?? 0,
+    blockAdv: attack.blockAdv ?? '--',
+    active: attack.active ?? '--',
     damageBlock: attack.damageBlock ?? 0,
-    startup: attack.startup ?? 0,
+    startup: attack.startup ?? '--',
     recovery: attack.recovery ?? 0,
     cancelAdv: attack.cancelAdv ?? 0,
     flawlessBlockAdv: attack.flawlessBlockAdv ?? 0,
@@ -63,14 +63,26 @@ export default function MoveBox({ attack, iconSet, style }) {
 
   //If a the block/startup adv value is a certain range, apply color style.
 
-  const colorStyleBlockAdv =
-    detailedInfo.blockAdv >= 0
-      ? styles.green
-      : detailedInfo.blockAdv <= -1 && detailedInfo.blockAdv >= -7
-      ? styles.yellow
-      : styles.red;
+  let colorStyleBlockAdv;
 
-  const colorStyleBlockAdvStartup = detailedInfo.startup <= 9 ? styles.green : styles.white;
+  if (!isNaN(detailedInfo.blockAdv)) {
+    colorStyleBlockAdv =
+      detailedInfo.blockAdv >= 0
+        ? styles.green
+        : detailedInfo.blockAdv <= -1 && detailedInfo.blockAdv >= -7
+        ? styles.yellow
+        : styles.red;
+  } else {
+    colorStyleBlockAdv = styles.white;
+  }
+
+  let colorStyleBlockAdvStartup;
+
+  if (!isNaN(detailedInfo.startup)) {
+    detailedInfo.startup <= 9 ? styles.green : styles.white;
+  } else {
+    colorStyleBlockAdvStartup = styles.white;
+  }
 
   return (
     <View>
@@ -107,7 +119,7 @@ export default function MoveBox({ attack, iconSet, style }) {
             <Text style={[styles.data, colorStyleBlockAdvStartup, { marginRight: 25 }]}>
               {detailedInfo.startup || 0}
             </Text>
-            <Text style={[styles.data, colorStyleBlockAdv]}>{detailedInfo.blockAdv || 0}</Text>
+            <Text style={[styles.data, colorStyleBlockAdv]}>{detailedInfo.blockAdv}</Text>
           </View>
           <Text style={styles.moveName}>{detailedInfo.attackType || 'undefined'}</Text>
         </View>
@@ -180,5 +192,8 @@ const styles = StyleSheet.create({
   },
   red: {
     color: 'red',
+  },
+  white: {
+    color: 'white',
   },
 });
