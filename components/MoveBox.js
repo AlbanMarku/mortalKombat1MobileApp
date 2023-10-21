@@ -12,7 +12,6 @@ export default function MoveBox({ attack, iconSet, style }) {
     { button: 8, direction: 2 },
   ];
   const [openModal, setOpenModal] = useState(false);
-  console.log(kombo);
 
   const detailedInfo = {
     name: attack.attackName ?? 'Undefined',
@@ -23,9 +22,9 @@ export default function MoveBox({ attack, iconSet, style }) {
     startup: attack.startup ?? '--',
     recovery: attack.recovery ?? 0,
     cancelAdv: attack.cancelAdv ?? 0,
-    flawlessBlockAdv: attack.flawlessBlockAdv ?? 0,
+    flawlessBlockAdv: attack.flawlessBlockAdv ?? '--',
     damageHit: attack.damageHit ?? 0,
-    hitAdv: attack.hitAdv ?? 0,
+    hitAdv: attack.hitAdv ?? '--',
     airOk: attack.airOk ?? false,
   };
 

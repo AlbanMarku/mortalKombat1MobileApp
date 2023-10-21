@@ -7,10 +7,20 @@ import HeaderComp from '../components/HeaderComp';
 import FrameData from '../views/FrameData';
 import LessonsList from '../views/LessonsList';
 import Lesson from '../views/Lesson';
+import LegendComp from '../components/LegendComp';
 
 //add box shadow
 
 const Stack = createNativeStackNavigator();
+
+const CustomHeader = () => {
+  return (
+    <View style={{ flexDirection: 'row' }}>
+      <HeaderComp />
+      <LegendComp />
+    </View>
+  );
+};
 
 export default function MyStack() {
   return (
@@ -36,7 +46,7 @@ export default function MyStack() {
             animation: 'slide_from_right',
             gestureEnabled: true,
             gestureDirection: 'horizontal',
-            headerRight: () => <HeaderComp />,
+            headerRight: () => <CustomHeader />,
           }}
         />
         <Stack.Screen
